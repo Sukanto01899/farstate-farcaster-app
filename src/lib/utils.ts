@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { Manifest } from "@farcaster/miniapp-core/src/manifest";
+import type { Manifest as ManifestType } from "@farcaster/miniapp-core/dist/manifest";
 import {
   APP_BUTTON_TEXT,
   APP_DESCRIPTION,
@@ -14,7 +14,6 @@ import {
   APP_URL,
   APP_WEBHOOK_URL,
   APP_ACCOUNT_ASSOCIATION,
-  APP_BUILDER_ADDRESS,
 } from "./constants";
 
 export function cn(...inputs: ClassValue[]) {
@@ -45,7 +44,7 @@ export function getMiniAppEmbedMetadata(ogImageUrl?: string) {
   };
 }
 
-export async function getFarcasterDomainManifest(): Promise<Manifest> {
+export async function getFarcasterDomainManifest(): Promise<ManifestType> {
   return {
     accountAssociation: APP_ACCOUNT_ASSOCIATION!,
     miniapp: {
@@ -58,9 +57,6 @@ export async function getFarcasterDomainManifest(): Promise<Manifest> {
       splashImageUrl: APP_SPLASH_URL,
       splashBackgroundColor: APP_SPLASH_BACKGROUND_COLOR,
       webhookUrl: APP_WEBHOOK_URL,
-    },
-    baseBuilder: {
-      builderAddress: APP_BUILDER_ADDRESS,
     },
   };
 }
