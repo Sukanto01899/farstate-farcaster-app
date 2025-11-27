@@ -62,7 +62,7 @@ export const APP_ICON_URL: string = `${APP_URL}/icon.png`;
  * URL for the app's Open Graph image.
  * Used for social media sharing and previews.
  */
-export const APP_OG_IMAGE_URL: string = `${APP_URL}/api/opengraph-image`;
+export const APP_OG_IMAGE_URL: string = `${APP_URL}/opengraph-image.png`;
 
 /**
  * URL for the app's splash screen image.
@@ -136,7 +136,7 @@ export const ANALYTICS_ENABLED: boolean = true;
  * Supported chains: eip155:1, eip155:137, eip155:42161, eip155:10, eip155:8453,
  * solana:mainnet, solana:devnet
  */
-export const APP_REQUIRED_CHAINS: string[] = [];
+export const APP_REQUIRED_CHAINS: string[] = ["eip155:8453", "eip155:1"];
 
 /**
  * Return URL for the mini app.

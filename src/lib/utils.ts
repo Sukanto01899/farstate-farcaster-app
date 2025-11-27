@@ -48,7 +48,7 @@ export async function getFarcasterDomainManifest() {
     accountAssociation: APP_ACCOUNT_ASSOCIATION!,
     miniapp: {
       version: "1",
-      name: APP_NAME ?? "Neynar Starter Kit",
+      name: APP_NAME ?? "Farstate",
       homeUrl: APP_URL,
       iconUrl: APP_ICON_URL,
       imageUrl: APP_OG_IMAGE_URL,
@@ -58,6 +58,12 @@ export async function getFarcasterDomainManifest() {
       webhookUrl: APP_WEBHOOK_URL,
       primaryCategory: APP_PRIMARY_CATEGORY,
       tags: APP_TAGS,
+      subtitle: "Track Farcaster score and info",
+      description: APP_DESCRIPTION,
+      tagline: "Farcaster Analytics",
+      ogTitle: "Farstate - Farcaster Analytics",
+      requiredChains: ["eip155:8453", "eip155:1"],
+      castShareUrl: `${APP_URL}/share`,
     },
   };
 }
