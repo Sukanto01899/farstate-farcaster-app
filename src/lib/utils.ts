@@ -1,6 +1,5 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import type { Manifest as ManifestType } from "@farcaster/miniapp-core/dist/manifest";
 import {
   APP_BUTTON_TEXT,
   APP_DESCRIPTION,
@@ -44,7 +43,7 @@ export function getMiniAppEmbedMetadata(ogImageUrl?: string) {
   };
 }
 
-export async function getFarcasterDomainManifest(): Promise<ManifestType> {
+export async function getFarcasterDomainManifest() {
   return {
     accountAssociation: APP_ACCOUNT_ASSOCIATION!,
     miniapp: {
