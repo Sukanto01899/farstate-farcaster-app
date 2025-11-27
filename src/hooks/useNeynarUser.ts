@@ -3,6 +3,15 @@ import { useEffect, useState } from "react";
 export interface NeynarUser {
   fid: number;
   score: number;
+  pro: {
+    state: string;
+  };
+  follower_count: number;
+  following_count: number;
+  verified_addresses: {
+    eth_addresses: string[];
+    sol_addresses: string[];
+  };
 }
 
 export function useNeynarUser(context?: { user?: { fid?: number } }) {
@@ -20,10 +29,12 @@ export function useNeynarUser(context?: { user?: { fid?: number } }) {
     setError(null);
     fetch(`/api/users?fids=${context.user.fid}`)
       .then((response) => {
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        if (!response.ok)
+          throw new Error(`HTTP error! status: ${response.status}`);
         return response.json();
       })
       .then((data) => {
+        console.log(data);
         if (data.users?.[0]) {
           setUser(data.users[0]);
         } else {
@@ -35,4 +46,4 @@ export function useNeynarUser(context?: { user?: { fid?: number } }) {
   }, [context?.user?.fid]);
 
   return { user, loading, error };
-} 
+}
