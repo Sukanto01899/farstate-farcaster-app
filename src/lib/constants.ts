@@ -31,19 +31,25 @@ export const APP_NAME: string = "Farstate";
  * Used in app store listings and metadata.
  */
 export const APP_DESCRIPTION: string =
-  "A Farcaster mini app created with Neynar";
+  "Farstate helps you track your Farcaster engagement metrics, wallet information, and token balances in one place, with detailed analytics and insights.";
 
 /**
  * The primary category for the mini app.
  * Used for app store categorization and discovery.
  */
-export const APP_PRIMARY_CATEGORY: string = "productivity";
+export const APP_PRIMARY_CATEGORY: string = "social";
 
 /**
  * Tags associated with the mini app.
  * Used for search and discovery in app stores.
  */
-export const APP_TAGS: string[] = ["Productivity"];
+export const APP_TAGS: string[] = [
+  "neynar",
+  "farcaster",
+  "analytics",
+  "reputation",
+  "profile",
+];
 
 // --- Asset URLs ---
 /**
@@ -68,16 +74,25 @@ export const APP_SPLASH_URL: string = `${APP_URL}/splash.png`;
  * Background color for the splash screen.
  * Used as fallback when splash image is loading.
  */
-export const APP_SPLASH_BACKGROUND_COLOR: string = "#f7f7f7";
+export const APP_SPLASH_BACKGROUND_COLOR: string = "#fafaff";
+
+// Builder address
+
+export const APP_BUILDER_ADDRESS: string =
+  "0xB23955A49c9974a40e68717813a108002072a368";
 
 /**
  * Account association for the mini app.
  * Used to associate the mini app with a Farcaster account.
  * If not provided, the mini app will be unsigned and have limited capabilities.
  */
-export const APP_ACCOUNT_ASSOCIATION: AccountAssociation | undefined =
-  undefined;
-
+export const APP_ACCOUNT_ASSOCIATION: AccountAssociation | undefined = {
+  header:
+    "eyJmaWQiOjMxNzI2MSwidHlwZSI6ImF1dGgiLCJrZXkiOiIweDQ5ZWUzMjNFYTFCYjY1RjY4RkE3NWRmMGM2RDQ0MWQyMGQ4M0E4Q2QifQ",
+  payload: "eyJkb21haW4iOiJodHRwczovL2ZhcnN0YXRlLnZlcmNlbC5hcHAvIn0",
+  signature:
+    "JTdApUfErlvZkYVL8Aw2ot3jN9KU97LMtPW0biJTDnQDS/4TkVNnz13f3trgIGj9oYWKZO0fuswwpLumxRWQrxs=",
+};
 // --- UI Configuration ---
 /**
  * Text displayed on the main action button.

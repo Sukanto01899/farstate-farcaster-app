@@ -14,6 +14,7 @@ import {
   APP_URL,
   APP_WEBHOOK_URL,
   APP_ACCOUNT_ASSOCIATION,
+  APP_BUILDER_ADDRESS,
 } from "./constants";
 
 export function cn(...inputs: ClassValue[]) {
@@ -57,6 +58,9 @@ export async function getFarcasterDomainManifest(): Promise<Manifest> {
       splashImageUrl: APP_SPLASH_URL,
       splashBackgroundColor: APP_SPLASH_BACKGROUND_COLOR,
       webhookUrl: APP_WEBHOOK_URL,
+    },
+    baseBuilder: {
+      builderAddress: APP_BUILDER_ADDRESS,
     },
   };
 }
