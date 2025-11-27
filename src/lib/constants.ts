@@ -89,9 +89,9 @@ export const APP_BUILDER_ADDRESS: string =
 export const APP_ACCOUNT_ASSOCIATION: AccountAssociation | undefined = {
   header:
     "eyJmaWQiOjMxNzI2MSwidHlwZSI6ImF1dGgiLCJrZXkiOiIweDQ5ZWUzMjNFYTFCYjY1RjY4RkE3NWRmMGM2RDQ0MWQyMGQ4M0E4Q2QifQ",
-  payload: "eyJkb21haW4iOiJodHRwczovL2ZhcnN0YXRlLnZlcmNlbC5hcHAvIn0",
+  payload: "eyJkb21haW4iOiJmYXJzdGF0ZS52ZXJjZWwuYXBwIn0",
   signature:
-    "JTdApUfErlvZkYVL8Aw2ot3jN9KU97LMtPW0biJTDnQDS/4TkVNnz13f3trgIGj9oYWKZO0fuswwpLumxRWQrxs=",
+    "TAFouFoy5C5A5APwUo+lvqNqvNj/RuSC9DCZ2eeFAwZgbQwABnOPl9+WcoYE4Z0PvC0ycFEJxYQQdidCGZwL5hw=",
 };
 // --- UI Configuration ---
 /**
