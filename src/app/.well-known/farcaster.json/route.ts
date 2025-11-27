@@ -7,7 +7,7 @@ export async function GET() {
     const content = {
       ...config,
       baseBuilder: {
-        builderAddress: "0xB23955A49c9974a40e68717813a108002072a368",
+        ownerAddress: "0xB23955A49c9974a40e68717813a108002072a368",
       },
     };
     return NextResponse.json(content);
