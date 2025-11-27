@@ -57,6 +57,8 @@ export async function getFarcasterDomainManifest(): Promise<ManifestType> {
       splashImageUrl: APP_SPLASH_URL,
       splashBackgroundColor: APP_SPLASH_BACKGROUND_COLOR,
       webhookUrl: APP_WEBHOOK_URL,
+      primaryCategory: APP_PRIMARY_CATEGORY,
+      tags: APP_TAGS,
     },
   };
 }
