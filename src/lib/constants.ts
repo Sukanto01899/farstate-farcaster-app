@@ -76,11 +76,6 @@ export const APP_SPLASH_URL: string = `${APP_URL}/splash.png`;
  */
 export const APP_SPLASH_BACKGROUND_COLOR: string = "#fafaff";
 
-// Builder address
-
-export const APP_BUILDER_ADDRESS: string =
-  "0xB23955A49c9974a40e68717813a108002072a368";
-
 /**
  * Account association for the mini app.
  * Used to associate the mini app with a Farcaster account.
