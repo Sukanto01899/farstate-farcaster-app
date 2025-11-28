@@ -1,8 +1,6 @@
 "use client";
 
-import ProfileCard from "../Home/ProfileCard";
-import UserDetails from "../Home/UserDetails";
-import UserWallet from "../Home/UserWallet";
+import FarcasterProfile from "../Home/FarcasterProfile";
 
 /**
  * HomeTab component displays the main landing content for the mini app.
@@ -18,10 +16,8 @@ import UserWallet from "../Home/UserWallet";
  */
 export function HomeTab() {
   return (
-    <div className="flex flex-col space-y-4 items-center justify-center min-h-[calc(100vh-200px)]">
-      <ProfileCard />
-      <UserDetails />
-      <UserWallet />
+    <div className="space-y-4 animate-fadeIn">
+      <FarcasterProfile />
     </div>
   );
 }

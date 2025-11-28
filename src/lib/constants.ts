@@ -18,8 +18,6 @@ import { type AccountAssociation } from "@farcaster/miniapp-core/src/manifest";
  */
 export const APP_URL: string = process.env.NEXT_PUBLIC_URL!;
 
-console.log(APP_URL);
-
 /**
  * The name of the mini app as displayed to users.
  * Used in titles, headers, and app store listings.

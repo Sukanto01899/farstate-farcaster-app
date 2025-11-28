@@ -1,65 +1,48 @@
+import { Award, Gift, Home } from "lucide-react";
 import React from "react";
 import { Tab } from "~/components/App";
 
 interface FooterProps {
-  activeTab: Tab;
+  activeTab: string;
   setActiveTab: (tab: Tab) => void;
-  showWallet?: boolean;
 }
 
-export const Footer: React.FC<FooterProps> = ({
-  activeTab,
-  setActiveTab,
-  showWallet = true,
-}) => (
-  <div className="fixed bottom-0 left-0 right-0 mx-4 mb-4 bg-gray-100 dark:bg-gray-800 border-2 border-primary px-2 py-2 rounded-lg z-50">
-    <div className="flex justify-around items-center h-14">
+export const Footer: React.FC<FooterProps> = ({ activeTab, setActiveTab }) => (
+  <div className="fixed bottom-0 left-0 right-0 bg-slate-900 border-t border-slate-800 px-6 py-4 shadow-2xl">
+    <div className="flex justify-around items-center">
       <button
         onClick={() => setActiveTab(Tab.Home)}
-        className={`flex flex-col items-center justify-center w-full h-full ${
+        className={`flex flex-col items-center space-y-1 transition-all ${
           activeTab === Tab.Home
-            ? "text-primary dark:text-primary-light"
-            : "text-gray-500 dark:text-gray-400"
+            ? "text-purple-400 scale-110"
+            : "text-slate-500"
         }`}
       >
-        <span className="text-xl">🏠</span>
-        <span className="text-xs mt-1">Home</span>
+        <Home className="w-6 h-6" />
+        <span className="text-xs font-semibold">Home</span>
       </button>
       <button
-        // onClick={() => setActiveTab(Tab.Actions)}
-        className={`flex flex-col items-center justify-center w-full h-full ${
-          activeTab === Tab.Actions
-            ? "text-primary dark:text-primary-light"
-            : "text-gray-500 dark:text-gray-400"
+        onClick={() => setActiveTab(Tab.Earn)}
+        className={`flex flex-col items-center space-y-1 transition-all ${
+          activeTab === Tab.Earn
+            ? "text-purple-400 scale-110"
+            : "text-slate-500"
         }`}
       >
-        <span className="text-xl">⚡</span>
-        <span className="text-xs mt-1">Earn (coming)</span>
+        <Award className="w-6 h-6" />
+        <span className="text-xs font-semibold">Earn</span>
       </button>
       <button
-        // onClick={() => setActiveTab(Tab.Context)}
-        className={`flex flex-col items-center justify-center w-full h-full ${
-          activeTab === Tab.Context
-            ? "text-primary dark:text-primary-light"
-            : "text-gray-500 dark:text-gray-400"
+        onClick={() => setActiveTab(Tab.Airdrop)}
+        className={`flex flex-col items-center space-y-1 transition-all ${
+          activeTab === Tab.Airdrop
+            ? "text-purple-400 scale-110"
+            : "text-slate-500"
         }`}
       >
-        <span className="text-xl">📋</span>
-        <span className="text-xs mt-1">Profile (coming)</span>
+        <Gift className="w-6 h-6" />
+        <span className="text-xs font-semibold">Airdrop</span>
       </button>
-      {showWallet && (
-        <button
-          onClick={() => setActiveTab(Tab.Wallet)}
-          className={`flex flex-col items-center justify-center w-full h-full ${
-            activeTab === Tab.Wallet
-              ? "text-primary dark:text-primary-light"
-              : "text-gray-500 dark:text-gray-400"
-          }`}
-        >
-          <span className="text-xl">👛</span>
-          <span className="text-xs mt-1">Wallet</span>
-        </button>
-      )}
     </div>
   </div>
 );

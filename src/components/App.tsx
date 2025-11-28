@@ -11,14 +11,14 @@ import {
   WalletTab,
 } from "~/components/ui/tabs";
 import { USE_WALLET } from "~/lib/constants";
-import { useNeynarUser } from "../hooks/useNeynarUser";
+import LoadingPage from "./ui/LoadingPage";
+import { useNeynarUser } from "~/hooks/useNeynarUser";
 
 // --- Types ---
 export enum Tab {
   Home = "home",
-  Actions = "actions",
-  Context = "context",
-  Wallet = "wallet",
+  Earn = "earn",
+  Airdrop = "airdrop",
 }
 
 export interface AppProps {
@@ -58,11 +58,15 @@ export default function App(
   { title }: AppProps = { title: "Neynar Starter Kit" }
 ) {
   // --- Hooks ---
-  const { isSDKLoaded, context, setInitialTab, setActiveTab, currentTab } =
-    useMiniApp();
-
-  // --- Neynar user hook ---
-  const { user: neynarUser } = useNeynarUser(context || undefined);
+  const {
+    isSDKLoaded,
+    context,
+    setInitialTab,
+    setActiveTab,
+    currentTab,
+    actions,
+  } = useMiniApp();
+  const { loading } = useNeynarUser(context || undefined);
 
   // --- Effects ---
   /**
@@ -75,19 +79,13 @@ export default function App(
   useEffect(() => {
     if (isSDKLoaded) {
       setInitialTab(Tab.Home);
+      actions?.addMiniApp();
     }
-  }, [isSDKLoaded, setInitialTab]);
+  }, [isSDKLoaded, setInitialTab, actions]);
 
   // --- Early Returns ---
-  if (!isSDKLoaded) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="text-center">
-          <div className="spinner h-8 w-8 mx-auto mb-4"></div>
-          <p>Loading SDK...</p>
-        </div>
-      </div>
-    );
+  if (!isSDKLoaded || loading) {
+    return <LoadingPage />;
   }
 
   // --- Render ---
@@ -99,28 +97,18 @@ export default function App(
         paddingLeft: context?.client.safeAreaInsets?.left ?? 0,
         paddingRight: context?.client.safeAreaInsets?.right ?? 0,
       }}
+      className="min-h-screen bg-slate-950 pb-20"
     >
       {/* Header should be full width */}
-      {/* <Header neynarUser={neynarUser} /> */}
+      <Header />
 
-      {/* Main content and footer should be centered */}
-      <div className="container py-2 pb-20">
-        {/* Main title */}
-        {/* <h1 className="text-2xl font-bold text-center mb-4">{title}</h1> */}
-
-        {/* Tab content rendering */}
+      {/* Main Content */}
+      <div className="relative px-4 py-6">
         {currentTab === Tab.Home && <HomeTab />}
-        {/* {currentTab === Tab.Actions && <ActionsTab />}
-        {currentTab === Tab.Context && <ContextTab />}
-        {currentTab === Tab.Wallet && <WalletTab />} */}
-
-        {/* Footer with navigation */}
-        <Footer
-          activeTab={currentTab as Tab}
-          setActiveTab={setActiveTab}
-          showWallet={USE_WALLET}
-        />
       </div>
+
+      {/* Footer */}
+      <Footer activeTab={currentTab} setActiveTab={setActiveTab} />
     </div>
   );
 }

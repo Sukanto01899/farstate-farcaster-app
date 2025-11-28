@@ -1,77 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import { APP_NAME } from "~/lib/constants";
-import sdk from "@farcaster/miniapp-sdk";
-import { useMiniApp } from "@neynar/react";
-
-type HeaderProps = {
-  neynarUser?: {
-    fid: number;
-    score: number;
-  } | null;
-};
-
-export function Header({ neynarUser }: HeaderProps) {
-  const { context } = useMiniApp();
-  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
-
+export function Header() {
   return (
-    <div className="relative ">
-      <div className="mt-4 mb-4 mx-4 px-2 py-2 bg-gray-100/20 dark:bg-gray-800/20 backdrop-blur-md rounded-full flex items-center justify-between shadow-sm shadow-purple-300/20 border-2 border-primary">
-        <div className="text-lg font-light">
-          Welcome to <span className="text-primary font-bold">{APP_NAME}</span>!
-        </div>
-        {context?.user && (
-          <div
-            className="cursor-pointer"
-            onClick={() => {
-              setIsUserDropdownOpen(!isUserDropdownOpen);
-            }}
-          >
-            {context.user.pfpUrl && (
-              <img
-                src={context.user.pfpUrl}
-                alt="Profile"
-                className="w-10 h-10 rounded-full border-2 border-primary"
-              />
-            )}
+    <div className="relative bg-slate-900 border-b-2 border-purple-600 px-6 py-4 shadow-2xl">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-3">
+          <div className="w-10 h-10 bg-purple-600 rounded-lg overflow-hidden flex items-center justify-center">
+            <img src="/icon.png" alt="Farstate Logo" />
           </div>
-        )}
+          <div>
+            <h1 className="text-white text-xl font-bold">Farstate</h1>
+            <p className="text-slate-400 text-xs">Activity Tracker</p>
+          </div>
+        </div>
+        <div className="bg-purple-600 w-2 h-2 rounded-full animate-pulse"></div>
       </div>
-      {context?.user && (
-        <>
-          {isUserDropdownOpen && (
-            <div className="absolute top-full right-0 z-50 w-fit mt-1 mx-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
-              <div className="p-3 space-y-2">
-                <div className="text-right">
-                  <h3
-                    className="font-bold text-sm hover:underline cursor-pointer inline-block"
-                    onClick={() =>
-                      sdk.actions.viewProfile({ fid: context.user.fid })
-                    }
-                  >
-                    {context.user.displayName || context.user.username}
-                  </h3>
-                  <p className="text-xs text-gray-600 dark:text-gray-400">
-                    @{context.user.username}
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-500">
-                    FID: {context.user.fid}
-                  </p>
-                  {neynarUser && (
-                    <>
-                      <p className="text-xs text-gray-500 dark:text-gray-500">
-                        Neynar Score: {neynarUser.score}
-                      </p>
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
-          )}
-        </>
-      )}
     </div>
   );
 }
