@@ -1,0 +1,69 @@
+"use client";
+
+import { App } from "@/components/ui";
+import { useFrame } from "@/components/providers/farcaster-provider";
+import { SafeAreaContainer } from "@/components/providers/safe-area-container";
+import { Toaster } from "react-hot-toast";
+import LoadingPage from "./ui/LoadingPage";
+
+export default function Home() {
+  const { context, isLoading, isSDKLoaded } = useFrame();
+
+  if (isLoading) {
+    return (
+      <SafeAreaContainer insets={context?.client.safeAreaInsets}>
+        <LoadingPage />
+      </SafeAreaContainer>
+    );
+  }
+
+  if (!isSDKLoaded) {
+    return (
+      <SafeAreaContainer insets={context?.client.safeAreaInsets}>
+        <div className="flex min-h-screen flex-col items-center justify-center p-4 space-y-8">
+          <h1 className="text-3xl font-bold text-center">
+            No farcaster SDK found, please use this miniapp in the farcaster app
+          </h1>
+        </div>
+      </SafeAreaContainer>
+    );
+  }
+
+  // console.log(data);
+
+  return (
+    <SafeAreaContainer insets={context?.client.safeAreaInsets}>
+      <div className="min-h-screen bg-slate-950 pb-20">
+        <App />
+        <Toaster
+          position="top-center"
+          reverseOrder={false}
+          gutter={15}
+          containerClassName=""
+          containerStyle={{}}
+          toasterId="default"
+          toastOptions={{
+            // Define default options
+            className: "",
+            duration: 5000,
+            removeDelay: 1000,
+            style: {
+              background:
+                "linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(19, 19, 173, 1) 0%, rgba(7, 124, 227, 1) 100%)",
+              color: "#fff",
+            },
+
+            // Default options for specific types
+            success: {
+              duration: 3000,
+              iconTheme: {
+                primary: "green",
+                secondary: "black",
+              },
+            },
+          }}
+        />
+      </div>
+    </SafeAreaContainer>
+  );
+}
