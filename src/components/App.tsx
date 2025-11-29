@@ -54,7 +54,9 @@ export interface AppProps {
  * <App title="My Mini App" />
  * ```
  */
-export default function App() {
+export default function App(
+  { title }: AppProps = { title: "Neynar Starter Kit" }
+) {
   // --- Hooks ---
   const { isSDKLoaded, setInitialTab, setActiveTab, currentTab, actions } =
     useMiniApp();
