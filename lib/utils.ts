@@ -16,7 +16,7 @@ import {
 export function getMiniAppEmbedMetadata(ogImageUrl?: string) {
   return {
     version: "next",
-    imageUrl: ogImageUrl ?? APP_OG_IMAGE_URL,
+    imageUrl: ogImageUrl,
     ogTitle: APP_NAME,
     ogDescription: APP_DESCRIPTION,
     ogImageUrl: ogImageUrl ?? APP_OG_IMAGE_URL,
@@ -45,7 +45,7 @@ export async function getFarcasterDomainManifest() {
       homeUrl: APP_URL,
       iconUrl: APP_ICON_URL,
       imageUrl: APP_OG_IMAGE_URL,
-      buttonTitle: APP_BUTTON_TEXT ?? "Launch Mini App",
+      buttonTitle: "Check State",
       splashImageUrl: APP_SPLASH_URL,
       splashBackgroundColor: APP_SPLASH_BACKGROUND_COLOR,
       webhookUrl: APP_WEBHOOK_URL,

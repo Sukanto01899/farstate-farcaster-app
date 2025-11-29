@@ -14,6 +14,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { fid } = await params;
   const imageUrl = `${APP_URL}/api/opengraph-image?fid=${fid}`;
+  console.log(imageUrl);
 
   return {
     title: `${APP_NAME} - Share`,

@@ -10,6 +10,7 @@ import AirdropTab from "./tabs/Airdrop";
 import AnimatedBackground from "./AnimatedBackground";
 import { useNeynarUser } from "@/hooks/useNeynarUser";
 import { useNeynarUserActivity } from "@/hooks/useNeynerActivity";
+import AdminTab from "./tabs/Admin";
 
 export function App() {
   const { tab, actions, setTab, context } = useFrame();
@@ -31,6 +32,7 @@ export function App() {
         )}
         {tab === Tab.Earn && <EarnTab />}
         {tab === Tab.Airdrop && <AirdropTab />}
+        {tab === Tab.Admin && <AdminTab />}
       </div>
 
       <BottomMenu activeTab={tab} setActiveTab={setTab} />

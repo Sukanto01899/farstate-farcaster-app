@@ -51,8 +51,8 @@ export async function POST(request: NextRequest) {
         await setUserNotificationDetails(fid, event.notificationDetails);
         await sendFrameNotification({
           fid,
-          title: "Welcome to Base Spin",
-          body: "Spin and Win Lottery Prize",
+          title: "Welcome to Farstate",
+          body: "Track Farcaster info and Earn",
         });
       } else {
         await deleteUserNotificationDetails(fid);

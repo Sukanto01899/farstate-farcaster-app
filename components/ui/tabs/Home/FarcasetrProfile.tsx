@@ -5,6 +5,8 @@ import UserActivity from "./UserActivity";
 import { truncateAddress } from "@/lib/utils";
 import { useFrame } from "@/components/providers/farcaster-provider";
 import { UserActivityStats } from "@/hooks/useNeynerActivity";
+import { ShareCast } from "../../common/ShareCast";
+import { APP_URL } from "@/lib/constants";
 
 type FarcasterProfileProps = {
   neynarUser: NeynarUser | null;
@@ -20,7 +22,7 @@ const FarcasterProfile = ({
     <div>
       {/* Profile Card */}
       <div className="bg-slate-900 rounded-2xl p-4 border border-slate-800 shadow-xl">
-        <div className="flex items-center space-x-4 mb-6">
+        <div className="flex items-center space-x-4 mb-4">
           <div className="relative">
             <div className="w-20 h-20 bg-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
               <img
@@ -40,8 +42,24 @@ const FarcasterProfile = ({
               {context?.user?.displayName}
             </h2>
             <p className="text-slate-400 text-sm">{context?.user?.username}</p>
+            <p className="text-slate-400 text-xs">
+              FID:{" "}
+              <span className="text-purple-600 font-semibold">
+                {context?.user?.fid}
+              </span>
+            </p>
           </div>
         </div>
+
+        <ShareCast
+          buttonText="Share Your Score"
+          cast={{
+            text: `My Neynar Score is ${neynarUser?.score}. Check your score: 🚀`,
+            bestFriends: false,
+            embeds: [`${APP_URL}/share/${context?.user?.fid || ""}`],
+          }}
+          className="w-full bg-purple-500 rounded-2xl mb-4"
+        />
 
         {/* Stats Grid */}
         <div className="grid grid-cols-2 gap-3 mb-4">

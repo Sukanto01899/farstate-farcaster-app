@@ -1,6 +1,6 @@
-import { Award, Gift, Home } from "lucide-react";
+import { Award, Gift, Home, Shield } from "lucide-react";
 import React from "react";
-import { Tab } from "../providers/farcaster-provider";
+import { Tab, useFrame } from "../providers/farcaster-provider";
 
 interface FooterProps {
   activeTab: string;
@@ -10,42 +10,59 @@ interface FooterProps {
 export const BottomMenu: React.FC<FooterProps> = ({
   activeTab,
   setActiveTab,
-}) => (
-  <div className="fixed bottom-0 left-0 right-0 bg-slate-900 border-t border-slate-800 px-6 py-4 shadow-2xl">
-    <div className="flex justify-around items-center">
-      <button
-        onClick={() => setActiveTab(Tab.Home)}
-        className={`flex flex-col items-center space-y-1 transition-all ${
-          activeTab === Tab.Home
-            ? "text-purple-400 scale-110"
-            : "text-slate-500"
-        }`}
-      >
-        <Home className="w-6 h-6" />
-        <span className="text-xs font-semibold">Home</span>
-      </button>
-      <button
-        onClick={() => setActiveTab(Tab.Earn)}
-        className={`flex flex-col items-center space-y-1 transition-all ${
-          activeTab === Tab.Earn
-            ? "text-purple-400 scale-110"
-            : "text-slate-500"
-        }`}
-      >
-        <Award className="w-6 h-6" />
-        <span className="text-xs font-semibold">Earn</span>
-      </button>
-      <button
-        onClick={() => setActiveTab(Tab.Airdrop)}
-        className={`flex flex-col items-center space-y-1 transition-all ${
-          activeTab === Tab.Airdrop
-            ? "text-purple-400 scale-110"
-            : "text-slate-500"
-        }`}
-      >
-        <Gift className="w-6 h-6" />
-        <span className="text-xs font-semibold">Airdrop</span>
-      </button>
+}) => {
+  const { context } = useFrame();
+  return (
+    <div className="fixed bottom-0 left-0 right-0 bg-slate-900 border-t border-slate-800 px-6 py-4 shadow-2xl">
+      <div className="flex justify-around items-center">
+        <button
+          onClick={() => setActiveTab(Tab.Home)}
+          className={`flex flex-col items-center space-y-1 transition-all ${
+            activeTab === Tab.Home
+              ? "text-purple-400 scale-110"
+              : "text-slate-500"
+          }`}
+        >
+          <Home className="w-6 h-6" />
+          <span className="text-xs font-semibold">Home</span>
+        </button>
+        <button
+          onClick={() => setActiveTab(Tab.Earn)}
+          className={`flex flex-col items-center space-y-1 transition-all ${
+            activeTab === Tab.Earn
+              ? "text-purple-400 scale-110"
+              : "text-slate-500"
+          }`}
+        >
+          <Award className="w-6 h-6" />
+          <span className="text-xs font-semibold">Earn</span>
+        </button>
+        <button
+          onClick={() => setActiveTab(Tab.Airdrop)}
+          className={`flex flex-col items-center space-y-1 transition-all ${
+            activeTab === Tab.Airdrop
+              ? "text-purple-400 scale-110"
+              : "text-slate-500"
+          }`}
+        >
+          <Gift className="w-6 h-6" />
+          <span className="text-xs font-semibold">Airdrop</span>
+        </button>
+
+        {context?.user?.fid === 317261 && (
+          <button
+            onClick={() => setActiveTab(Tab.Admin)}
+            className={`flex flex-col items-center space-y-1 transition-all ${
+              activeTab === Tab.Admin
+                ? "text-purple-400 scale-110"
+                : "text-slate-500"
+            }`}
+          >
+            <Shield className="w-6 h-6" />
+            <span className="text-xs font-semibold">Admin</span>
+          </button>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};

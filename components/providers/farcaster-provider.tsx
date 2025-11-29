@@ -7,6 +7,7 @@ export enum Tab {
   Home = "home",
   Earn = "earn",
   Airdrop = "airdrop",
+  Admin = "admin",
 }
 
 interface FrameContextValue {

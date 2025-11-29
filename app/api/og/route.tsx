@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const username = searchParams.get("username") || "User";
+    const fid = searchParams.get("fid") || "User";
     const imageUrl =
       searchParams.get("image") ||
       "https://i.ibb.co/NdyfX1qx/Monad-Logo-Black-Logo-Mark.png";
