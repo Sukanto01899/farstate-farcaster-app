@@ -15,7 +15,7 @@ export function Button({
   size = "md",
   ...props
 }: ButtonProps) {
-  const baseClasses = "btn flex justify-center";
+  const baseClasses = "btn flex justify-center text-white";
 
   const variantClasses = {
     primary: "btn-primary",

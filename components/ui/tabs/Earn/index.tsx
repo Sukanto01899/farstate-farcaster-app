@@ -93,7 +93,7 @@ const EarnTab = () => {
     //     </div>
     //   </div>
     // </div>
-    <div className="text-center mt-4 text-lg">Earn Coming Soon</div>
+    <div className="text-center mt-4 text-lg text-white">Earn Coming Soon</div>
   );
 };
 

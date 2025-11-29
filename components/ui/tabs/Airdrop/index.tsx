@@ -64,7 +64,9 @@ const AirdropTab = () => {
     //     ))}
     //   </div>
     // </div>
-    <div className="text-center mt-4 text-lg">Airdrop Coming Soon</div>
+    <div className="text-center mt-4 text-lg text-white">
+      Airdrop Coming Soon
+    </div>
   );
 };
 
