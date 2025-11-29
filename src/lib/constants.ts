@@ -16,8 +16,7 @@ import { type AccountAssociation } from "@farcaster/miniapp-core/src/manifest";
  * The base URL of the application.
  * Used for generating absolute URLs for assets and API endpoints.
  */
-export const APP_URL: string =
-  "https://plaintiff-pentium-yarn-specials.trycloudflare.com";
+export const APP_URL: string = process.env.NEXT_PUBLIC_URL!;
 
 /**
  * The name of the mini app as displayed to users.
