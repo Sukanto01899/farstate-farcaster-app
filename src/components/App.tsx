@@ -66,7 +66,6 @@ export default function App(
     currentTab,
     actions,
   } = useMiniApp();
-  const { loading } = useNeynarUser(context || undefined);
 
   // --- Effects ---
   /**
@@ -84,7 +83,7 @@ export default function App(
   }, [isSDKLoaded, setInitialTab, actions]);
 
   // --- Early Returns ---
-  if (!isSDKLoaded || loading) {
+  if (!isSDKLoaded) {
     return <LoadingPage />;
   }
 

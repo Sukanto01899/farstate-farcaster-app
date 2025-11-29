@@ -4,21 +4,13 @@ import {
   verifyAppKeyWithNeynar,
 } from "@farcaster/miniapp-node";
 import { NextRequest } from "next/server";
-import { APP_NAME } from "~/lib/constants";
 import {
   deleteUserNotificationDetails,
   setUserNotificationDetails,
 } from "~/lib/kv";
-import { sendMiniAppNotification } from "~/lib/notifs";
+import { sendFrameNotification } from "~/lib/notifs";
 
 export async function POST(request: NextRequest) {
-  // If Neynar is enabled, we don't need to handle webhooks here
-  // as they will be handled by Neynar's webhook endpoint
-  const neynarEnabled = process.env.NEYNAR_API_KEY && process.env.NEYNAR_CLIENT_ID;
-  if (neynarEnabled) {
-    return Response.json({ success: true });
-  }
-
   const requestJson = await request.json();
 
   let data;
@@ -53,37 +45,36 @@ export async function POST(request: NextRequest) {
   const fid = data.fid;
   const event = data.event;
 
-  // Only handle notifications if Neynar is not enabled
-  // When Neynar is enabled, notifications are handled through their webhook
   switch (event.event) {
     case "miniapp_added":
       if (event.notificationDetails) {
         await setUserNotificationDetails(fid, event.notificationDetails);
-        await sendMiniAppNotification({
+        await sendFrameNotification({
           fid,
-          title: `Welcome to ${APP_NAME}`,
-          body: "Mini app is now added to your client",
+          title: "Welcome to Farstate",
+          body: "Check farcaster acivitty & Earn",
         });
       } else {
         await deleteUserNotificationDetails(fid);
       }
-      break;
 
-    case "miniapp_removed":
+      break;
+    case "miniapp_added":
       await deleteUserNotificationDetails(fid);
-      break;
 
+      break;
     case "notifications_enabled":
       await setUserNotificationDetails(fid, event.notificationDetails);
-      await sendMiniAppNotification({
+      await sendFrameNotification({
         fid,
-        title: `Welcome to ${APP_NAME}`,
-        body: "Notifications are now enabled",
+        title: "Great Job!",
+        body: "You are enabled notification!",
       });
-      break;
 
+      break;
     case "notifications_disabled":
       await deleteUserNotificationDetails(fid);
+
       break;
   }
 

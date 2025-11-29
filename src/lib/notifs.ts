@@ -2,10 +2,10 @@ import {
   SendNotificationRequest,
   sendNotificationResponseSchema,
 } from "@farcaster/miniapp-sdk";
-import { getUserNotificationDetails } from "~/lib/kv";
+import { getUserNotificationDetails } from "./kv";
 import { APP_URL } from "./constants";
 
-type SendMiniAppNotificationResult =
+type SendFrameNotificationResult =
   | {
       state: "error";
       error: unknown;
@@ -14,7 +14,7 @@ type SendMiniAppNotificationResult =
   | { state: "rate_limit" }
   | { state: "success" };
 
-export async function sendMiniAppNotification({
+export async function sendFrameNotification({
   fid,
   title,
   body,
@@ -22,8 +22,9 @@ export async function sendMiniAppNotification({
   fid: number;
   title: string;
   body: string;
-}): Promise<SendMiniAppNotificationResult> {
+}): Promise<SendFrameNotificationResult> {
   const notificationDetails = await getUserNotificationDetails(fid);
+
   if (!notificationDetails) {
     return { state: "no_token" };
   }
@@ -37,7 +38,7 @@ export async function sendMiniAppNotification({
       notificationId: crypto.randomUUID(),
       title,
       body,
-      targetUrl: APP_URL,
+      targetUrl: APP_URL || "",
       tokens: [notificationDetails.token],
     } satisfies SendNotificationRequest),
   });
