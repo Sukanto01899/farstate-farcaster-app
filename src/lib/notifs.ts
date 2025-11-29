@@ -3,7 +3,6 @@ import {
   sendNotificationResponseSchema,
 } from "@farcaster/miniapp-sdk";
 import { getUserNotificationDetails } from "./kv";
-import { APP_URL } from "./constants";
 
 type SendFrameNotificationResult =
   | {
@@ -38,7 +37,7 @@ export async function sendFrameNotification({
       notificationId: crypto.randomUUID(),
       title,
       body,
-      targetUrl: APP_URL || "",
+      targetUrl: "https://farstate.vercel.app",
       tokens: [notificationDetails.token],
     } satisfies SendNotificationRequest),
   });

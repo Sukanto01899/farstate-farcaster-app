@@ -26,7 +26,7 @@ async function sendNotificationBatch(
     notificationId,
     title,
     body,
-    targetUrl: "https://base-spin.vercel.app",
+    targetUrl: "https://farstate.vercel.app",
     tokens,
   };
 

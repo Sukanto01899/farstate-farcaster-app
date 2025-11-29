@@ -10,9 +10,9 @@ import {
   ContextTab,
   WalletTab,
 } from "~/components/ui/tabs";
-import { USE_WALLET } from "~/lib/constants";
 import LoadingPage from "./ui/LoadingPage";
-import { useNeynarUser } from "~/hooks/useNeynarUser";
+import { SafeAreaContainer } from "./safe-area-container";
+import { useQuery } from "@tanstack/react-query";
 
 // --- Types ---
 export enum Tab {
@@ -54,18 +54,10 @@ export interface AppProps {
  * <App title="My Mini App" />
  * ```
  */
-export default function App(
-  { title }: AppProps = { title: "Neynar Starter Kit" }
-) {
+export default function App() {
   // --- Hooks ---
-  const {
-    isSDKLoaded,
-    context,
-    setInitialTab,
-    setActiveTab,
-    currentTab,
-    actions,
-  } = useMiniApp();
+  const { isSDKLoaded, setInitialTab, setActiveTab, currentTab, actions } =
+    useMiniApp();
 
   // --- Effects ---
   /**
@@ -84,20 +76,16 @@ export default function App(
 
   // --- Early Returns ---
   if (!isSDKLoaded) {
-    return <LoadingPage />;
+    return (
+      <SafeAreaContainer>
+        <LoadingPage />
+      </SafeAreaContainer>
+    );
   }
 
   // --- Render ---
   return (
-    <div
-      style={{
-        paddingTop: context?.client.safeAreaInsets?.top ?? 0,
-        paddingBottom: context?.client.safeAreaInsets?.bottom ?? 0,
-        paddingLeft: context?.client.safeAreaInsets?.left ?? 0,
-        paddingRight: context?.client.safeAreaInsets?.right ?? 0,
-      }}
-      className="min-h-screen bg-slate-950 pb-20"
-    >
+    <SafeAreaContainer>
       {/* Header should be full width */}
       <Header />
 
@@ -108,6 +96,6 @@ export default function App(
 
       {/* Footer */}
       <Footer activeTab={currentTab} setActiveTab={setActiveTab} />
-    </div>
+    </SafeAreaContainer>
   );
 }
