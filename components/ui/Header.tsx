@@ -9,8 +9,10 @@ export function Header() {
             <img src="/icon.png" alt="Farstate Logo" />
           </div>
           <div>
-            <h1 className="text-white text-xl font-bold">Farstate</h1>
-            <p className="text-slate-400 text-xs">Activity Tracker</p>
+            <h1 className="text-white text-xl font-bold">Farstate Ai</h1>
+            <p className="text-slate-400 text-xs">
+              Activity Tracker & Ai Cast Generator
+            </p>
           </div>
         </div>
         <div className="bg-purple-600 w-2 h-2 rounded-full animate-pulse"></div>

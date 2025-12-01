@@ -1,28 +1,33 @@
-import { NeynarUser, useNeynarUser } from "@/hooks/useNeynarUser";
-import { Award, CheckCircle, LoaderIcon, TrendingUp, User } from "lucide-react";
+import { NeynarUser } from "@/hooks/useNeynarUser";
+import {
+  Award,
+  CheckCircle,
+  Loader,
+  LoaderIcon,
+  TrendingUp,
+} from "lucide-react";
 import React from "react";
-import UserActivity from "./UserActivity";
 import { truncateAddress } from "@/lib/utils";
 import { useFrame } from "@/components/providers/farcaster-provider";
-import { UserActivityStats } from "@/hooks/useNeynerActivity";
 import { ShareCast } from "../../common/ShareCast";
 import { APP_URL } from "@/lib/constants";
+import { useSendTransaction } from "wagmi";
+import { parseEther } from "viem";
 
 type FarcasterProfileProps = {
   neynarUser: NeynarUser | null;
-  userActivity: UserActivityStats | null;
 };
 
-const FarcasterProfile = ({
-  neynarUser,
-  userActivity,
-}: FarcasterProfileProps) => {
-  const { context } = useFrame();
+const FarcasterProfile = ({ neynarUser }: FarcasterProfileProps) => {
+  const { context, actions } = useFrame();
+  const { sendTransaction: supportDev, isPending: supportPending } =
+    useSendTransaction();
+  const { sendTransaction: sendGM, isPending: gmPending } =
+    useSendTransaction();
   return (
-    <div>
-      {/* Profile Card */}
-      <div className="bg-slate-900 rounded-2xl p-4 border border-slate-800 shadow-xl">
-        <div className="flex items-center space-x-4 mb-4">
+    <div className="bg-slate-900 rounded-2xl p-4 border border-slate-800 shadow-xl">
+      <div className="flex justify-between items-center mb-4">
+        <div className="flex items-center space-x-4">
           <div className="relative">
             <div className="w-20 h-20 bg-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
               <img
@@ -51,85 +56,116 @@ const FarcasterProfile = ({
           </div>
         </div>
 
-        <ShareCast
-          buttonText="Share Your Score"
-          cast={{
-            text: `My Neynar Score is ${neynarUser?.score}. Check your score: 🚀`,
-            bestFriends: false,
-            embeds: [`${APP_URL}/share/${context?.user?.fid || ""}`],
+        <button
+          onClick={() => {
+            sendGM({
+              to: "0x2000C13E94F45ba68ee3517aDbE6Ca382e6F0e20",
+              value: parseEther("0"),
+            });
           }}
-          className="w-full bg-purple-500 rounded-2xl mb-4"
-        />
+          className=" bg-purple-500/20 hover:bg-purple-500/50 ring-2 ring-purple-500 rounded-full p-3 text-lg text-white font-bold"
+        >
+          {gmPending ? <Loader className="h-5 w-5 animate-spin" /> : <i>GM</i>}
+        </button>
+      </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          <div className="bg-slate-800 rounded-xl p-4 border border-slate-700">
-            <p className="text-slate-400 text-xs mb-1">Followers</p>
-            <p className="text-white text-xl font-bold">
-              {neynarUser?.follower_count ? (
-                neynarUser.follower_count
+      {/* Neynar Score - Separate Highlighted Card */}
+      <div className="bg-purple-900 rounded-xl p-4 border-2 border-purple-600 mb-4 shadow-lg">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-purple-200 text-xs mb-1 flex items-center">
+              <TrendingUp className="w-3 h-3 mr-1" />
+              Neynar Score
+            </p>
+            <p className="text-white text-3xl font-bold">
+              {neynarUser?.score ? (
+                <i>{neynarUser.score}</i>
               ) : (
                 <LoaderIcon className="animate-spin" />
               )}
             </p>
           </div>
-          <div className="bg-slate-800 rounded-xl p-4 border border-slate-700">
-            <p className="text-slate-400 text-xs mb-1">Following</p>
-            <p className="text-white text-xl font-bold">
-              {neynarUser?.following_count ? (
-                neynarUser.following_count
-              ) : (
-                <LoaderIcon className="animate-spin" />
-              )}
+          <div className="bg-purple-800 rounded-full p-3">
+            <Award className="w-8 h-8 text-purple-300" />
+          </div>
+        </div>
+      </div>
+
+      <ShareCast
+        buttonText="Share Your Score"
+        cast={{
+          text: `My Neynar Score is ${neynarUser?.score}. Check your score: 🚀`,
+          bestFriends: false,
+          embeds: [`${APP_URL}/share/${context?.user?.fid || ""}`],
+        }}
+        className="w-full bg-purple-500 rounded-2xl mb-4"
+      />
+
+      {/* Stats Grid */}
+      <div className="grid grid-cols-2 gap-3 mb-4">
+        <div className="bg-slate-800 rounded-xl p-4 border border-slate-700">
+          <p className="text-slate-400 text-xs mb-1">Followers</p>
+          <p className="text-white text-xl font-bold">
+            {neynarUser?.follower_count ? (
+              neynarUser.follower_count
+            ) : (
+              <LoaderIcon className="animate-spin" />
+            )}
+          </p>
+        </div>
+        <div className="bg-slate-800 rounded-xl p-4 border border-slate-700">
+          <p className="text-slate-400 text-xs mb-1">Following</p>
+          <p className="text-white text-xl font-bold">
+            {neynarUser?.following_count ? (
+              neynarUser.following_count
+            ) : (
+              <LoaderIcon className="animate-spin" />
+            )}
+          </p>
+        </div>
+      </div>
+
+      {/* Wallet Address */}
+      <div className="bg-slate-800 rounded-xl p-4 border border-slate-700 mb-4">
+        <p className="text-slate-400 text-xs mb-1">Connected Wallet</p>
+
+        {neynarUser?.verified_addresses?.eth_addresses.map(
+          (address: string) => (
+            <p className="text-white text-sm font-bold" key={address}>
+              {truncateAddress(address)}
             </p>
-          </div>
-        </div>
+          )
+        )}
 
-        {/* Neynar Score - Separate Highlighted Card */}
-        <div className="bg-purple-900 rounded-xl p-4 border-2 border-purple-600 mb-4 shadow-lg">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-purple-200 text-xs mb-1 flex items-center">
-                <TrendingUp className="w-3 h-3 mr-1" />
-                Neynar Score
-              </p>
-              <p className="text-white text-3xl font-bold">
-                {neynarUser?.score ? (
-                  neynarUser.score
-                ) : (
-                  <LoaderIcon className="animate-spin" />
-                )}
-              </p>
-            </div>
-            <div className="bg-purple-800 rounded-full p-3">
-              <Award className="w-8 h-8 text-purple-300" />
-            </div>
-          </div>
-        </div>
+        {neynarUser?.verified_addresses?.sol_addresses.map(
+          (address: string) => (
+            <p className="text-white text-sm font-bold" key={address}>
+              {truncateAddress(address)}
+            </p>
+          )
+        )}
+      </div>
 
-        {/* Activity Stats */}
-        <UserActivity userActivity={userActivity} />
-
-        {/* Wallet Address */}
-        <div className="bg-slate-800 rounded-xl p-4 border border-slate-700 mb-4">
-          <p className="text-slate-400 text-xs mb-1">Connected Wallet</p>
-
-          {neynarUser?.verified_addresses?.eth_addresses.map(
-            (address: string) => (
-              <p className="text-white text-sm font-bold" key={address}>
-                {truncateAddress(address)}
-              </p>
-            )
-          )}
-
-          {neynarUser?.verified_addresses?.sol_addresses.map(
-            (address: string) => (
-              <p className="text-white text-sm font-bold" key={address}>
-                {truncateAddress(address)}
-              </p>
-            )
-          )}
-        </div>
+      <div className="flex justify-between items-center gap-2 ">
+        <button
+          onClick={() => {
+            supportDev({
+              to: "0x2000C13E94F45ba68ee3517aDbE6Ca382e6F0e20",
+              value: parseEther("0.0001"),
+            });
+          }}
+          className="w-full bg-purple-500 text-white py-2 rounded-2xl"
+        >
+          {supportPending ? "Loading..." : "Support Dev"}
+        </button>
+        <button
+          onClick={() => {
+            actions?.viewProfile({ fid: 317261 });
+          }}
+          className="w-full bg-purple-500 text-white py-2 rounded-2xl"
+        >
+          Follow Dev
+        </button>
       </div>
     </div>
   );

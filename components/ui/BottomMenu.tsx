@@ -1,4 +1,4 @@
-import { Award, Gift, Home, Shield } from "lucide-react";
+import { Award, Gift, Home, Shield, Wand2 } from "lucide-react";
 import React from "react";
 import { Tab, useFrame } from "../providers/farcaster-provider";
 
@@ -27,15 +27,15 @@ export const BottomMenu: React.FC<FooterProps> = ({
           <span className="text-xs font-semibold">Home</span>
         </button>
         <button
-          onClick={() => setActiveTab(Tab.Earn)}
+          onClick={() => setActiveTab(Tab.Create)}
           className={`flex flex-col items-center space-y-1 transition-all ${
-            activeTab === Tab.Earn
+            activeTab === Tab.Create
               ? "text-purple-400 scale-110"
               : "text-slate-500"
           }`}
         >
-          <Award className="w-6 h-6" />
-          <span className="text-xs font-semibold">Earn</span>
+          <Wand2 className="w-6 h-6" />
+          <span className="text-xs font-semibold">Create Cast</span>
         </button>
         <button
           onClick={() => setActiveTab(Tab.Airdrop)}

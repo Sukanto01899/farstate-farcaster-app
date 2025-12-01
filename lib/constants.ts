@@ -1,3 +1,12 @@
+import {
+  AwardIcon,
+  CheckCircle,
+  MessageSquare,
+  Sparkles,
+  TrendingUp,
+  Zap,
+} from "lucide-react";
+
 export const MESSAGE_EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 30; // 30 day
 
 export const APP_URL = process.env.NEXT_PUBLIC_URL;
@@ -63,9 +72,9 @@ export const notificationsBtn = [
   },
 ];
 
-export const APP_NAME = "Farstate";
+export const APP_NAME = "Farstate Ai";
 export const APP_DESCRIPTION =
-  "Farstate helps you track your Farcaster engagement metrics, wallet information, and token balances in one place, with detailed analytics and insights.";
+  "Farstate Ai helps you track your Farcaster engagement metrics, wallet information, and generate cast with Ai, with detailed analytics and insights.";
 export const APP_OG_IMAGE_URL = `${APP_URL}/feed.png`;
 export const APP_BUTTON_TEXT = "Check State";
 export const APP_SPLASH_URL = `${APP_URL}/splash.png`;
@@ -77,7 +86,7 @@ export const APP_TAGS = [
   "farcaster",
   "analytics",
   "reputation",
-  "profile",
+  "ai",
 ];
 export const APP_WEBHOOK_URL = `${APP_URL}/api/webhook`;
 export const APP_ACCOUNT_ASSOCIATION = {
@@ -87,3 +96,42 @@ export const APP_ACCOUNT_ASSOCIATION = {
   signature:
     "TAFouFoy5C5A5APwUo+lvqNqvNj/RuSC9DCZ2eeFAwZgbQwABnOPl9+WcoYE4Z0PvC0ycFEJxYQQdidCGZwL5hw=",
 };
+
+export const castCategories = [
+  {
+    id: 1,
+    name: "Tech News",
+    icon: Zap,
+    color: "bg-blue-900 border-blue-600",
+  },
+  {
+    id: 2,
+    name: "Crypto Updates",
+    icon: TrendingUp,
+    color: "bg-emerald-900 border-emerald-600",
+  },
+  {
+    id: 3,
+    name: "Motivational",
+    icon: AwardIcon,
+    color: "bg-amber-900 border-amber-600",
+  },
+  {
+    id: 4,
+    name: "Community",
+    icon: MessageSquare,
+    color: "bg-purple-900 border-purple-600",
+  },
+  {
+    id: 5,
+    name: "Meme",
+    icon: Sparkles,
+    color: "bg-pink-900 border-pink-600",
+  },
+  {
+    id: 6,
+    name: "Question",
+    icon: CheckCircle,
+    color: "bg-indigo-900 border-indigo-600",
+  },
+];

@@ -1,8 +1,4 @@
-import { useFrame } from "@/components/providers/farcaster-provider";
-import {
-  useNeynarUserActivity,
-  UserActivityStats,
-} from "@/hooks/useNeynerActivity";
+import { UserActivityStats } from "@/hooks/useNeynerActivity";
 import { LoaderIcon } from "lucide-react";
 import React from "react";
 
@@ -11,8 +7,6 @@ type UserActivityProps = {
 };
 
 const UserActivity = ({ userActivity }: UserActivityProps) => {
-  const { context } = useFrame();
-
   return (
     <div className="grid grid-cols-2 gap-3 mb-4">
       <div className="bg-slate-800 rounded-xl p-4 border border-slate-700">

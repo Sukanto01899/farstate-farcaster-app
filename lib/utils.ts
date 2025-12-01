@@ -41,7 +41,7 @@ export async function getFarcasterDomainManifest() {
     accountAssociation: APP_ACCOUNT_ASSOCIATION!,
     miniapp: {
       version: "1",
-      name: APP_NAME ?? "Farstate",
+      name: APP_NAME ?? "Farstate Ai",
       homeUrl: APP_URL,
       iconUrl: APP_ICON_URL,
       imageUrl: APP_OG_IMAGE_URL,

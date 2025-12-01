@@ -5,7 +5,7 @@ import { type ReactNode, createContext, useContext, useState } from "react";
 
 export enum Tab {
   Home = "home",
-  Earn = "earn",
+  Create = "create",
   Airdrop = "airdrop",
   Admin = "admin",
 }
@@ -43,14 +43,38 @@ export function FrameProvider({ children }: FrameProviderProps) {
   const farcasterContextQuery = useQuery({
     queryKey: ["farcaster-context"],
     queryFn: async () => {
-      const context = await sdk.context;
-      try {
-        await sdk.actions.ready();
-        return { context, isReady: true };
-      } catch (err) {
-        console.error("SDK initialization error:", err);
+      // Avoid getting stuck indefinitely waiting for SDK context/ready on slow webviews (eg. iOS).
+      // Race context resolution against a short timeout so the UI can render a helpful fallback.
+      const context = await Promise.race([
+        sdk.context,
+        new Promise<undefined>((resolve) =>
+          setTimeout(() => resolve(undefined), 3000)
+        ),
+      ] as const);
+
+      let isReady = false;
+      if (context) {
+        try {
+          // Some hosts may stall on actions.ready(), race it against a timeout too.
+          // actions.ready() resolves void on success — convert that to boolean true.
+          isReady = await Promise.race([
+            sdk.actions.ready().then(() => true),
+            new Promise<boolean>((resolve) =>
+              setTimeout(() => resolve(false), 3000)
+            ),
+          ] as const);
+        } catch (err) {
+          console.error("SDK initialization error:", err);
+          isReady = false;
+        }
+      } else {
+        // context was not available quickly — it may still resolve later; log for diagnostics.
+        console.warn(
+          "SDK context not available within timeout — running in fallback mode."
+        );
       }
-      return { context, isReady: false };
+
+      return { context, isReady };
     },
   });
 

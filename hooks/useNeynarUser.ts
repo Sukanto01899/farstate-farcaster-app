@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
 export interface NeynarUser {
@@ -18,6 +19,18 @@ export function useNeynarUser(context?: { user?: { fid?: number } }) {
   const [user, setUser] = useState<NeynarUser | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // const {} = useQuery({
+  //   queryKey: ["neynerUser", context?.user?.fid],
+  //   queryFn: async () => {
+  //     if (!context?.user?.fid) {
+  //       return;
+  //     }
+  //     const res = await fetch(`/api/users?fids=${context?.user.fid}`);
+  //     const data = await res.json();
+  //     return data?.users?.[0];
+  //   },
+  // });
 
   useEffect(() => {
     if (!context?.user?.fid) {

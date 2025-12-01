@@ -18,13 +18,12 @@ import { UserActivityStats } from "@/hooks/useNeynerActivity";
  */
 type HomeTabProps = {
   neynarUser: NeynarUser | null;
-  userActivity: UserActivityStats | null;
 };
 
-export function HomeTab({ neynarUser, userActivity }: HomeTabProps) {
+export function HomeTab({ neynarUser }: HomeTabProps) {
   return (
     <div className="space-y-4 animate-fadeIn">
-      <FarcasterProfile neynarUser={neynarUser} userActivity={userActivity} />
+      <FarcasterProfile neynarUser={neynarUser} />
     </div>
   );
 }

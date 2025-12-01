@@ -4,7 +4,6 @@ import { createClient, Errors } from "@farcaster/quick-auth";
 
 const client = createClient();
 
-// আপনার মিনি-অ্যাপের deployment domain এখানে দিন
 const DEPLOYMENT_DOMAIN = process.env.DOMAIN || "your-domain.com";
 
 export async function middleware(request: NextRequest) {
@@ -59,5 +58,5 @@ export async function middleware(request: NextRequest) {
 
 // middleware  route matcher
 export const config = {
-  matcher: ["/api/auth/signature/:path*"], // PROTECT all /api/auth/* routes
+  matcher: ["/api/auth/signature/:path*", "/api/create-cast"], // PROTECT all /api/auth/* routes
 };

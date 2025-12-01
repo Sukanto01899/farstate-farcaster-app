@@ -54,13 +54,13 @@ const LoadingPage = () => {
 
         {/* App Name */}
         <h1 className="text-white text-4xl font-bold mb-2 animate-slideIn">
-          Farstate
+          Farstate Ai
         </h1>
         <p
           className="text-slate-400 text-sm mb-8 animate-slideIn"
           style={{ animationDelay: "0.2s" }}
         >
-          Your Farcaster Activity Hub
+          Farcaster Activity Hub & Ai Cast Generator
         </p>
 
         {/* Loading dots */}
