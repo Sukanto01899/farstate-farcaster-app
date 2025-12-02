@@ -5,7 +5,7 @@ export interface NeynarUser {
   fid: number;
   score: number;
   pro: {
-    state: string;
+    status: string;
   };
   follower_count: number;
   following_count: number;

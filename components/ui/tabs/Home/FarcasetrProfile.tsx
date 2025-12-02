@@ -36,7 +36,7 @@ const FarcasterProfile = ({ neynarUser }: FarcasterProfileProps) => {
                 className="w-20 h-20 rounded-full"
               />
             </div>
-            {neynarUser?.pro.state == "subscriber" && (
+            {neynarUser?.pro?.status == "subscribed" && (
               <div className="absolute -bottom-1 -right-1 bg-green-500 rounded-full p-1 shadow-lg">
                 <CheckCircle className="w-4 h-4 text-white" />
               </div>
