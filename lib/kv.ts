@@ -9,7 +9,7 @@ export const redis = new Redis({
 const KEY_PREFIX = "notification:";
 
 function getUserNotificationDetailsKey(fid: number): string {
-  return `${fid}`;
+  return `${KEY_PREFIX}${fid}`;
 }
 
 export async function getUserNotificationDetails(
