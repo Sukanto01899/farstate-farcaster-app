@@ -2,13 +2,15 @@ import { NeynarUser } from "@/hooks/useNeynarUser";
 import {
   Award,
   CheckCircle,
+  FireExtinguisher,
+  Gift,
   Loader,
   LoaderIcon,
   TrendingUp,
 } from "lucide-react";
 import React from "react";
 import { truncateAddress } from "@/lib/utils";
-import { useFrame } from "@/components/providers/farcaster-provider";
+import { Tab, useFrame } from "@/components/providers/farcaster-provider";
 import { ShareCast } from "../../common/ShareCast";
 import { APP_URL } from "@/lib/constants";
 import { useSendTransaction } from "wagmi";
@@ -19,7 +21,7 @@ type FarcasterProfileProps = {
 };
 
 const FarcasterProfile = ({ neynarUser }: FarcasterProfileProps) => {
-  const { context, actions } = useFrame();
+  const { context, actions, setTab } = useFrame();
   const { sendTransaction: supportDev, isPending: supportPending } =
     useSendTransaction();
   const { sendTransaction: sendGM, isPending: gmPending } =
@@ -59,7 +61,7 @@ const FarcasterProfile = ({ neynarUser }: FarcasterProfileProps) => {
         <button
           onClick={() => {
             sendGM({
-              to: "0x2000C13E94F45ba68ee3517aDbE6Ca382e6F0e20",
+              to: "0x49ee323Ea1Bb65F68FA75df0c6D441d20d83A8Cd",
               value: parseEther("0"),
             });
           }}
@@ -150,7 +152,7 @@ const FarcasterProfile = ({ neynarUser }: FarcasterProfileProps) => {
         <button
           onClick={() => {
             supportDev({
-              to: "0x2000C13E94F45ba68ee3517aDbE6Ca382e6F0e20",
+              to: "0x49ee323Ea1Bb65F68FA75df0c6D441d20d83A8Cd",
               value: parseEther("0.0001"),
             });
           }}
@@ -166,6 +168,14 @@ const FarcasterProfile = ({ neynarUser }: FarcasterProfileProps) => {
         >
           Follow Dev
         </button>
+      </div>
+
+      {/* Marketing  */}
+      <div
+        onClick={() => setTab(Tab.Analysis)}
+        className="fixed shadow-md animate-pulse cursor-pointer flex justify-center items-center bg-gradient bg-gradient-to-tr from-purple-900 via-purple-700 to-purple-500 h-12 w-12 rounded-full right-4 bottom-24"
+      >
+        <Gift />
       </div>
     </div>
   );

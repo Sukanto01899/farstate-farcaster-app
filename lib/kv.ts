@@ -43,7 +43,9 @@ export async function getUsersNotificationDetails(): Promise<
     }
   } while (cursor !== "0");
 
-  return allUsers;
+  const filterUser = allUsers.filter((u) => typeof u?.url === "string");
+
+  return filterUser;
 }
 
 export async function setUserNotificationDetails(

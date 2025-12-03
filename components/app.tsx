@@ -33,7 +33,7 @@ export default function Home() {
 
   return (
     <SafeAreaContainer insets={context?.client.safeAreaInsets}>
-      <div className="min-h-screen bg-slate-950 pb-20">
+      <div className="bg-slate-950  pb-20">
         <App />
         <Toaster
           position="top-center"

@@ -26,7 +26,7 @@ async function sendNotificationBatch(
     notificationId,
     title,
     body,
-    targetUrl: "https://base-spin.vercel.app",
+    targetUrl: "https://farstate.vercel.app",
     tokens,
   };
 
@@ -77,6 +77,7 @@ export async function POST(request: NextRequest) {
   }
 
   const allKeys = await getUsersNotificationDetails();
+
   const notificationId = `broadcast-${Date.now()}`;
 
   // Create batches

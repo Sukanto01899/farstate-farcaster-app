@@ -42,9 +42,7 @@ const SelectCategory = ({
               className={`${
                 category.color
               } border rounded-lg p-2 transition-all hover:scale-105 flex-shrink-0 min-w-[110px] ${
-                selectedCategory === category.name
-                  ? "ring-2 ring-purple-400 "
-                  : ""
+                selectedCategory === category.name ? "bg-purple-900 " : ""
               }`}
             >
               <category.icon className="w-5 h-5 text-white mx-auto mb-1" />
@@ -57,8 +55,8 @@ const SelectCategory = ({
         <button
           onClick={() => handleCustomCommandShow()}
           className={`${
-            showCustomCommandInput && "ring-2 ring-purple-400"
-          } border rounded-lg p-2 transition-all hover:scale-105 flex-shrink-0 min-w-[110px] `}
+            showCustomCommandInput && "bg-purple-900"
+          } border border-purple-600 rounded-lg p-2 transition-all hover:scale-105 flex-shrink-0 min-w-[110px] `}
         >
           <Edit className="w-5 h-5 text-white mx-auto mb-1" />
           <p className="text-white text-xs font-semibold text-center">Custom</p>

@@ -6,7 +6,7 @@ import { type ReactNode, createContext, useContext, useState } from "react";
 export enum Tab {
   Home = "home",
   Create = "create",
-  Airdrop = "airdrop",
+  Analysis = "Analysis",
   Admin = "admin",
 }
 

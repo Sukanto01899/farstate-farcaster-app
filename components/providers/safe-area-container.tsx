@@ -5,7 +5,7 @@ interface SafeAreaContainerProps {
   insets?: SafeAreaInsets;
 }
 
-const background = "#1E90FF";
+const background = "#020617";
 
 export const SafeAreaContainer = ({
   children,

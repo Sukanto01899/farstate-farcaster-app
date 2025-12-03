@@ -23,7 +23,7 @@ export async function middleware(request: NextRequest) {
       domain: DEPLOYMENT_DOMAIN,
     });
     // payload.sub = user FID
-    console.log("Authenticated FID:", payload);
+    // console.log("Authenticated FID:", payload);
 
     if (!payload.sub) {
       return NextResponse.json(
@@ -58,5 +58,9 @@ export async function middleware(request: NextRequest) {
 
 // middleware  route matcher
 export const config = {
-  matcher: ["/api/auth/signature/:path*", "/api/create-cast"], // PROTECT all /api/auth/* routes
+  matcher: [
+    "/api/auth/signature/:path*",
+    "/api/create-cast",
+    "/api/signature/drop",
+  ], // PROTECT all /api/auth/* routes
 };

@@ -5,12 +5,11 @@ import { useEffect } from "react";
 import { Header } from "./Header";
 import { HomeTab } from "./tabs/Home";
 import { BottomMenu } from "./BottomMenu";
-import AirdropTab from "./tabs/Airdrop";
 import AnimatedBackground from "./AnimatedBackground";
 import { useNeynarUser } from "@/hooks/useNeynarUser";
-import { useNeynarUserActivity } from "@/hooks/useNeynerActivity";
 import AdminTab from "./tabs/Admin";
 import CreateTab from "./tabs/Create";
+import Analysis from "./tabs/Rewards";
 
 export function App() {
   const { tab, actions, setTab, context } = useFrame();
@@ -30,7 +29,7 @@ export function App() {
       <div className="relative px-4 pb-6 pt-20">
         {tab === Tab.Home && <HomeTab neynarUser={neynarUser} />}
         {tab === Tab.Create && <CreateTab />}
-        {tab === Tab.Airdrop && <AirdropTab />}
+        {tab === Tab.Analysis && <Analysis />}
         {tab === Tab.Admin && <AdminTab />}
       </div>
 

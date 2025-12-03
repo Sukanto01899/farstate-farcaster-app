@@ -1,28 +1,28 @@
 import App from "@/components/app";
-import { APP_URL } from "@/lib/constants";
+import { APP_URL, APP_SPLASH_BACKGROUND_COLOR } from "@/lib/constants";
 import type { Metadata } from "next";
 
 const frame = {
   version: "next",
   imageUrl: `${APP_URL}/feed.png`,
   button: {
-    title: "Play",
+    title: "Check State",
     action: {
       type: "launch_frame",
-      name: "Base Spin",
+      name: "Farstate Ai",
       url: APP_URL,
       splashImageUrl: `${APP_URL}/splash.png`,
-      splashBackgroundColor: "#1E90FF",
+      splashBackgroundColor: APP_SPLASH_BACKGROUND_COLOR || "#1E90FF",
     },
   },
 };
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: "Base Spin",
+    title: "Farstate Ai",
     openGraph: {
-      title: "Base Spin Farcaster MiniGame",
-      description: "A base ecosystem mini game for fun and earn!",
+      title: "Farstate Ai Farcaster Activity Checker",
+      description: "A base ecosystem mini game for check status and earn!",
     },
     other: {
       "fc:frame": JSON.stringify(frame),

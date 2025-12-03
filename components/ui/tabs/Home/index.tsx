@@ -22,7 +22,7 @@ type HomeTabProps = {
 
 export function HomeTab({ neynarUser }: HomeTabProps) {
   return (
-    <div className="space-y-4 animate-fadeIn">
+    <div className="space-y-4 animate-fadeIn relative">
       <FarcasterProfile neynarUser={neynarUser} />
     </div>
   );

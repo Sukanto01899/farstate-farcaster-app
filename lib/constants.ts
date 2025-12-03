@@ -15,63 +15,6 @@ if (!APP_URL) {
   throw new Error("NEXT_PUBLIC_URL or NEXT_PUBLIC_VERCEL_URL is not set");
 }
 
-export const notificationsBtn = [
-  {
-    id: 1,
-    name: "Draw Started",
-    title: "🎉 New Draw started",
-    body: "Join now to win big rewards 💰!",
-  },
-  {
-    id: 2,
-    name: "Winner Selected",
-    title: "🏆 Lottery Winners selected!",
-    body: "Check and claim rewards from lottery tab 🥇!",
-  },
-  {
-    id: 3,
-    name: "Giveaway Started",
-    title: "🎉 Claim your prize now!",
-    body: "FCFS giveaway started. Open app and claim now ⚡!",
-  },
-  {
-    id: 4,
-    name: "Daily spin",
-    title: "🎡 You forgot to spin!",
-    body: "Open app and claim daily free spin ⚡!",
-  },
-  {
-    id: 5,
-    name: "Mint NFT",
-    title: "🎉 MINT your Warplet Monster!",
-    body: "Get Exclusive rewards and utilities for Holder ⚡!",
-  },
-  {
-    id: 6,
-    name: "Unclaimed",
-    title: "🎗️ Unclaimed rewards reminder!",
-    body: "Open app and check for any unclaimed rewards ⚡!",
-  },
-  {
-    id: 7,
-    name: "Invite started",
-    title: "🎉 Invite & Earn rewards!",
-    body: "Invite your friends & earn more BXP ⚡!",
-  },
-  {
-    id: 8,
-    name: "Draw ending",
-    title: "🚩 Draw is ending soon!",
-    body: "Hurry up and participate before end! 🏃‍➡️",
-  },
-  {
-    id: 8,
-    name: "Weekly Airdrop",
-    title: "✔️ Check Airdrop Eligibility!",
-    body: "Weekly airdrop program enabled, check now! ✨",
-  },
-];
-
 export const APP_NAME = "Farstate Ai";
 export const APP_DESCRIPTION =
   "Farstate Ai helps you track your Farcaster engagement metrics, wallet information, and generate cast with Ai, with detailed analytics and insights.";
@@ -102,36 +45,84 @@ export const castCategories = [
     id: 1,
     name: "Tech News",
     icon: Zap,
-    color: "bg-blue-900 border-blue-600",
+    color: "border-purple-600",
   },
   {
     id: 2,
     name: "Crypto Updates",
     icon: TrendingUp,
-    color: "bg-emerald-900 border-emerald-600",
+    color: "border-purple-600",
   },
   {
     id: 3,
     name: "Motivational",
     icon: AwardIcon,
-    color: "bg-amber-900 border-amber-600",
+    color: "border-purple-600",
   },
   {
     id: 4,
     name: "Community",
     icon: MessageSquare,
-    color: "bg-purple-900 border-purple-600",
+    color: "border-purple-600",
   },
   {
     id: 5,
     name: "Meme",
     icon: Sparkles,
-    color: "bg-pink-900 border-pink-600",
+    color: "border-purple-600",
   },
   {
     id: 6,
     name: "Question",
     icon: CheckCircle,
-    color: "bg-indigo-900 border-indigo-600",
+    color: "border-purple-600",
   },
 ];
+
+export const notificationsBtn = [
+  {
+    id: 1,
+    name: "Score Check",
+    title: "🎉 Check you Neyner score today.",
+    body: "Open Farstate Ai & Check your Neyner score!",
+  },
+  {
+    id: 2,
+    name: "Daily Cast",
+    title: "🏆 Make cast with Ai today!",
+    body: "Generate cast wih Ai and Cast it instant  🥇!",
+  },
+  {
+    id: 3,
+    name: "Increase score?",
+    title: "How to increase Neyner score?",
+    body: "FCFS giveaway started. Open app and claim now ⚡!",
+  },
+  {
+    id: 4,
+    name: "Rewards",
+    title: "💰 Claim your rewards!",
+    body: "Farstate Exclusive rewards claiming started ⚡!",
+  },
+];
+
+import { defineChain } from "viem";
+
+export const Monad = defineChain({
+  id: 143,
+  name: "Monad",
+  nativeCurrency: {
+    decimals: 18,
+    name: "Monad",
+    symbol: "MON",
+  },
+  rpcUrls: {
+    default: {
+      http: ["https://rpc.monad.xyz"],
+      webSocket: ["wss://rpc.monad.xyz"],
+    },
+  },
+  blockExplorers: {
+    default: { name: "Explorer", url: "https://monadscan.com" },
+  },
+});
