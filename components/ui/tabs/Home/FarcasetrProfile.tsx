@@ -2,7 +2,6 @@ import { NeynarUser } from "@/hooks/useNeynarUser";
 import {
   Award,
   CheckCircle,
-  FireExtinguisher,
   Gift,
   Loader,
   LoaderIcon,
@@ -13,8 +12,15 @@ import { truncateAddress } from "@/lib/utils";
 import { Tab, useFrame } from "@/components/providers/farcaster-provider";
 import { ShareCast } from "../../common/ShareCast";
 import { APP_URL } from "@/lib/constants";
-import { useSendTransaction } from "wagmi";
+import {
+  useAccount,
+  useConnect,
+  useSendTransaction,
+  useSwitchChain,
+} from "wagmi";
 import { parseEther } from "viem";
+import { base } from "viem/chains";
+import { farcasterMiniApp as miniAppConnector } from "@farcaster/miniapp-wagmi-connector";
 
 type FarcasterProfileProps = {
   neynarUser: NeynarUser | null;
@@ -22,6 +28,9 @@ type FarcasterProfileProps = {
 
 const FarcasterProfile = ({ neynarUser }: FarcasterProfileProps) => {
   const { context, actions, setTab } = useFrame();
+  const { chainId, isConnected } = useAccount();
+  const { switchChainAsync } = useSwitchChain();
+  const { connectAsync } = useConnect();
   const { sendTransaction: supportDev, isPending: supportPending } =
     useSendTransaction();
   const { sendTransaction: sendGM, isPending: gmPending } =
@@ -59,7 +68,13 @@ const FarcasterProfile = ({ neynarUser }: FarcasterProfileProps) => {
         </div>
 
         <button
-          onClick={() => {
+          onClick={async () => {
+            if (!isConnected) {
+              await connectAsync({ connector: miniAppConnector() });
+            }
+            if (chainId !== base.id) {
+              await switchChainAsync({ chainId: base.id });
+            }
             sendGM({
               to: "0x49ee323Ea1Bb65F68FA75df0c6D441d20d83A8Cd",
               value: parseEther("0"),
@@ -150,7 +165,13 @@ const FarcasterProfile = ({ neynarUser }: FarcasterProfileProps) => {
 
       <div className="flex justify-between items-center gap-2 ">
         <button
-          onClick={() => {
+          onClick={async () => {
+            if (!isConnected) {
+              await connectAsync({ connector: miniAppConnector() });
+            }
+            if (chainId !== base.id) {
+              await switchChainAsync({ chainId: base.id });
+            }
             supportDev({
               to: "0x49ee323Ea1Bb65F68FA75df0c6D441d20d83A8Cd",
               value: parseEther("0.0001"),

@@ -19,8 +19,13 @@ const RewardsTab = () => {
         <MonDrop />
       </div>
 
-      <div>
-        <p className="text-white text-sm text-center">More Drop Coming!</p>
+      <div className="flex flex-col justify-center items-center">
+        <p className="text-white text-sm text-center">
+          More Big Drop Coming soon!
+        </p>
+        <p className="text-xs text-purple-300 mt-2">
+          More Active, More Rewards
+        </p>
       </div>
     </div>
   );
