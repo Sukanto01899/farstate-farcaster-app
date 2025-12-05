@@ -1,3 +1,5 @@
+import { Monad } from "@/lib/constants";
+
 export const abi = {
   MONDrop: {
     address: "0x55E6C140C0fd38b348cdb85DA2b67872ffB42FC5",
@@ -311,6 +313,6 @@ export const abi = {
         type: "receive",
       },
     ],
-    chain: "Monad",
+    chain: Monad,
   },
 } as const;

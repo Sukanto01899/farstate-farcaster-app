@@ -1,4 +1,3 @@
-import { Monad } from "@/lib/constants";
 import { quickAuth } from "@farcaster/miniapp-sdk";
 import { useMutation } from "@tanstack/react-query";
 import { Loader } from "lucide-react";
@@ -12,29 +11,43 @@ import {
   useTransactionReceipt,
   useWriteContract,
 } from "wagmi";
-import { abi } from "@/contracts/abi";
-import { useFrame } from "@/components/providers/farcaster-provider";
 import toast from "react-hot-toast";
 import ClaimBtn from "./ClaimBtn";
+import { DropType } from "./drop";
+import { useFrame } from "@/components/providers/farcaster-provider";
 
-const MonDrop = () => {
+const ExclusiveDrop = ({
+  title,
+  description,
+  contract,
+  isActive,
+  icon,
+  reward,
+  isUpcoming,
+}: DropType) => {
   const { context, actions } = useFrame();
   const { address } = useAccount();
+  const { address: contractAddress, abi } = contract;
 
   const {
     data: isClaimed,
     refetch: refetchIsClaimed,
     isLoading: isClaimedLoading,
   } = useReadContract({
-    address: abi.MONDrop.address,
-    abi: abi.MONDrop.abi,
+    address: contractAddress,
+    abi: abi,
     functionName: "claimedFid",
     args: context ? [BigInt(context?.user?.fid)] : undefined,
   });
   const { data: fidEpoch, isLoading: loadingFidEpoch } = useReadContract({
-    address: abi.MONDrop.address,
-    abi: abi.MONDrop.abi,
+    address: contractAddress,
+    abi: abi,
     functionName: "fidEpoch",
+  });
+  const { data: isPaused, isLoading: loadingIsPaused } = useReadContract({
+    address: contractAddress,
+    abi: abi,
+    functionName: "paused",
   });
 
   const { mutateAsync: getSignature, isPending: signaturePending } =
@@ -98,11 +111,11 @@ const MonDrop = () => {
       }
       await claimDrop(
         {
-          address: abi.MONDrop.address,
-          abi: abi.MONDrop.abi,
+          address: contractAddress,
+          abi: abi,
           functionName: "claimDrop",
           args: [BigInt(userFid), signature as `0x${string}`],
-          chainId: Monad.id,
+          chainId: contract.chain.id,
         },
         {
           onSuccess: () => {
@@ -136,51 +149,49 @@ const MonDrop = () => {
     <div className="bg-slate-900 rounded-2xl p-4 border border-slate-800 shadow-xl hover:border-purple-600 transition-all">
       <div className="flex items-start justify-between mb-3">
         <div className="flex-1">
-          <h3 className="text-white text-lg font-bold mb-1">
-            FCFS <span className="text-purple-500">$MON</span> Drop
-          </h3>
-          <p className="text-slate-400 text-sm">
-            Only for first 100 users (FCFS).
-          </p>
+          <h3 className="text-white text-lg font-bold mb-1">{title}</h3>
+          <p className="text-slate-400 text-sm">{description}</p>
         </div>
-        <img
-          src="https://monadvision.com/images/token/monad.svg"
-          alt=""
-          className="h-8 w-8"
-        />
+        <img src={icon} alt="" className="h-8 w-8 rounded-full" />
       </div>
 
       <div className="flex items-center justify-between">
         <div className="bg-slate-800 px-4 py-2 rounded-lg border border-slate-700">
-          <p className="text-amber-400 text-sm font-bold">1 MON</p>
+          <p className="text-amber-400 text-sm font-bold">{reward}</p>
         </div>
-        <ClaimBtn
-          chain={Monad}
-          disabled={txLoading || isClaimed || loadingFidEpoch}
-          onClick={handleClaimDrop}
-          className={`${
-            disableBtn ? "bg-purple-400" : "bg-purple-600 hover:bg-purple-700"
-          }  text-white px-6 py-2 rounded-xl text-sm font-semibold transition-all shadow-lg`}
-        >
-          {initialLoading ? (
-            <span className="flex items-center gap-2">
-              <Loader className="animate-spin" /> Checking...
-            </span>
-          ) : totalClaimed > 100 ? (
-            "All Claimed"
-          ) : isClaimed ? (
-            "You'r Claimed"
-          ) : txLoading ? (
-            <span className="flex items-center gap-2">
-              <Loader className="animate-spin" /> Claiming...
-            </span>
-          ) : (
-            "Claim Now"
-          )}
-        </ClaimBtn>
+        {isUpcoming ? (
+          <div className="text-blue-400 text-sm font-bold">Upcoming</div>
+        ) : isActive ? (
+          <ClaimBtn
+            chain={contract.chain}
+            disabled={txLoading || loadingFidEpoch}
+            onClick={handleClaimDrop}
+            className={`${
+              disableBtn ? "bg-purple-400" : "bg-purple-600 hover:bg-purple-700"
+            }  text-white px-6 py-2 rounded-xl text-sm font-semibold transition-all shadow-lg`}
+          >
+            {initialLoading ? (
+              <span className="flex items-center gap-2">
+                <Loader className="animate-spin" /> Checking...
+              </span>
+            ) : totalClaimed > 100 ? (
+              "All Claimed"
+            ) : isClaimed ? (
+              "You'r Claimed"
+            ) : txLoading ? (
+              <span className="flex items-center gap-2">
+                <Loader className="animate-spin" /> Claiming...
+              </span>
+            ) : (
+              "Claim Now"
+            )}
+          </ClaimBtn>
+        ) : (
+          <div className="text-red-400 text-sm font-bold">Ended</div>
+        )}
       </div>
     </div>
   );
 };
 
-export default MonDrop;
+export default ExclusiveDrop;

@@ -104,6 +104,12 @@ export const notificationsBtn = [
     title: "💰 Claim your rewards!",
     body: "Farstate Exclusive rewards claiming started ⚡!",
   },
+  {
+    id: 5,
+    name: "Upcoming Drop",
+    title: "💰 Are you ready for upcoming Drop?",
+    body: "New Exclusive ARB reward coming soon ⚡!",
+  },
 ];
 
 import { defineChain } from "viem";

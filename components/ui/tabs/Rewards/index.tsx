@@ -1,8 +1,13 @@
-import { Gift, Sparkles } from "lucide-react";
-import React from "react";
-import MonDrop from "./MonDrop";
+import { Gift } from "lucide-react";
+import React, { useState } from "react";
+import { drop } from "./drop";
+import ExclusiveDrop from "./ExclusiveDrop";
 
 const RewardsTab = () => {
+  const [isActiveTab, setActiveTab] = useState(true);
+  const activeDrop = drop.filter((d) => d.isActive);
+  const endedDrop = drop.filter((d) => !d.isActive);
+
   return (
     <div className="space-y-4 animate-fadeIn">
       <div className="bg-indigo-900 rounded-2xl p-2 border-2 border-indigo-600 shadow-xl">
@@ -15,8 +20,29 @@ const RewardsTab = () => {
         </div>
       </div>
 
+      <div className="flex items-center gap-4">
+        <button
+          className={`${
+            isActiveTab && "bg-slate-800"
+          }  px-4 py-2 rounded-lg border-slate-700 border  text-green-400 text-sm font-bold`}
+          onClick={() => setActiveTab(true)}
+        >
+          Active
+        </button>
+        <button
+          className={`${
+            !isActiveTab && "bg-slate-800"
+          }  px-4 py-2 rounded-lg border-slate-700 border  text-red-400 text-sm font-bold`}
+          onClick={() => setActiveTab(false)}
+        >
+          Ended
+        </button>
+      </div>
+
       <div className="space-y-4">
-        <MonDrop />
+        {isActiveTab
+          ? activeDrop.map((drop) => <ExclusiveDrop {...drop} />)
+          : endedDrop.map((drop) => <ExclusiveDrop {...drop} />)}
       </div>
 
       <div className="flex flex-col justify-center items-center">
