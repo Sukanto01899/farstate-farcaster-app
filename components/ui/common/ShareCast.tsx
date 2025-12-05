@@ -100,11 +100,13 @@ export function ShareCast({
         })
       );
 
-      console.log(processedEmbeds, finalText);
       // Open cast composer with all supported intents
       await actions?.composeCast({
         text: finalText,
-        embeds: processedEmbeds as [string] | [string, string] | undefined,
+        embeds: [
+          ...processedEmbeds,
+          "https://farcaster.xyz/miniapps/SpHID4BP6Z3b/farstate-ai",
+        ] as [string] | [string, string] | undefined,
         parent: cast.parent,
         channelKey: cast.channelKey,
         close: cast.close,

@@ -2,10 +2,14 @@ import { NeynarUser } from "@/hooks/useNeynarUser";
 import {
   Award,
   CheckCircle,
+  Code,
+  CoinsIcon,
   Gift,
   Loader,
   LoaderIcon,
+  Share,
   TrendingUp,
+  User,
 } from "lucide-react";
 import React from "react";
 import { truncateAddress } from "@/lib/utils";
@@ -113,9 +117,15 @@ const FarcasterProfile = ({ neynarUser }: FarcasterProfileProps) => {
         cast={{
           text: `My Neynar Score is ${neynarUser?.score}. Check your score: 🚀`,
           bestFriends: false,
-          embeds: [`${APP_URL}/share/${context?.user?.fid || ""}`],
+          embeds: [
+            {
+              url: `${APP_URL}/api/opengraph-image?fid=${
+                context?.user?.fid || ""
+              }`,
+            },
+          ],
         }}
-        className="w-full bg-purple-500 rounded-2xl mb-4"
+        className="w-full bg-purple-800 rounded-2xl mb-4"
       />
 
       {/* Stats Grid */}
@@ -166,37 +176,33 @@ const FarcasterProfile = ({ neynarUser }: FarcasterProfileProps) => {
       <div className="flex justify-between items-center gap-2 ">
         <button
           onClick={async () => {
-            if (!isConnected) {
-              await connectAsync({ connector: miniAppConnector() });
-            }
-            if (chainId !== base.id) {
-              await switchChainAsync({ chainId: base.id });
-            }
-            supportDev({
-              to: "0x49ee323Ea1Bb65F68FA75df0c6D441d20d83A8Cd",
-              value: parseEther("0.0001"),
+            actions?.sendToken({
+              token:
+                "eip155:8453/erc20:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+              recipientAddress: "0x49ee323Ea1Bb65F68FA75df0c6D441d20d83A8Cd",
+              amount: "1000000",
             });
           }}
-          className="w-full bg-purple-500 text-white py-2 rounded-2xl"
+          className="flex items-center justify-center gap-2 w-full bg-purple-800 text-white py-2 rounded-2xl"
         >
-          {supportPending ? "Loading..." : "Support Dev"}
+          Tip <CoinsIcon />
         </button>
         <button
           onClick={() => {
             actions?.viewProfile({ fid: 317261 });
           }}
-          className="w-full bg-purple-500 text-white py-2 rounded-2xl"
+          className="flex items-center justify-center gap-2 w-full bg-purple-800 text-white py-2 rounded-2xl"
         >
-          Follow Dev
+          Follow Dev <Code />
         </button>
       </div>
 
       {/* Marketing  */}
       <div
         onClick={() => setTab(Tab.Analysis)}
-        className="fixed shadow-md animate-pulse cursor-pointer flex justify-center items-center bg-gradient bg-gradient-to-tr from-purple-900 via-purple-700 to-purple-500 h-12 w-12 rounded-full right-4 bottom-24"
+        className="fixed  cursor-pointer flex justify-center items-center bg-gradient  right-4 bottom-24"
       >
-        <Gift />
+        <Gift className="w-14 h-14 font-bold -mt-4 text-orange-400 animate-bounce" />
       </div>
     </div>
   );

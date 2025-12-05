@@ -12,9 +12,9 @@ export async function GET(request: NextRequest) {
 
   return new ImageResponse(
     (
-      <div tw="flex h-full w-full flex-col justify-center items-center relative bg-primary">
+      <div tw="flex h-full w-full flex-col justify-center items-center relative bg-purple-900">
         {user?.pfp_url && (
-          <div tw="flex w-96 h-96 rounded-full overflow-hidden mb-8 border-8 border-white">
+          <div tw="flex w-80 h-80 rounded-full overflow-hidden mb-8 border-8 border-white">
             <img
               src={user.pfp_url}
               alt="Profile"
@@ -22,12 +22,12 @@ export async function GET(request: NextRequest) {
             />
           </div>
         )}
-        <h1 tw="text-8xl text-white">
-          {user?.display_name
-            ? `Hello from ${user.display_name ?? user.username}!`
-            : "Hello!"}
+
+        <h1 tw="text-7xl mt-4 text-white opacity-80">
+          My Neynar Score{" "}
+          <span tw="text-white font-bold ml-4 opacity-100"> {user?.score}</span>
         </h1>
-        <p tw="text-5xl mt-4 text-white opacity-80">Powered by Neynar 🪐</p>
+        <p tw="text-5xl mt-3 text-white opacity-80">Powered By Farstate Ai</p>
       </div>
     ),
     {

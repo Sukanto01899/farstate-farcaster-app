@@ -15,6 +15,8 @@ import toast from "react-hot-toast";
 import ClaimBtn from "./ClaimBtn";
 import { DropType } from "./drop";
 import { useFrame } from "@/components/providers/farcaster-provider";
+import useShareCast from "@/hooks/useShareCast";
+import { APP_URL } from "@/lib/constants";
 
 const ExclusiveDrop = ({
   title,
@@ -28,6 +30,7 @@ const ExclusiveDrop = ({
   const { context, actions } = useFrame();
   const { address } = useAccount();
   const { address: contractAddress, abi } = contract;
+  const { handleShare } = useShareCast();
 
   const {
     data: isClaimed,
@@ -90,15 +93,17 @@ const ExclusiveDrop = ({
   });
 
   //   Extra variable for state showing
-  const initialLoading = isClaimedLoading || loadingFidEpoch;
+  const initialLoading = isClaimedLoading || loadingFidEpoch || loadingIsPaused;
   const txLoading = signaturePending || claimPending;
   const totalClaimed = fidEpoch ? parseInt(fidEpoch.toString()) : 0;
   const disableBtn =
     signaturePending ||
     claimPending ||
-    isClaimed ||
-    totalClaimed > 100 ||
-    initialLoading;
+    !!isClaimed ||
+    totalClaimed >= 100 ||
+    initialLoading ||
+    txLoading ||
+    loadingFidEpoch;
 
   // Claim function
   const handleClaimDrop = async () => {
@@ -115,7 +120,6 @@ const ExclusiveDrop = ({
           abi: abi,
           functionName: "claimDrop",
           args: [BigInt(userFid), signature as `0x${string}`],
-          chainId: contract.chain.id,
         },
         {
           onSuccess: () => {
@@ -137,12 +141,19 @@ const ExclusiveDrop = ({
   }, [isTxConfirmed]);
 
   const handleAutoCast = () => {
-    actions?.composeCast({
-      text: `🎉 I just claimed 1 MON from the Farstate Ai Exclusive Drop! 🚀
+    handleShare(
+      {
+        text: `🎉 I just claimed ${reward} from the Farstate Ai Exclusive Drop! 🚀`,
+        embeds: [`${APP_URL}/share/${context?.user?.fid || ""}`],
+      },
+      true
+    );
+    // actions?.composeCast({
+    //   text: `🎉 I just claimed ${reward} from the Farstate Ai Exclusive Drop! 🚀
 
-    Claim Here 👇`,
-      embeds: ["https://farcaster.xyz/miniapps/SpHID4BP6Z3b/farstate-ai"],
-    });
+    // Claim Here 👇`,
+    //   embeds: ["https://farcaster.xyz/miniapps/SpHID4BP6Z3b/farstate-ai"],
+    // });
   };
 
   return (
@@ -160,11 +171,16 @@ const ExclusiveDrop = ({
           <p className="text-amber-400 text-sm font-bold">{reward}</p>
         </div>
         {isUpcoming ? (
-          <div className="text-blue-400 text-sm font-bold">Upcoming</div>
-        ) : isActive ? (
+          <div
+            onClick={handleAutoCast}
+            className="text-blue-400 text-sm font-bold"
+          >
+            Upcoming
+          </div>
+        ) : isActive || isPaused ? (
           <ClaimBtn
             chain={contract.chain}
-            disabled={txLoading || loadingFidEpoch}
+            disabled={disableBtn}
             onClick={handleClaimDrop}
             className={`${
               disableBtn ? "bg-purple-400" : "bg-purple-600 hover:bg-purple-700"

@@ -1,6 +1,6 @@
-import { useFrame } from "@/components/providers/farcaster-provider";
 import { CastData } from "@/hooks/useCreateCast";
-import { Image, Send } from "lucide-react";
+import useShareCast from "@/hooks/useShareCast";
+import { Image, Loader, Send } from "lucide-react";
 import React from "react";
 
 type PostCastProps = {
@@ -9,13 +9,11 @@ type PostCastProps = {
 };
 
 const PostCast = ({ castData, isCastCreating }: PostCastProps) => {
-  const { actions } = useFrame();
+  const { handleShare, isProcessing } = useShareCast();
 
   const handlePostCast = async () => {
     try {
-      actions?.composeCast({
-        text: castData?.cast,
-      });
+      await handleShare({ text: castData?.cast }, false);
     } catch (error) {
       console.log(error);
     }
@@ -64,8 +62,12 @@ const PostCast = ({ castData, isCastCreating }: PostCastProps) => {
                 onClick={handlePostCast}
                 className="bg-green-600 hover:bg-green-700 text-white text-sm font-semibold py-2.5 rounded-lg transition-all flex items-center justify-center space-x-1.5"
               >
-                <Send className="w-4 h-4" />
-                <span>Post Cast</span>
+                {isProcessing ? (
+                  <Loader className="w-4 h-4" />
+                ) : (
+                  <Send className="w-4 h-4" />
+                )}
+                <span>{isProcessing ? "Casting..." : "Post Cast"}</span>
               </button>
             </div>
           </>
