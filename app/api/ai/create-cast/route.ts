@@ -150,7 +150,7 @@ export async function POST(req: NextRequest) {
     }
 
     const aiData = await createCastWithAI(prompt);
-    // console.log(aiData);
+    console.log(aiData);
 
     if (!aiData) {
       return NextResponse.json(

@@ -5,9 +5,7 @@ import React, { useEffect } from "react";
 
 import {
   useAccount,
-  useConnect,
   useReadContract,
-  useSwitchChain,
   useTransactionReceipt,
   useWriteContract,
 } from "wagmi";
@@ -27,7 +25,7 @@ const ExclusiveDrop = ({
   reward,
   isUpcoming,
 }: DropType) => {
-  const { context, actions } = useFrame();
+  const { context } = useFrame();
   const { address } = useAccount();
   const { address: contractAddress, abi } = contract;
   const { handleShare } = useShareCast();
@@ -46,6 +44,11 @@ const ExclusiveDrop = ({
     address: contractAddress,
     abi: abi,
     functionName: "fidEpoch",
+  });
+  const { data: maxEpoch, isLoading: loadingMaxEpoch } = useReadContract({
+    address: contractAddress,
+    abi: abi,
+    functionName: "MAX_FIDEPOCH",
   });
   const { data: isPaused, isLoading: loadingIsPaused } = useReadContract({
     address: contractAddress,
@@ -93,14 +96,16 @@ const ExclusiveDrop = ({
   });
 
   //   Extra variable for state showing
-  const initialLoading = isClaimedLoading || loadingFidEpoch || loadingIsPaused;
+  const initialLoading =
+    isClaimedLoading || loadingFidEpoch || loadingIsPaused || loadingMaxEpoch;
   const txLoading = signaturePending || claimPending;
   const totalClaimed = fidEpoch ? parseInt(fidEpoch.toString()) : 0;
+  const maxClaimEpoch = maxEpoch ? parseInt(maxEpoch.toString()) : 0;
   const disableBtn =
     signaturePending ||
     claimPending ||
     !!isClaimed ||
-    totalClaimed >= 100 ||
+    totalClaimed >= maxClaimEpoch ||
     initialLoading ||
     txLoading ||
     loadingFidEpoch;
@@ -140,6 +145,8 @@ const ExclusiveDrop = ({
     }
   }, [isTxConfirmed]);
 
+  console.log("total claimed", fidEpoch);
+
   const handleAutoCast = () => {
     handleShare(
       {
@@ -148,12 +155,6 @@ const ExclusiveDrop = ({
       },
       true
     );
-    // actions?.composeCast({
-    //   text: `🎉 I just claimed ${reward} from the Farstate Ai Exclusive Drop! 🚀
-
-    // Claim Here 👇`,
-    //   embeds: ["https://farcaster.xyz/miniapps/SpHID4BP6Z3b/farstate-ai"],
-    // });
   };
 
   return (
@@ -190,7 +191,7 @@ const ExclusiveDrop = ({
               <span className="flex items-center gap-2">
                 <Loader className="animate-spin" /> Checking...
               </span>
-            ) : totalClaimed > 100 ? (
+            ) : totalClaimed >= maxClaimEpoch ? (
               "All Claimed"
             ) : isClaimed ? (
               "You'r Claimed"

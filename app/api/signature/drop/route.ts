@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const account = privateKeyToAccount(SERVER_PRIVATE_KEY as `0x${string}`);
-    const contractAddress = abi.ARBDrop.address; // Your contract address
+    const contractAddress = abi.OPDrop.address; // Your contract address
 
     // Create the message hash
     const structuredMessageHash = keccak256(

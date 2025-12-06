@@ -1,0 +1,80 @@
+// lib/limits.ts
+import { redis } from "./upstash";
+
+export const STANDARD_LIMIT = 3;
+export const SUB_LIMIT = 10;
+
+/** Return YYYY-MM-DD string for Asia/Dhaka (UTC+6) */
+export function currentDateDhaka(): string {
+  const now = new Date();
+  const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
+  const dhakaMs = utcMs + 6 * 60 * 60 * 1000;
+  const d = new Date(dhakaMs);
+  const yyyy = d.getUTCFullYear();
+  const mm = String(d.getUTCMonth() + 1).padStart(2, "0");
+  const dd = String(d.getUTCDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+/** Seconds until next midnight in Asia/Dhaka */
+export function secondsUntilDhakaMidnight(): number {
+  const now = new Date();
+  const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
+  const dhakaMs = utcMs + 6 * 60 * 60 * 1000;
+  const d = new Date(dhakaMs);
+  // Next midnight (Dhaka)
+  const next = Date.UTC(
+    d.getUTCFullYear(),
+    d.getUTCMonth(),
+    d.getUTCDate() + 1,
+    0,
+    0,
+    0
+  );
+  const seconds = Math.max(0, Math.floor((next - d.getTime()) / 1000));
+  return seconds;
+}
+
+/** Read rate counter */
+export async function getRateCount(
+  userId: string,
+  dateKey: string
+): Promise<number> {
+  const key = `rate:${userId}:${dateKey}`;
+  const v = await redis.get(key);
+  return v === null ? 0 : Number(v);
+}
+
+/** Increment rate counter and ensure TTL set to Dhaka midnight (expires at midnight) */
+export async function incrRateCount(
+  userId: string,
+  dateKey: string
+): Promise<number> {
+  const key = `rate:${userId}:${dateKey}`;
+  const newCount = await redis.incr(key);
+  // If this is the first increment, set expire to Dhaka midnight
+  if (newCount === 1) {
+    const ttl = secondsUntilDhakaMidnight();
+    // set expiration (Upstash SDK supports expire)
+    await redis.expire(key, ttl);
+  }
+  return newCount;
+}
+
+/** Store subscription: value should be JSON string or expiresAt number. We set TTL to durationSeconds */
+export async function setSubscription(
+  userId: string,
+  subValue: string,
+  durationSeconds: number
+) {
+  const key = `sub:${userId}`;
+  // set with TTL in seconds
+  await redis.set(key, subValue, { ex: durationSeconds });
+}
+
+/** Read subscription raw value (string) */
+export async function getSubscription(userId: string): Promise<string | null> {
+  const key = `sub:${userId}`;
+  const v = await redis.get(key);
+  return v === null ? null : String(v);
+}

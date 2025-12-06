@@ -1,7 +1,7 @@
 import { abi } from "@/contracts/abi";
 import { Monad } from "@/lib/constants";
 import { Abi } from "viem";
-import { arbitrum, Chain } from "viem/chains";
+import { arbitrum, Chain, optimism } from "viem/chains";
 
 export type DropType = {
   title: string;
@@ -16,24 +16,34 @@ export type DropType = {
 
 export const drop = [
   {
+    title: "Exclusive OP Drop",
+    description: "Early first 50 users (FCFS).",
+    contract: abi.OPDrop,
+    chain: optimism,
+    isActive: true,
+    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/11840.png",
+    reward: "0.1 OP",
+    isUpcoming: false,
+  },
+  {
+    title: "Exclusive USDC Drop",
+    description: "Early first 30 users (FCFS).",
+    contract: abi.OPDrop,
+    chain: optimism,
+    isActive: true,
+    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png",
+    reward: "0.05 USDC",
+    isUpcoming: true,
+  },
+  {
     title: "Exclusive ARB Drop",
     description: "Early first 100 users (FCFS).",
     contract: abi.ARBDrop,
     chain: arbitrum,
-    isActive: true,
+    isActive: false,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/11841.png",
     reward: "0.15 ARB",
     isUpcoming: false,
-  },
-  {
-    title: "Exclusive OP Drop",
-    description: "Early first 50 users (FCFS).",
-    contract: abi.ARBDrop,
-    chain: arbitrum,
-    isActive: true,
-    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/11840.png",
-    reward: "0.1 OP",
-    isUpcoming: true,
   },
   {
     title: "Exclusive MON Drop",

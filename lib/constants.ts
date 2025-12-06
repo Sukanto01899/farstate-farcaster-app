@@ -101,8 +101,8 @@ export const notificationsBtn = [
   {
     id: 4,
     name: "Rewards",
-    title: "💰 Claim ARB Drop now!",
-    body: "ARB Exclusive drop claiming started (FCFS)⚡!",
+    title: "💰 Claim OP Drop now!",
+    body: "OP Exclusive drop claiming started (FCFS)⚡!",
   },
   {
     id: 5,
