@@ -17,7 +17,7 @@ export type DropType = {
 export const drop = [
   {
     title: "Exclusive DEGEN Drop",
-    description: "Early first 500 users (FCFS).",
+    description: "Early first 500 users",
     contract: abi.DEGENDrop,
     chain: base,
     isActive: true,
@@ -27,7 +27,7 @@ export const drop = [
   },
   {
     title: "Exclusive OP Drop",
-    description: "Early first 50 users (FCFS).",
+    description: "Early first 50 users",
     contract: abi.OPDrop,
     chain: optimism,
     isActive: false,
@@ -37,7 +37,7 @@ export const drop = [
   },
   {
     title: "Exclusive USDC Drop",
-    description: "Early first 30 users (FCFS).",
+    description: "Early first 30 users",
     contract: abi.OPDrop,
     chain: optimism,
     isActive: true,
@@ -47,7 +47,7 @@ export const drop = [
   },
   {
     title: "Exclusive ARB Drop",
-    description: "Early first 100 users (FCFS).",
+    description: "Early first 100 users",
     contract: abi.ARBDrop,
     chain: arbitrum,
     isActive: false,
@@ -57,7 +57,7 @@ export const drop = [
   },
   {
     title: "Exclusive MON Drop",
-    description: "Only for first 100 users (FCFS).",
+    description: "Only for first 100 users",
     contract: abi.MONDrop,
     chain: Monad,
     isActive: false,

@@ -48,8 +48,7 @@ export default function Home() {
             duration: 5000,
             removeDelay: 1000,
             style: {
-              background:
-                "linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(19, 19, 173, 1) 0%, rgba(7, 124, 227, 1) 100%)",
+              background: "#cb6ce6",
               color: "#fff",
             },
 

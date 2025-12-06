@@ -167,7 +167,14 @@ const ExclusiveDrop = ({
               </span>
             )}
           </h3>
-          <p className="text-slate-400 text-sm">{description}</p>
+          <p className="text-slate-400 text-sm">
+            {description}{" "}
+            {isActive && !isUpcoming && (
+              <span className="text-xs text-purple-400 font-semibold">
+                ({totalClaimed}/{maxClaimEpoch})
+              </span>
+            )}
+          </p>
         </div>
         <img src={icon} alt="" className="h-8 w-8 rounded-full" />
       </div>

@@ -3,18 +3,14 @@ import {
   Award,
   CheckCircle,
   Code,
-  CoinsIcon,
-  Gift,
   Loader,
   LoaderIcon,
-  Share,
+  Share2,
   TrendingUp,
-  User,
 } from "lucide-react";
 import React from "react";
 import { truncateAddress } from "@/lib/utils";
 import { Tab, useFrame } from "@/components/providers/farcaster-provider";
-import { ShareCast } from "../../common/ShareCast";
 import { APP_URL } from "@/lib/constants";
 import {
   useAccount,
@@ -25,6 +21,8 @@ import {
 import { parseEther } from "viem";
 import { base } from "viem/chains";
 import { farcasterMiniApp as miniAppConnector } from "@farcaster/miniapp-wagmi-connector";
+import MintProfile from "./MintProfile";
+import useShareCast from "@/hooks/useShareCast";
 
 type FarcasterProfileProps = {
   neynarUser: NeynarUser | null;
@@ -35,10 +33,10 @@ const FarcasterProfile = ({ neynarUser }: FarcasterProfileProps) => {
   const { chainId, isConnected } = useAccount();
   const { switchChainAsync } = useSwitchChain();
   const { connectAsync } = useConnect();
-  const { sendTransaction: supportDev, isPending: supportPending } =
-    useSendTransaction();
   const { sendTransaction: sendGM, isPending: gmPending } =
     useSendTransaction();
+
+  const { handleShare } = useShareCast();
   return (
     <div className="bg-slate-900 rounded-2xl p-4 border border-slate-800 shadow-xl">
       <div className="flex justify-between items-center mb-4">
@@ -48,7 +46,7 @@ const FarcasterProfile = ({ neynarUser }: FarcasterProfileProps) => {
               <img
                 src={context?.user?.pfpUrl}
                 alt="Profile Avatar"
-                className="w-20 h-20 rounded-full"
+                className="w-20 h-20 rounded-full bg-center"
               />
             </div>
             {neynarUser?.pro?.status == "subscribed" && (
@@ -58,8 +56,9 @@ const FarcasterProfile = ({ neynarUser }: FarcasterProfileProps) => {
             )}
           </div>
           <div>
-            <h2 className="text-white text-xl font-bold">
-              {context?.user?.displayName}
+            <h2 className="text-white text-lg font-bold">
+              {context?.user?.displayName &&
+                context?.user?.displayName.split(" ")[0]}
             </h2>
             <p className="text-slate-400 text-sm">{context?.user?.username}</p>
             <p className="text-slate-400 text-xs">
@@ -112,21 +111,7 @@ const FarcasterProfile = ({ neynarUser }: FarcasterProfileProps) => {
         </div>
       </div>
 
-      <ShareCast
-        buttonText="Share Your Score"
-        cast={{
-          text: `My Neynar Score is ${neynarUser?.score}. Check your score: 🚀`,
-          bestFriends: false,
-          embeds: [
-            {
-              url: `${APP_URL}/api/opengraph-image?fid=${
-                context?.user?.fid || ""
-              }`,
-            },
-          ],
-        }}
-        className="w-full bg-purple-800 rounded-2xl mb-4"
-      />
+      <MintProfile />
 
       {/* Stats Grid */}
       <div className="grid grid-cols-2 gap-3 mb-4">
@@ -176,16 +161,20 @@ const FarcasterProfile = ({ neynarUser }: FarcasterProfileProps) => {
       <div className="flex justify-between items-center gap-2 ">
         <button
           onClick={async () => {
-            actions?.sendToken({
-              token:
-                "eip155:8453/erc20:0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-              recipientAddress: "0x49ee323Ea1Bb65F68FA75df0c6D441d20d83A8Cd",
-              amount: "1000000",
-            });
+            await handleShare(
+              {
+                text: `My Neynar score is ${neynarUser?.score}. Check your score: 🚀`,
+                embeds: [
+                  `${APP_URL}/share/${context?.user?.fid}`,
+                  `${APP_URL}/api/opengraph-image?fid=${context?.user?.fid}`,
+                ],
+              },
+              false
+            );
           }}
           className="flex items-center justify-center gap-2 w-full bg-purple-800 text-white py-2 rounded-2xl"
         >
-          Tip <CoinsIcon />
+          Share Score <Share2 size={20} />
         </button>
         <button
           onClick={() => {
@@ -193,16 +182,16 @@ const FarcasterProfile = ({ neynarUser }: FarcasterProfileProps) => {
           }}
           className="flex items-center justify-center gap-2 w-full bg-purple-800 text-white py-2 rounded-2xl"
         >
-          Follow Dev <Code />
+          Follow Dev <Code size={20} />
         </button>
       </div>
 
       {/* Marketing  */}
       <div
         onClick={() => setTab(Tab.Analysis)}
-        className="fixed  cursor-pointer flex justify-center items-center bg-gradient  right-4 bottom-24"
+        className="fixed h-16 w-16  cursor-pointer flex justify-center items-center bg-gradient  right-4 bottom-24"
       >
-        <Gift className="w-14 h-14 font-bold -mt-4 text-orange-400 animate-bounce" />
+        <img src="/gift.gif" className="w-full" />
       </div>
     </div>
   );
