@@ -1,6 +1,5 @@
 // app/api/generate-thumbnail/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import { GoogleGenAI } from "@google/genai";
 import {
   currentDateDhaka,
   getRateCount,
@@ -9,8 +8,7 @@ import {
   STANDARD_LIMIT,
   SUB_LIMIT,
 } from "@/lib/limits";
-
-export const MODEL = process.env.GEMINI_IMAGE_MODEL || "gemini-2.5-flash-image";
+import { createThumbnailWithAI } from "@/lib/ai";
 
 async function getUserLimit(userId: string): Promise<number> {
   const raw = await getSubscription(userId);
@@ -68,32 +66,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Call Gemini / GoogleGenAI to generate image
-    const ai = new GoogleGenAI({});
-    const response = await ai.models.generateContent({
-      model: MODEL,
-      contents: prompt,
-    });
-
-    const candidate = response.candidates?.[0];
-    if (!candidate) {
-      return NextResponse.json(
-        { error: "No candidate returned from image model" },
-        { status: 502 }
-      );
-    }
-
-    const part = candidate?.content?.parts?.find(
-      (p: any) => p.inlineData && p.inlineData.data
-    );
-    if (!part) {
-      // Not successful generation — do NOT increment
-      return NextResponse.json(
-        { error: "Image not generated (no inlineData)", status: 502 },
-        { status: 502 }
-      );
-    }
-
-    const imageBase64 = part?.inlineData?.data as string;
+    const imageBase64 = await createThumbnailWithAI(prompt);
 
     // Successful generation — increment count and ensure TTL (handled by incrRateCount)
     await incrRateCount(userId, dateKey);
