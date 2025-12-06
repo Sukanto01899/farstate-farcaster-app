@@ -1,7 +1,7 @@
 import { abi } from "@/contracts/abi";
 import { Monad } from "@/lib/constants";
 import { Abi } from "viem";
-import { arbitrum, Chain, optimism } from "viem/chains";
+import { arbitrum, base, Chain, optimism } from "viem/chains";
 
 export type DropType = {
   title: string;
@@ -16,11 +16,21 @@ export type DropType = {
 
 export const drop = [
   {
+    title: "Exclusive DEGEN Drop",
+    description: "Early first 500 users (FCFS).",
+    contract: abi.DEGENDrop,
+    chain: base,
+    isActive: true,
+    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/30096.png",
+    reward: "10 DEGEN",
+    isUpcoming: false,
+  },
+  {
     title: "Exclusive OP Drop",
     description: "Early first 50 users (FCFS).",
     contract: abi.OPDrop,
     chain: optimism,
-    isActive: true,
+    isActive: false,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/11840.png",
     reward: "0.1 OP",
     isUpcoming: false,
@@ -32,7 +42,7 @@ export const drop = [
     chain: optimism,
     isActive: true,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png",
-    reward: "0.05 USDC",
+    reward: "0.1 USDC",
     isUpcoming: true,
   },
   {

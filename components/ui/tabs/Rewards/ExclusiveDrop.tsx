@@ -145,8 +145,6 @@ const ExclusiveDrop = ({
     }
   }, [isTxConfirmed]);
 
-  console.log("total claimed", fidEpoch);
-
   const handleAutoCast = () => {
     handleShare(
       {
@@ -161,7 +159,14 @@ const ExclusiveDrop = ({
     <div className="bg-slate-900 rounded-2xl p-4 border border-slate-800 shadow-xl hover:border-purple-600 transition-all">
       <div className="flex items-start justify-between mb-3">
         <div className="flex-1">
-          <h3 className="text-white text-lg font-bold mb-1">{title}</h3>
+          <h3 className="text-white text-lg font-bold mb-1">
+            {title}{" "}
+            {isActive && !isUpcoming && totalClaimed <= maxClaimEpoch && (
+              <span className="bg-green-500 py-1 px-2 rounded-full text-xs animate-pulse">
+                Live
+              </span>
+            )}
+          </h3>
           <p className="text-slate-400 text-sm">{description}</p>
         </div>
         <img src={icon} alt="" className="h-8 w-8 rounded-full" />
