@@ -1,8 +1,8 @@
 // lib/limits.ts
 import { redis } from "./upstash";
 
-export const STANDARD_LIMIT = 3;
-export const SUB_LIMIT = 10;
+export const STANDARD_LIMIT = 5;
+export const SUB_LIMIT = 50;
 
 /** Return YYYY-MM-DD string for Asia/Dhaka (UTC+6) */
 export function currentDateDhaka(): string {
@@ -63,18 +63,24 @@ export async function incrRateCount(
 
 /** Store subscription: value should be JSON string or expiresAt number. We set TTL to durationSeconds */
 export async function setSubscription(
-  userId: string,
+  userFid: string,
   subValue: string,
   durationSeconds: number
 ) {
-  const key = `sub:${userId}`;
+  const key = `sub:${userFid}`;
   // set with TTL in seconds
   await redis.set(key, subValue, { ex: durationSeconds });
 }
+/** Store TxHasg: value should be JSON string or expiresAt number. We set TTL to durationSeconds */
+export async function setTxHash(userFid: string, durationSeconds: number) {
+  const key = `tx:${userFid}`;
+  // set with TTL in seconds
+  await redis.set(key, userFid, { ex: durationSeconds });
+}
 
 /** Read subscription raw value (string) */
-export async function getSubscription(userId: string): Promise<string | null> {
-  const key = `sub:${userId}`;
+export async function getSubscription(userFid: string): Promise<string | null> {
+  const key = `sub:${userFid}`;
   const v = await redis.get(key);
   return v === null ? null : String(v);
 }

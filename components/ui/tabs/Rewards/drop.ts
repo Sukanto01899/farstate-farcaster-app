@@ -16,6 +16,16 @@ export type DropType = {
 
 export const drop = [
   {
+    title: "Exclusive WCT Drop",
+    description: "Early first 500 users",
+    contract: abi.WCTDrop,
+    chain: base,
+    isActive: true,
+    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/33152.png",
+    reward: "0.3 WCT",
+    isUpcoming: false,
+  },
+  {
     title: "Exclusive DEGEN Drop",
     description: "Early first 500 users",
     contract: abi.DEGENDrop,
@@ -35,16 +45,7 @@ export const drop = [
     reward: "0.1 OP",
     isUpcoming: false,
   },
-  {
-    title: "Exclusive USDC Drop",
-    description: "Early first 30 users",
-    contract: abi.OPDrop,
-    chain: optimism,
-    isActive: true,
-    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png",
-    reward: "0.1 USDC",
-    isUpcoming: true,
-  },
+
   {
     title: "Exclusive ARB Drop",
     description: "Early first 100 users",
