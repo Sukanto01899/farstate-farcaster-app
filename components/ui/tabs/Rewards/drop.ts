@@ -17,7 +17,7 @@ export type DropType = {
 export const drop = [
   {
     title: "Exclusive WCT Drop",
-    description: "Early first 500 users",
+    description: "Early first 250 users",
     contract: abi.WCTDrop,
     chain: base,
     isActive: true,
