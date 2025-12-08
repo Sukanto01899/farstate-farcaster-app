@@ -1,5 +1,5 @@
 import { StatusType } from "@/hooks/useAiLimitStatus";
-import { Sparkles, Wand2 } from "lucide-react";
+import { Loader, Sparkles, Wand2 } from "lucide-react";
 import React from "react";
 import { useState } from "react";
 import ProModal from "./ProModal";
@@ -38,9 +38,11 @@ const CreateHeader = ({ status, isStatusLoading }: HeaderProps) => {
                 status?.text_remaining ? "text-white" : "text-red-400"
               }  text-sm font-bold text-center`}
             >
-              {isStatusLoading
-                ? "Loading..."
-                : status && `${status?.text_used}/${status?.text_limit}`}
+              {isStatusLoading ? (
+                <Loader className="animate-spin mx-auto text-white" size={20} />
+              ) : (
+                status && `${status?.text_used}/${status?.text_limit}`
+              )}
             </p>
           </div>
           <div className="bg-purple-800 rounded-lg px-2 py-1.5 border border-purple-600">
@@ -50,15 +52,21 @@ const CreateHeader = ({ status, isStatusLoading }: HeaderProps) => {
                 status?.image_remaining ? "text-white" : "text-red-400"
               } text-sm font-bold text-center`}
             >
-              {isStatusLoading
-                ? "Loading..."
-                : status && `${status?.image_used}/${status?.image_limit}`}
+              {isStatusLoading ? (
+                <Loader className="animate-spin mx-auto text-white" size={20} />
+              ) : (
+                status && `${status?.image_used}/${status?.image_limit}`
+              )}
             </p>
           </div>
           <div className="bg-purple-800 rounded-lg px-2 py-1.5 border border-purple-600">
             <p className="text-purple-200 text-xs">Your Tier</p>
             <p className="text-white text-sm font-bold text-center">
-              {status && status?.tier.toUpperCase()}
+              {isStatusLoading ? (
+                <Loader className="animate-spin mx-auto text-white" size={20} />
+              ) : (
+                status && status?.tier.toUpperCase()
+              )}
             </p>
           </div>
         </div>
