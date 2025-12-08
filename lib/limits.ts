@@ -1,8 +1,10 @@
 // lib/limits.ts
 import { redis } from "./upstash";
 
-export const STANDARD_LIMIT = 5;
-export const SUB_LIMIT = 50;
+export const STANDARD_TEXT_LIMIT = 5;
+export const STANDARD_IMAGE_LIMIT = 3;
+export const SUB_TEXT_LIMIT = 20;
+export const SUB_IMAGE_LIMIT = 10;
 
 /** Return YYYY-MM-DD string for Asia/Dhaka (UTC+6) */
 export function currentDateDhaka(): string {
@@ -38,9 +40,16 @@ export function secondsUntilDhakaMidnight(): number {
 /** Read rate counter */
 export async function getRateCount(
   userId: string,
-  dateKey: string
+  dateKey: string,
+  content: string
 ): Promise<number> {
-  const key = `rate:${userId}:${dateKey}`;
+  let key: string;
+  if (content === "image") {
+    key = `image_rate:${userId}:${dateKey}`;
+  } else {
+    key = `text_rate:${userId}:${dateKey}`;
+  }
+
   const v = await redis.get(key);
   return v === null ? 0 : Number(v);
 }
@@ -48,9 +57,15 @@ export async function getRateCount(
 /** Increment rate counter and ensure TTL set to Dhaka midnight (expires at midnight) */
 export async function incrRateCount(
   userId: string,
-  dateKey: string
+  dateKey: string,
+  content: string
 ): Promise<number> {
-  const key = `rate:${userId}:${dateKey}`;
+  let key: string;
+  if (content === "image") {
+    key = `image_rate:${userId}:${dateKey}`;
+  } else {
+    key = `text_rate:${userId}:${dateKey}`;
+  }
   const newCount = await redis.incr(key);
   // If this is the first increment, set expire to Dhaka midnight
   if (newCount === 1) {

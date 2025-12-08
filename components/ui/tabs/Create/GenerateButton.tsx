@@ -1,6 +1,6 @@
 import useCreateCast from "@/hooks/useCreateCast";
 import { castCategories } from "@/lib/constants";
-import { MutateFunction } from "@tanstack/react-query";
+import { MutateFunction, RefetchOptions } from "@tanstack/react-query";
 import { Loader, Wand2 } from "lucide-react";
 import React, { useEffect } from "react";
 
@@ -13,6 +13,10 @@ type GenerateButtonProps = {
   isCastCreating: boolean;
   castCreatingError: Error | null;
   setCustomPrompt: (val: string) => void;
+  refetchStatus: () => void;
+  generateThumbnail: MutateFunction<any, any, string>;
+  isThumbnailCreating: Boolean;
+  castData: { cast: string } | undefined;
 };
 
 const GenerateButton = ({
@@ -24,6 +28,9 @@ const GenerateButton = ({
   isCastCreating,
   castCreatingError,
   setCustomPrompt,
+  refetchStatus,
+  generateThumbnail,
+  castData,
 }: GenerateButtonProps) => {
   const handleGenerateCast = async () => {
     setError(null);
@@ -35,6 +42,17 @@ const GenerateButton = ({
       setCustomPrompt("");
     } else if (selectedCategory) {
       await generateCast(selectedCategory);
+    }
+
+    refetchStatus();
+  };
+
+  const handleGenerateThumbnail = async () => {
+    if (!castData) return;
+    try {
+      await generateThumbnail(castData.cast);
+    } catch (err) {
+      console.log(err);
     }
   };
 

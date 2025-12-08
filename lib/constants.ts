@@ -104,12 +104,6 @@ export const notificationsBtn = [
     title: "💰 Claim DEGEN Drop now!",
     body: "DEGEN Exclusive drop claiming started (FCFS)⚡!",
   },
-  {
-    id: 5,
-    name: "Upcoming Drop",
-    title: "💰 Are you ready for upcoming Drop?",
-    body: "New Exclusive ARB reward coming soon ⚡!",
-  },
 ];
 
 import { defineChain } from "viem";

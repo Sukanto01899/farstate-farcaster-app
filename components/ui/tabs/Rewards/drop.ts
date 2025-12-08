@@ -20,7 +20,7 @@ export const drop = [
     description: "Early first 250 users",
     contract: abi.WCTDrop,
     chain: base,
-    isActive: true,
+    isActive: false,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/33152.png",
     reward: "0.3 WCT",
     isUpcoming: false,

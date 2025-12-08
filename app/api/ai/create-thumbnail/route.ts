@@ -5,41 +5,39 @@ import {
   getRateCount,
   incrRateCount,
   getSubscription,
-  STANDARD_LIMIT,
-  SUB_LIMIT,
+  STANDARD_IMAGE_LIMIT,
+  SUB_IMAGE_LIMIT,
 } from "@/lib/limits";
 import { createThumbnailWithAI } from "@/lib/ai";
+import { uploadImageToCloudinary } from "@/lib/upload";
 
 async function getUserLimit(userId: string): Promise<number> {
   const raw = await getSubscription(userId);
-  if (!raw) return STANDARD_LIMIT;
+  if (!raw) return STANDARD_IMAGE_LIMIT;
   try {
     const parsed = JSON.parse(raw);
     const expiresAt = Number(
       parsed.expiresAt || parsed.expiry || parsed.expiresAtMs
     );
-    if (!isNaN(expiresAt) && Date.now() < expiresAt) return SUB_LIMIT;
-    return STANDARD_LIMIT;
+    if (!isNaN(expiresAt) && Date.now() < expiresAt) return SUB_IMAGE_LIMIT;
+    return STANDARD_IMAGE_LIMIT;
   } catch (e) {
     // If stored value is not JSON (legacy) attempt numeric parse
     const maybe = Number(raw);
-    if (!isNaN(maybe) && Date.now() < maybe) return SUB_LIMIT;
-    return STANDARD_LIMIT;
+    if (!isNaN(maybe) && Date.now() < maybe) return SUB_IMAGE_LIMIT;
+    return STANDARD_IMAGE_LIMIT;
   }
 }
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json().catch(() => ({}));
-    const auth = req.headers.get("authorization") || "";
-    let userId: string | null = null;
-    if (auth.startsWith("Bearer ")) userId = auth.slice(7).trim();
-    if (!userId && body.userId) userId = String(body.userId).trim();
-    if (!userId) {
+    const fid = req.headers.get("x-fid");
+
+    if (!fid) {
       return NextResponse.json(
         {
-          error:
-            "Missing userId (Authorization Bearer or body.userId required)",
+          error: "Missing fid (Authorization Bearer or body.userId required)",
         },
         { status: 401 }
       );
@@ -50,8 +48,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing prompt" }, { status: 400 });
 
     const dateKey = currentDateDhaka();
-    const limit = await getUserLimit(userId);
-    const current = await getRateCount(userId, dateKey);
+    const limit = await getUserLimit(fid);
+    const current = await getRateCount(fid, dateKey, "image");
 
     if (current >= limit) {
       return NextResponse.json(
@@ -68,10 +66,20 @@ export async function POST(req: NextRequest) {
     // Call Gemini / GoogleGenAI to generate image
     const imageBase64 = await createThumbnailWithAI(prompt);
 
-    // Successful generation — increment count and ensure TTL (handled by incrRateCount)
-    await incrRateCount(userId, dateKey);
+    if (!imageBase64) {
+      return NextResponse.json(
+        { error: "No candidate returned from image model" },
+        { status: 502 }
+      );
+    }
 
-    const used = await getRateCount(userId, dateKey);
+    // ✅ Upload to get public URL
+    const imageUrl = await uploadImageToCloudinary(imageBase64);
+
+    // Successful generation — increment count and ensure TTL (handled by incrRateCount)
+    await incrRateCount(fid, dateKey, "image");
+
+    const used = await getRateCount(fid, dateKey, "image");
 
     return NextResponse.json(
       {
@@ -81,6 +89,7 @@ export async function POST(req: NextRequest) {
         remaining: Math.max(0, limit - used),
         limit,
         date: dateKey,
+        imageUrl,
       },
       { status: 200 }
     );

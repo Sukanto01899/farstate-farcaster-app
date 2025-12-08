@@ -1,16 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createCastWithAI } from "@/lib/ai";
-
-const DAILY_LIMIT = process.env.DAILY_AI_GEN_LIMIT
-  ? parseInt(process.env.DAILY_AI_GEN_LIMIT)
-  : 5;
-
-/**
- * Optional Upstash REST Redis usage.
- * Set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN in env to enable.
- */
-const UPSTASH_URL = process.env.UPSTASH_REDIS_REST_URL || "";
-const UPSTASH_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN || "";
+import {
+  currentDateDhaka,
+  getRateCount,
+  getSubscription,
+  incrRateCount,
+  STANDARD_TEXT_LIMIT,
+  SUB_TEXT_LIMIT,
+} from "@/lib/limits";
 
 /**
  * Fallback in-memory store (non-persistent; only for local dev).
@@ -18,93 +15,22 @@ const UPSTASH_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN || "";
  */
 const inMemoryStore = new Map<string, number>();
 
-/** Helper: get current date string in Asia/Dhaka (UTC+6) as YYYY-MM-DD */
-function currentDateDhaka(): string {
-  const now = new Date();
-  // Add +6 hours to convert UTC -> Asia/Dhaka date
-  const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
-  const dhakaMs = utcMs + 6 * 60 * 60 * 1000;
-  const d = new Date(dhakaMs);
-  const yyyy = d.getUTCFullYear();
-  const mm = String(d.getUTCMonth() + 1).padStart(2, "0");
-  const dd = String(d.getUTCDate()).padStart(2, "0");
-  return `${yyyy}-${mm}-${dd}`;
-}
-
-/** Redis helpers using Upstash REST API */
-async function redisGet(key: string): Promise<number | null> {
-  if (!UPSTASH_URL || !UPSTASH_TOKEN) {
-    const v = inMemoryStore.get(key);
-    return typeof v === "number" ? v : null;
-  }
-
-  const res = await fetch(`${UPSTASH_URL}/get/${encodeURIComponent(key)}`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${UPSTASH_TOKEN}`,
-      "Content-Type": "application/json",
-    },
-  });
-  if (!res.ok) return null;
-  const json = await res.json();
-  return json.result !== null ? Number(json.result) : null;
-}
-
-async function redisIncr(key: string, expireSeconds?: number): Promise<number> {
-  if (!UPSTASH_URL || !UPSTASH_TOKEN) {
-    const v = inMemoryStore.get(key) || 0;
-    const nv = v + 1;
-    inMemoryStore.set(key, nv);
-    return nv;
-  }
-
-  // Use Upstash incr
-  const res = await fetch(`${UPSTASH_URL}/incr/${encodeURIComponent(key)}`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${UPSTASH_TOKEN}`,
-      "Content-Type": "application/json",
-    },
-  });
-  if (!res.ok) throw new Error("Redis INCR failed");
-  const json = await res.json();
-  const newVal: number = Number(json.result);
-
-  // If expireSeconds provided, set ttl (only first time ideally)
-  if (expireSeconds) {
-    // set the TTL separately
-    await fetch(
-      `${UPSTASH_URL}/expire/${encodeURIComponent(key)}/${expireSeconds}`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${UPSTASH_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-      }
+async function getUserLimit(userId: string): Promise<number> {
+  const raw = await getSubscription(userId);
+  if (!raw) return STANDARD_TEXT_LIMIT;
+  try {
+    const parsed = JSON.parse(raw);
+    const expiresAt = Number(
+      parsed.expiresAt || parsed.expiry || parsed.expiresAtMs
     );
+    if (!isNaN(expiresAt) && Date.now() < expiresAt) return SUB_TEXT_LIMIT;
+    return STANDARD_TEXT_LIMIT;
+  } catch (e) {
+    // If stored value is not JSON (legacy) attempt numeric parse
+    const maybe = Number(raw);
+    if (!isNaN(maybe) && Date.now() < maybe) return SUB_TEXT_LIMIT;
+    return STANDARD_TEXT_LIMIT;
   }
-  return newVal;
-}
-
-/** Compute seconds until Dhaka midnight (used to set Redis TTL so limits reset at Dhaka midnight) */
-function secondsUntilDhakaMidnight(): number {
-  const now = new Date();
-  const utcMs = now.getTime() + now.getTimezoneOffset() * 60000;
-  const dhakaMs = utcMs + 6 * 60 * 60 * 1000;
-  const d = new Date(dhakaMs);
-  // compute next midnight in Dhaka ms
-  const next = Date.UTC(
-    d.getUTCFullYear(),
-    d.getUTCMonth(),
-    d.getUTCDate() + 1,
-    0,
-    0,
-    0
-  );
-  // next minus current dhaka ms
-  const seconds = Math.max(0, Math.floor((next - d.getTime()) / 1000));
-  return seconds;
 }
 
 export async function POST(req: NextRequest) {
@@ -113,8 +39,8 @@ export async function POST(req: NextRequest) {
     // Accept userId via Authorization Bearer or body.userId
 
     const fid = req.headers.get("x-fid");
-    let userId: string | null = fid;
-    if (!userId) {
+    // // let userId: string | null = fid;
+    if (!fid) {
       return NextResponse.json(
         {
           error:
@@ -133,15 +59,16 @@ export async function POST(req: NextRequest) {
     }
 
     const dateKey = currentDateDhaka();
-    const redisKey = `rate:${userId}:${dateKey}`;
+    const redisKey = `rate:${fid}:${dateKey}`;
 
     // Check current count
-    const current = (await redisGet(redisKey)) || 0;
-    if (current >= DAILY_LIMIT) {
+    const limit = await getUserLimit(fid);
+    const current = await getRateCount(fid, dateKey, "text");
+    if (current >= limit) {
       return NextResponse.json(
         {
           error: "Your Daily limit reached. Back Tomorrow.",
-          limit: DAILY_LIMIT,
+          limit,
           used: current,
           resetDate: dateKey, // Dhaka date when it resets
         },
@@ -150,27 +77,25 @@ export async function POST(req: NextRequest) {
     }
 
     const aiData = await createCastWithAI(prompt);
-    console.log(aiData);
 
     if (!aiData) {
       return NextResponse.json(
-        { error: "No candidate returned from image model" },
+        { error: "No content returned from text model" },
         { status: 502 }
       );
     }
 
     // At this point the image generation is successful -> increment the user's daily count
-    // For persistence set TTL so the key expires at Dhaka midnight
-    const ttl = secondsUntilDhakaMidnight();
     try {
-      const newCount = await redisIncr(redisKey, ttl);
-      // Optionally set TTL only when newCount === 1 (but Upstash expire is idempotent)
-      // We ignore the return value; we already have newCount if needed.
+      // Successful generation — increment count and ensure TTL (handled by incrRateCount)
+      await incrRateCount(fid, dateKey, "text");
     } catch (e) {
       // If Redis fails, fallback to in-memory increment (best-effort)
       const v = inMemoryStore.get(redisKey) || 0;
       inMemoryStore.set(redisKey, v + 1);
     }
+
+    const used = await getRateCount(fid, dateKey, "text");
 
     // Return base64 payload. Consumers can directly render or upload to CDN.
     return NextResponse.json(
@@ -178,11 +103,8 @@ export async function POST(req: NextRequest) {
         contentType: "text",
         cast: aiData,
         message: "Image generated successfully",
-        remaining: Math.max(
-          0,
-          DAILY_LIMIT -
-            ((await redisGet(redisKey)) || inMemoryStore.get(redisKey) || 0)
-        ),
+        remaining: Math.max(0, limit - used),
+        limit,
         date: dateKey,
       },
       { status: 200 }

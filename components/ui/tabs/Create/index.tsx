@@ -5,12 +5,14 @@ import useCreateCast from "@/hooks/useCreateCast";
 import PostCast from "./PostCast";
 import SelectCategory from "./SelectCategory";
 import CreateHeader from "./Header";
+import useAiLimitStatus from "@/hooks/useAiLimitStatus";
 
 const CreateTab = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [customPrompt, setCustomPrompt] = useState("");
   const [showCustomCommandInput, setShowCustomCommandInput] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { status, isStatusLoading, refetchStatus } = useAiLimitStatus();
 
   const {
     isCastCreating,
@@ -18,6 +20,10 @@ const CreateTab = () => {
     generateCast,
     isCastCreatingError,
     castCreatingError,
+    generateThumbnail,
+    thumbnail,
+    isThumbnailCreating,
+    isThumbnailCreatingError,
   } = useCreateCast();
 
   useEffect(() => {
@@ -29,7 +35,18 @@ const CreateTab = () => {
   return (
     <div className="space-y-4 animate-fadeIn">
       {/* Create Cast Header */}
-      <CreateHeader />
+      <CreateHeader status={status} isStatusLoading={isStatusLoading} />
+
+      {/* Generated Cast Preview */}
+      <PostCast
+        generateThumbnail={generateThumbnail}
+        castData={castData}
+        isCastCreating={isCastCreating}
+        isThumbnailCreating={isThumbnailCreating}
+        thumbnail={thumbnail}
+        refetchStatus={refetchStatus}
+        status={status}
+      />
       {/* Category Slider */}
       <SelectCategory
         setSelectedCategory={setSelectedCategory}
@@ -63,13 +80,14 @@ const CreateTab = () => {
         isCustomCommandActive={showCustomCommandInput}
         setError={setError}
         generateCast={generateCast}
+        generateThumbnail={generateThumbnail}
         isCastCreating={isCastCreating}
         castCreatingError={castCreatingError}
         setCustomPrompt={setCustomPrompt}
+        refetchStatus={refetchStatus}
+        isThumbnailCreating={isThumbnailCreating}
+        castData={castData}
       />
-      {/* Generated Cast Preview */}
-
-      <PostCast castData={castData} isCastCreating={isCastCreating} />
     </div>
   );
 };

@@ -69,7 +69,10 @@ const ExclusiveDrop = ({
             "Content-Type": "application/json",
             authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ userAddress: address }),
+          body: JSON.stringify({
+            userAddress: address,
+            contract: contract.address,
+          }),
         });
 
         if (!res.ok) {
@@ -161,7 +164,7 @@ const ExclusiveDrop = ({
         <div className="flex-1">
           <h3 className="text-white text-lg font-bold mb-1">
             {title}{" "}
-            {isActive && !isUpcoming && totalClaimed <= maxClaimEpoch && (
+            {isActive && !isUpcoming && totalClaimed < maxClaimEpoch && (
               <span className="bg-green-500 py-1 px-2 rounded-full text-xs animate-pulse">
                 Live
               </span>

@@ -1,9 +1,35 @@
 import { ApiError, GoogleGenAI } from "@google/genai";
-import fs from "fs";
 
 const ai = new GoogleGenAI({});
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+function sanitizePrompt(userPrompt: string): string {
+  // Remove potentially harmful/sensitive words
+  const bannedKeywords = [
+    "violent",
+    "nsfw",
+    "explicit",
+    "nude",
+    "blood",
+    "gore",
+    "weapon",
+    "drug",
+    "hate",
+    "racist",
+    "sexual",
+  ];
+
+  let cleaned = userPrompt.toLowerCase();
+  bannedKeywords.forEach((word) => {
+    cleaned = cleaned.replace(new RegExp(`\\b${word}\\b`, "gi"), "");
+  });
+
+  // Remove excessive punctuation or special chars that might trigger filters
+  cleaned = cleaned.replace(/[!@#$%^&*()]+/g, " ").trim();
+
+  return cleaned;
+}
 
 const getPrompt = (prompt: string): string => {
   return `You are an AI Cast Creator for Farcaster. 
@@ -24,6 +50,14 @@ Rules:
 If the user input is unclear, interpret it in the most reasonable and creative way.
 `;
 };
+const getImagePrompt = (prompt: string): string => {
+  const safePart = sanitizePrompt(prompt);
+  return `
+A vibrant Wide horizontal 16:9 thumbnail design representing: ${safePart}.
+Style: modern, colorful, professional, abstract geometric shapes.
+Clean composition, no text, no people, suitable for social media.
+  `;
+};
 
 export const createThumbnailWithAI = async (prompt: string) => {
   const MAX_RETRIES = 5;
@@ -31,34 +65,22 @@ export const createThumbnailWithAI = async (prompt: string) => {
   while (attempt < MAX_RETRIES) {
     attempt++;
     try {
-      const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: getPrompt(prompt),
+      const response = await ai.models.generateImages({
+        model: "imagen-4.0-generate-001",
+        prompt: getImagePrompt(prompt),
         config: {
-          thinkingConfig: {
-            thinkingBudget: 0, // Disables thinking
-          },
-          systemInstruction:
-            "You are an AI Cast Creator for Farcaster, Your job is to generate short, clear, engaging casts based on the user’s input",
+          numberOfImages: 1,
         },
       });
+      if (!response.generatedImages?.length) return;
 
-      // Find the first inlineData part with image
-      const candidate = response.candidates?.[0];
-      if (!candidate) {
-        throw Error("No candidate returned from image model");
-      }
+      // Return base64 for the first generated image
+      const first = response.generatedImages[0];
+      const imgBytes = first?.image?.imageBytes;
 
-      const part = candidate?.content?.parts?.find(
-        (p: any) => p.inlineData && p.inlineData.data
-      );
-      if (!part) {
-        // Not successful image generation — do not increment limit
-        throw Error("Image not generated (no inlineData)");
-      }
-      //   console.log(response);
-      const imageBase64 = part?.inlineData?.data as string;
-      return imageBase64;
+      // console.log({ first, imgBytes });
+      if (!imgBytes) return;
+      return imgBytes;
     } catch (error) {
       // Check specifically for the 503 UNAVAILABLE or other rate limit errors (like 429)
       if (
