@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
     // Check current count
     const limit = await getUserLimit(fid);
     const current = await getRateCount(fid, dateKey, "text");
-    console.log({ limit, current });
+    // console.log({ limit, current });
     if (current >= limit) {
       return NextResponse.json(
         {

@@ -143,7 +143,9 @@ const PostCast = ({
                     ? isThumbnailCreating
                       ? "Creating..."
                       : "Thumbnail"
-                    : "Limit Reached"}
+                    : status?.tier === "pro"
+                    ? "Limit Reached"
+                    : "Buy Pro"}
                 </span>
               </button>
               <button

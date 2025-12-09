@@ -151,10 +151,13 @@ const ExclusiveDrop = ({
   const handleAutoCast = () => {
     handleShare(
       {
-        text: `🎉 I just claimed ${reward} from the Farstate Ai Exclusive Drop! 🚀`,
+        text: `🎉 I just claimed ${reward} from the Farstate Ai Exclusive Drop!
+
+try it below 👇
+              `,
         embeds: [`${APP_URL}/share/${context?.user?.fid || ""}`],
       },
-      true
+      false
     );
   };
 

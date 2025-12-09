@@ -16,12 +16,15 @@ import { parseEther } from "viem";
 import { base } from "viem/chains";
 import { farcasterMiniApp as miniAppConnector } from "@farcaster/miniapp-wagmi-connector";
 import { useEffect } from "react";
+import useShareCast from "@/hooks/useShareCast";
+import { APP_URL } from "@/lib/constants";
 
 const MintProfile = () => {
   const { context } = useFrame();
   const { address, isConnected, chainId } = useAccount();
   const { switchChainAsync } = useSwitchChain();
   const { connectAsync } = useConnect();
+  const { handleShare } = useShareCast();
 
   const {
     data: canMint,
@@ -60,6 +63,16 @@ const MintProfile = () => {
         {
           onSuccess: () => {
             toast.success("Onchain Profile Minted");
+            handleShare(
+              {
+                text: `I Minted My Farcaster Profile on-chain
+
+Mint your profile on-chain 👇
+              `,
+                embeds: [`${APP_URL}/share/${context?.user?.fid || ""}`],
+              },
+              false
+            );
           },
         }
       );

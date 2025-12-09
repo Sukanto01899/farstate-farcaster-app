@@ -8,7 +8,7 @@ import {
   STANDARD_IMAGE_LIMIT,
   SUB_IMAGE_LIMIT,
 } from "@/lib/limits";
-import { createThumbnailWithAI } from "@/lib/ai";
+import { createImageWithAI, createThumbnailWithAI } from "@/lib/ai";
 import { uploadImageToCloudinary } from "@/lib/upload";
 
 async function getUserLimit(userId: string): Promise<number> {
@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Call Gemini / GoogleGenAI to generate image
-    const imageBase64 = await createThumbnailWithAI(prompt);
+    const imageBase64 = await createImageWithAI(prompt);
 
     if (!imageBase64) {
       return NextResponse.json(

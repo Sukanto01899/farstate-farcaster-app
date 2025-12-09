@@ -22,7 +22,7 @@ export const drop = [
     chain: celo,
     isActive: true,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/5567.png",
-    reward: "0.1 CELO",
+    reward: "0.1 $CELO",
     isUpcoming: false,
   },
   {
@@ -32,7 +32,7 @@ export const drop = [
     chain: base,
     isActive: true,
     icon: "https://assets.coingecko.com/coins/images/31126/standard/Toshi_Logo_-_Circular.png?1721677476",
-    reward: "10 TOSHI",
+    reward: "10 $TOSHI",
     isUpcoming: false,
   },
   {

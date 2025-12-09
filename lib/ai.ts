@@ -151,3 +151,55 @@ export const createCastWithAI = async (prompt: string) => {
     }
   }
 };
+
+export const createImageWithAI = async (prompt: string) => {
+  const MAX_RETRIES = 5;
+  let attempt = 0;
+  while (attempt < MAX_RETRIES) {
+    attempt++;
+    try {
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash-image",
+        contents: getImagePrompt(prompt),
+      });
+      if (!response || !response?.candidates) return;
+
+      const parts = response?.candidates[0]?.content?.parts;
+
+      let base64String: string | undefined;
+
+      parts?.forEach((part) => {
+        if (part.inlineData) {
+          base64String = part.inlineData.data;
+        }
+      });
+
+      // Return base64 for the first generated image
+      return base64String;
+    } catch (error) {
+      // Check specifically for the 503 UNAVAILABLE or other rate limit errors (like 429)
+      if (
+        (error instanceof ApiError && error.status === 503) ||
+        (error instanceof ApiError && error.status === 429)
+      ) {
+        console.warn(
+          `AI Verification failed on attempt ${attempt} with status ${error.status}. Retrying...`
+        );
+
+        if (attempt < MAX_RETRIES) {
+          // Exponential Backoff calculation (e.g., 2^attempt * 1000ms + jitter)
+          const delay = Math.pow(2, attempt) * 1000 + Math.random() * 500;
+          await sleep(delay);
+        } else {
+          // Max retries reached
+          console.error("AI Verification failed after maximum retries.");
+          // Re-throw the last error to be handled by the POST route
+          throw error;
+        }
+      } else {
+        // Re-throw any other unexpected error (e.g., bad request 400, internal server error 500)
+        throw error;
+      }
+    }
+  }
+};
