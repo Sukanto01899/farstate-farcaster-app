@@ -16,10 +16,17 @@ async function getUserLimit(userId: string): Promise<number> {
   if (!raw) return STANDARD_IMAGE_LIMIT;
   try {
     const parsed = JSON.parse(raw);
-    const expiresAt = Number(
-      parsed.expiresAt || parsed.expiry || parsed.expiresAtMs
-    );
-    if (!isNaN(expiresAt) && Date.now() < expiresAt) return SUB_IMAGE_LIMIT;
+    const expiresAt = parsed.expiresAt
+      ? Number(parsed.expiresAt)
+      : parsed.expiryDate
+      ? new Date(parsed.expiryDate).getTime()
+      : parsed.expiresAtMs
+      ? Number(parsed.expiresAtMs)
+      : null;
+
+    if (expiresAt && Date.now() < expiresAt) {
+      return SUB_IMAGE_LIMIT;
+    }
     return STANDARD_IMAGE_LIMIT;
   } catch (e) {
     // If stored value is not JSON (legacy) attempt numeric parse

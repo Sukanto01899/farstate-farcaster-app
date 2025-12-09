@@ -52,11 +52,7 @@ If the user input is unclear, interpret it in the most reasonable and creative w
 };
 const getImagePrompt = (prompt: string): string => {
   const safePart = sanitizePrompt(prompt);
-  return `
-A vibrant Wide horizontal 16:9 thumbnail design representing: ${safePart}.
-Style: modern, colorful, professional, abstract geometric shapes.
-Clean composition, no text, no people, suitable for social media.
-  `;
+  return `Generate an image with a strict 4:3 landscape aspect ratio. The image should represent the content of this social media post: ${prompt}.`;
 };
 
 export const createThumbnailWithAI = async (prompt: string) => {

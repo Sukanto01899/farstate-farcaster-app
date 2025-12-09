@@ -29,7 +29,6 @@ const PostCast = ({
 }: PostCastProps) => {
   const { handleShare, isProcessing } = useShareCast();
   const [dataUrl, setDataUrl] = useState("");
-  const [thumbnailUrl, setThumbnailUrl] = useState("");
 
   const handlePostCast = async () => {
     try {
@@ -61,12 +60,13 @@ const PostCast = ({
 
   useEffect(() => {
     if (thumbnail) {
-      setThumbnailUrl(thumbnail.imageUrl);
+      setDataUrl(`data:image/png;base64,${thumbnail.imageBase64}`);
     }
   }, [thumbnail]);
+
   useEffect(() => {
     if (isCastCreating) {
-      setThumbnailUrl("");
+      setDataUrl("");
     }
   }, [isCastCreating]);
 
@@ -109,16 +109,16 @@ const PostCast = ({
               </p>
             </div>
             {isThumbnailCreating && (
-              <div className="w-full h-24 mb-3 rounded-2xl font-semibold bg-slate-400 animate-pulse flex justify-center items-center text-purple-800">
+              <div className="w-full h-24 mb-3 rounded-2xl font-semibold bg-gray-200 animate-pulse flex justify-center items-center text-purple-800">
                 Thumbnail creating...
               </div>
             )}
-            {thumbnailUrl && !isThumbnailCreating && (
-              <div className="w-full min-h-32 bg-slate-300 overflow-hidden mb-3 rounded-2xl">
+            {dataUrl && !isThumbnailCreating && (
+              <div className="w-full bg-slate-300 overflow-hidden mb-3 rounded-xl">
                 <img
-                  src={thumbnailUrl}
+                  src={dataUrl}
                   alt="Generated thumbnail"
-                  className="w-full h-full object-cover"
+                  className="w-full"
                 />
               </div>
             )}

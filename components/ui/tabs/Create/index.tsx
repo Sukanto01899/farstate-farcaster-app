@@ -35,7 +35,11 @@ const CreateTab = () => {
   return (
     <div className="space-y-4 animate-fadeIn">
       {/* Create Cast Header */}
-      <CreateHeader status={status} isStatusLoading={isStatusLoading} />
+      <CreateHeader
+        status={status}
+        isStatusLoading={isStatusLoading}
+        refetchStatus={refetchStatus}
+      />
 
       {/* Generated Cast Preview */}
       <PostCast

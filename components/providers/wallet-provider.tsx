@@ -4,10 +4,18 @@ import { Monad } from "@/lib/constants";
 import { farcasterMiniApp as miniAppConnector } from "@farcaster/miniapp-wagmi-connector";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { http, WagmiProvider, createConfig } from "wagmi";
-import { arbitrum, base, optimism, polygon, story } from "wagmi/chains";
+import {
+  arbitrum,
+  base,
+  optimism,
+  polygon,
+  story,
+  baseSepolia,
+  celo,
+} from "wagmi/chains";
 
 export const config = createConfig({
-  chains: [base, Monad, arbitrum, optimism, polygon, story],
+  chains: [base, Monad, arbitrum, optimism, polygon, story, baseSepolia, celo],
   transports: {
     [base.id]: http(),
     [Monad.id]: http(),
@@ -15,6 +23,8 @@ export const config = createConfig({
     [optimism.id]: http(),
     [polygon.id]: http(),
     [story.id]: http(),
+    [baseSepolia.id]: http(),
+    [celo.id]: http(),
   },
   connectors: [miniAppConnector()],
 });

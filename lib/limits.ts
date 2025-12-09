@@ -3,8 +3,8 @@ import { redis } from "./upstash";
 
 export const STANDARD_TEXT_LIMIT = 5;
 export const STANDARD_IMAGE_LIMIT = 3;
-export const SUB_TEXT_LIMIT = 20;
-export const SUB_IMAGE_LIMIT = 10;
+export const SUB_TEXT_LIMIT = 10;
+export const SUB_IMAGE_LIMIT = 8;
 
 /** Return YYYY-MM-DD string for Asia/Dhaka (UTC+6) */
 export function currentDateDhaka(): string {
@@ -97,5 +97,14 @@ export async function setTxHash(userFid: string, durationSeconds: number) {
 export async function getSubscription(userFid: string): Promise<string | null> {
   const key = `sub:${userFid}`;
   const v = await redis.get(key);
-  return v === null ? null : String(v);
+
+  if (v === null) return null;
+
+  // If it's already an object, stringify it
+  if (typeof v === "object") {
+    return JSON.stringify(v);
+  }
+
+  // Otherwise return as string
+  return String(v);
 }

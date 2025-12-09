@@ -1,7 +1,7 @@
 import { abi } from "@/contracts/abi";
 import { Monad } from "@/lib/constants";
 import { Abi } from "viem";
-import { arbitrum, base, Chain, optimism } from "viem/chains";
+import { arbitrum, base, celo, Chain, optimism } from "viem/chains";
 
 export type DropType = {
   title: string;
@@ -15,6 +15,16 @@ export type DropType = {
 };
 
 export const drop = [
+  {
+    title: "Exclusive CELO Drop",
+    description: "Early first 150 users",
+    contract: abi.CELODrop,
+    chain: celo,
+    isActive: true,
+    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/5567.png",
+    reward: "0.1 CELO",
+    isUpcoming: false,
+  },
   {
     title: "Exclusive TOSHI Drop",
     description: "Early first 1000 users",

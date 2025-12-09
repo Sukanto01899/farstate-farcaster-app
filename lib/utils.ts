@@ -111,7 +111,7 @@ export async function verifyTransaction(txHash: string) {
 
       // Check if from our contract
       if (log.address.toLowerCase() !== CONTRACT_ADDRESS.toLowerCase()) {
-        console.log("  ❌ Not from our contract");
+        // console.log("  ❌ Not from our contract");
         continue;
       }
 
@@ -122,11 +122,11 @@ export async function verifyTransaction(txHash: string) {
           topics: log.topics,
         });
 
-        console.log("  ✅ Decoded:", decoded);
+        // console.log("  ✅ Decoded:", decoded);
 
         if (decoded.eventName === "PaymentReceived") {
           paymentData = decoded.args;
-          console.log("  ✅ Payment data found!");
+          // console.log("  ✅ Payment data found!");
           break;
         }
       } catch (error) {

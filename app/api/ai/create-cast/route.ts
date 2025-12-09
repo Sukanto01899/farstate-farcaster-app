@@ -20,10 +20,17 @@ async function getUserLimit(userId: string): Promise<number> {
   if (!raw) return STANDARD_TEXT_LIMIT;
   try {
     const parsed = JSON.parse(raw);
-    const expiresAt = Number(
-      parsed.expiresAt || parsed.expiry || parsed.expiresAtMs
-    );
-    if (!isNaN(expiresAt) && Date.now() < expiresAt) return SUB_TEXT_LIMIT;
+    const expiresAt = parsed.expiresAt
+      ? Number(parsed.expiresAt)
+      : parsed.expiryDate
+      ? new Date(parsed.expiryDate).getTime()
+      : parsed.expiresAtMs
+      ? Number(parsed.expiresAtMs)
+      : null;
+
+    if (expiresAt && Date.now() < expiresAt) {
+      return SUB_TEXT_LIMIT;
+    }
     return STANDARD_TEXT_LIMIT;
   } catch (e) {
     // If stored value is not JSON (legacy) attempt numeric parse
@@ -59,11 +66,12 @@ export async function POST(req: NextRequest) {
     }
 
     const dateKey = currentDateDhaka();
-    const redisKey = `rate:${fid}:${dateKey}`;
+    const redisKey = `text_rate:${fid}:${dateKey}`;
 
     // Check current count
     const limit = await getUserLimit(fid);
     const current = await getRateCount(fid, dateKey, "text");
+    console.log({ limit, current });
     if (current >= limit) {
       return NextResponse.json(
         {

@@ -7,9 +7,14 @@ import ProModal from "./ProModal";
 type HeaderProps = {
   status: StatusType | undefined;
   isStatusLoading: boolean;
+  refetchStatus: () => void;
 };
 
-const CreateHeader = ({ status, isStatusLoading }: HeaderProps) => {
+const CreateHeader = ({
+  status,
+  isStatusLoading,
+  refetchStatus,
+}: HeaderProps) => {
   const [showProModal, setShowProModal] = useState(false);
 
   console.log(status);
@@ -22,16 +27,22 @@ const CreateHeader = ({ status, isStatusLoading }: HeaderProps) => {
             AI Cast Generator
           </h2>
 
-          <button
-            onClick={() => setShowProModal(true)}
-            className="py-1 px-2 bg-purple-900 text-white rounded-2xl text-sm hover:bg-purple-600"
-          >
-            Get Pro
-          </button>
+          {status && status?.tier === "pro" ? (
+            <span className="bg-purple-900 py-1 px-2 rounded-2xl text-sm text-orange-400 font-semibold">
+              Pro
+            </span>
+          ) : (
+            <button
+              onClick={() => setShowProModal(true)}
+              className="py-1 px-2 bg-purple-900 text-white rounded-2xl text-sm hover:bg-purple-600"
+            >
+              Get Pro
+            </button>
+          )}
         </div>
 
-        <div className="flex justify-around items-center w-full mt-2">
-          <div className="bg-purple-800 rounded-lg px-2 py-1.5 border border-purple-600">
+        <div className="flex justify-around items-center w-full mt-2 bg-purple-900 py-2 rounded-xl">
+          <div className="">
             <p className="text-purple-200 text-xs">Daily Cast</p>
             <p
               className={`${
@@ -45,7 +56,7 @@ const CreateHeader = ({ status, isStatusLoading }: HeaderProps) => {
               )}
             </p>
           </div>
-          <div className="bg-purple-800 rounded-lg px-2 py-1.5 border border-purple-600">
+          <div className="">
             <p className="text-purple-200 text-xs">Daily Thumbnail</p>
             <p
               className={`${
@@ -59,7 +70,7 @@ const CreateHeader = ({ status, isStatusLoading }: HeaderProps) => {
               )}
             </p>
           </div>
-          <div className="bg-purple-800 rounded-lg px-2 py-1.5 border border-purple-600">
+          <div className="">
             <p className="text-purple-200 text-xs">Your Tier</p>
             <p className="text-white text-sm font-bold text-center">
               {isStatusLoading ? (
@@ -72,7 +83,12 @@ const CreateHeader = ({ status, isStatusLoading }: HeaderProps) => {
         </div>
       </div>
 
-      {showProModal && <ProModal setShowProModal={setShowProModal} />}
+      {showProModal && (
+        <ProModal
+          setShowProModal={setShowProModal}
+          refetchStatus={refetchStatus}
+        />
+      )}
     </div>
   );
 };

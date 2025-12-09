@@ -22,7 +22,7 @@ export async function uploadImageToCloudinary(
     // Add data URI prefix if not present
     const dataUri = base64Image.startsWith("data:")
       ? base64Image
-      : `data:image/jpeg;base64,${base64Image}`;
+      : `data:image/png;base64,${base64Image}`;
 
     // Upload to Cloudinary
     const uploadResult = await cloudinary.uploader.upload(dataUri, {
@@ -31,7 +31,6 @@ export async function uploadImageToCloudinary(
       resource_type: "image",
       // Auto optimize
       transformation: [
-        { width: 500, height: 281, crop: "fill", gravity: "auto" }, // 16:9 ratio
         { quality: "auto", fetch_format: "auto" }, // Auto format & quality
       ],
     });
@@ -56,7 +55,7 @@ export async function uploadAndOptimize(base64Image: string): Promise<{
   try {
     const dataUri = base64Image.startsWith("data:")
       ? base64Image
-      : `data:image/jpeg;base64,${base64Image}`;
+      : `data:image/png;base64,${base64Image}`;
 
     const uploadResult = await cloudinary.uploader.upload(dataUri, {
       folder: "farcaster-thumbnails",

@@ -85,6 +85,7 @@ export async function POST(request: NextRequest) {
       startDate: new Date().toISOString(),
       expiryDate: new Date(Date.now() + durationSeconds * 1000).toISOString(),
       timestamp: verification.timestamp,
+      tier: "Pro",
     });
 
     // Store in Redis with expiration

@@ -2,8 +2,8 @@
 import { Redis } from "@upstash/redis";
 
 if (
-  !process.env.UPSTASH_REDIS_REST_URL ||
-  !process.env.UPSTASH_REDIS_REST_TOKEN
+  process.env.UPSTASH_REDIS_REST_URL === null ||
+  !process.env.UPSTASH_REDIS_REST_TOKEN === null
 ) {
   throw new Error(
     "Missing UPSTASH_REDIS_REST_URL or UPSTASH_REDIS_REST_TOKEN env vars"
