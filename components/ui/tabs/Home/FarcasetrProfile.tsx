@@ -188,10 +188,10 @@ const FarcasterProfile = ({ neynarUser }: FarcasterProfileProps) => {
 
       {/* Marketing  */}
       <div
-        onClick={() => setTab(Tab.Analysis)}
-        className="fixed h-16 w-16  cursor-pointer flex justify-center items-center bg-gradient  right-4 bottom-24"
+        onClick={() => setTab(Tab.Create)}
+        className="fixed h-20 w-20  cursor-pointer flex justify-center items-center bg-gradient  right-4 bottom-24"
       >
-        <img src="/gift.gif" className="w-full" />
+        <img src="/discount.gif" className="w-full animate-bounce" />
       </div>
     </div>
   );

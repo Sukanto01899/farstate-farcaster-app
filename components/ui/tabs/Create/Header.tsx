@@ -34,7 +34,7 @@ const CreateHeader = ({
           ) : (
             <button
               onClick={() => setShowProModal(true)}
-              className="py-1 px-2 bg-purple-900 text-white rounded-2xl text-sm hover:bg-purple-600"
+              className="  py-1 px-3 duration-150 font-bold bg-purple-900 text-white rounded-2xl text-sm hover:bg-purple-600"
             >
               Get Pro
             </button>
@@ -82,6 +82,14 @@ const CreateHeader = ({
           </div>
         </div>
       </div>
+
+      {/* Marketing */}
+      <button
+        onClick={() => setShowProModal(true)}
+        className="fixed h-14 w-14 hover:h-16 z-50 duration-150 hover:w-16  cursor-pointer flex justify-center items-center bg-gradient  right-4 bottom-24"
+      >
+        <img src="/offer.gif" className="w-full" />
+      </button>
 
       {showProModal && (
         <ProModal

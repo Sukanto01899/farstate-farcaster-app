@@ -220,6 +220,9 @@ const ProModal = ({
               <p className="text-xl font-bold">
                 ${perMonthPrice * selectedPlan}
               </p>
+              <p className="text-xs text-green-500 font-semibold mt-0.5">
+                50% OFF
+              </p>
             </div>
           </div>
         </div>
