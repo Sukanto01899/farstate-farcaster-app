@@ -16,18 +16,28 @@ export type DropType = {
 
 export const drop = [
   {
+    title: "Exclusive USDC Drop",
+    description: "Early first 50 users",
+    contract: abi.ExclusiveUSDCDrop,
+    chain: base,
+    isActive: true,
+    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png",
+    reward: "0.3 $USDC",
+    isUpcoming: false,
+  },
+  {
     title: "Exclusive CELO Drop",
     description: "Early first 150 users",
     contract: abi.CELODrop,
     chain: celo,
-    isActive: true,
+    isActive: false,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/5567.png",
     reward: "0.1 $CELO",
     isUpcoming: false,
   },
   {
     title: "Exclusive TOSHI Drop",
-    description: "Early first 1000 users",
+    description: "Early first 500 users",
     contract: abi.TOSHIDrop,
     chain: base,
     isActive: true,

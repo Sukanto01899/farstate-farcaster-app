@@ -2,7 +2,7 @@
 import { redis } from "./upstash";
 
 export const STANDARD_TEXT_LIMIT = 5;
-export const STANDARD_IMAGE_LIMIT = 3;
+export const STANDARD_IMAGE_LIMIT = 1;
 export const SUB_TEXT_LIMIT = 20;
 export const SUB_IMAGE_LIMIT = 10;
 
