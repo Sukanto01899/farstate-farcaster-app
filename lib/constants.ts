@@ -101,8 +101,8 @@ export const notificationsBtn = [
   {
     id: 4,
     name: "Rewards",
-    title: "💰 Claim USDC Drop now!",
-    body: "USDC Exclusive drop claiming started (FCFS)⚡!",
+    title: "💰 Claim DEGEN Drop now!",
+    body: "DEGEN Exclusive drop claiming started (FCFS)⚡!",
   },
 ];
 

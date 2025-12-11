@@ -16,6 +16,16 @@ export type DropType = {
 
 export const drop = [
   {
+    title: "Exclusive DEGEN Drop",
+    description: "Early first 250 users",
+    contract: abi.DEGENDrop,
+    chain: base,
+    isActive: true,
+    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/30096.png",
+    reward: "20 $DEGEN",
+    isUpcoming: false,
+  },
+  {
     title: "Exclusive USDC Drop",
     description: "Early first 50 users",
     contract: abi.ExclusiveUSDCDrop,
@@ -55,16 +65,7 @@ export const drop = [
     reward: "0.3 WCT",
     isUpcoming: false,
   },
-  {
-    title: "Exclusive DEGEN Drop",
-    description: "Early first 500 users",
-    contract: abi.DEGENDrop,
-    chain: base,
-    isActive: false,
-    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/30096.png",
-    reward: "10 DEGEN",
-    isUpcoming: false,
-  },
+
   {
     title: "Exclusive OP Drop",
     description: "Early first 50 users",
