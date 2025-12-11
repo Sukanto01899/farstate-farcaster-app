@@ -30,7 +30,7 @@ export const drop = [
     description: "Early first 50 users",
     contract: abi.ExclusiveUSDCDrop,
     chain: base,
-    isActive: true,
+    isActive: false,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png",
     reward: "0.3 $USDC",
     isUpcoming: false,
