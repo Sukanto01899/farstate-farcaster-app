@@ -16,6 +16,16 @@ export type DropType = {
 
 export const drop = [
   {
+    title: "Exclusive MON Drop",
+    description: "Only for first 200 users",
+    contract: abi.MONDrop,
+    chain: Monad,
+    isActive: true,
+    icon: "https://monadvision.com/images/token/monad.svg",
+    reward: "0.5 MON",
+    isUpcoming: false,
+  },
+  {
     title: "Exclusive DEGEN Drop",
     description: "Early first 250 users",
     contract: abi.DEGENDrop,
@@ -85,16 +95,6 @@ export const drop = [
     isActive: false,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/11841.png",
     reward: "0.15 ARB",
-    isUpcoming: false,
-  },
-  {
-    title: "Exclusive MON Drop",
-    description: "Only for first 100 users",
-    contract: abi.MONDrop,
-    chain: Monad,
-    isActive: false,
-    icon: "https://monadvision.com/images/token/monad.svg",
-    reward: "1 MON",
     isUpcoming: false,
   },
 ];
