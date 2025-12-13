@@ -16,6 +16,16 @@ export type DropType = {
 
 export const drop = [
   {
+    title: "Exclusive WCT Drop",
+    description: "Claim WCT Drop (FCFS)",
+    contract: abi.WCTDrop,
+    chain: base,
+    isActive: true,
+    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/33152.png",
+    reward: "0.2 $WCT",
+    isUpcoming: false,
+  },
+  {
     title: "Exclusive MON Drop",
     description: "Only for first 200 users",
     contract: abi.MONDrop,
@@ -30,7 +40,7 @@ export const drop = [
     description: "Increase Onchain Activity",
     contract: abi.DEGENDrop,
     chain: base,
-    isActive: true,
+    isActive: false,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/30096.png",
     reward: "3 $DEGEN",
     isUpcoming: false,
@@ -60,19 +70,9 @@ export const drop = [
     description: "Early first 500 users",
     contract: abi.TOSHIDrop,
     chain: base,
-    isActive: true,
+    isActive: false,
     icon: "https://assets.coingecko.com/coins/images/31126/standard/Toshi_Logo_-_Circular.png?1721677476",
     reward: "10 $TOSHI",
-    isUpcoming: false,
-  },
-  {
-    title: "Exclusive WCT Drop",
-    description: "Early first 250 users",
-    contract: abi.WCTDrop,
-    chain: base,
-    isActive: false,
-    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/33152.png",
-    reward: "0.3 WCT",
     isUpcoming: false,
   },
 
