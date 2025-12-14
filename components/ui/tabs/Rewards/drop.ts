@@ -16,6 +16,16 @@ export type DropType = {
 
 export const drop = [
   {
+    title: "Exclusive USDC Drop",
+    description: "Claim USDC Drop (FCFS)",
+    contract: abi.ExclusiveUSDCDrop,
+    chain: base,
+    isActive: true,
+    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png",
+    reward: "0.02 $USDC",
+    isUpcoming: false,
+  },
+  {
     title: "Exclusive WCT Drop",
     description: "Claim WCT Drop (FCFS)",
     contract: abi.WCTDrop,
@@ -45,16 +55,7 @@ export const drop = [
     reward: "3 $DEGEN",
     isUpcoming: false,
   },
-  {
-    title: "Exclusive USDC Drop",
-    description: "Early first 50 users",
-    contract: abi.ExclusiveUSDCDrop,
-    chain: base,
-    isActive: false,
-    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png",
-    reward: "0.3 $USDC",
-    isUpcoming: false,
-  },
+
   {
     title: "Exclusive CELO Drop",
     description: "Early first 150 users",

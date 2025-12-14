@@ -3580,7 +3580,7 @@ export const abi = {
   },
 
   ExclusiveUSDCDrop: {
-    address: "0x7c4659CA43f8B453CBbF7006C536Ab3De17aB250",
+    address: "0x748E7948cCA8Ec4AFb381067Debe462f48653C63",
     abi: [
       {
         inputs: [
