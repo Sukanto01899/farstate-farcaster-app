@@ -43,8 +43,8 @@ const FarcasterProfile = ({ neynarUser }: FarcasterProfileProps) => {
   const { data: userInfo } = useReadContract({
     address: abi.DailyStreakRewards.address,
     abi: abi.DailyStreakRewards.abi,
-    functionName: "getUserInfoByFID",
-    args: context ? [BigInt(context.user?.fid)] : undefined,
+    functionName: "getUserInfo",
+    args: address ? [address] : undefined,
     query: {
       enabled: !!address,
     },

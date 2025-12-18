@@ -50,26 +50,18 @@ export default function StreakCard({
   const [fetchingSignature, setFetchingSignature] = useState(false);
 
   // Read user info from contract
-  const { data: userInfo, refetch: refetchUserInfo } = useReadContract({
+  const {
+    data: userInfo,
+    refetch: refetchUserInfo,
+    isLoading: isUserInfoLoading,
+  } = useReadContract({
     address: CONTRACT_ADDRESS,
     abi: CONTRACT_ABI,
-    functionName: "getUserInfoByFID",
-    args: context ? [BigInt(context.user?.fid)] : undefined,
-    query: {
-      enabled: !!context,
-      refetchInterval: 10000, // Refetch every 10 seconds
-    },
-  });
-
-  // Read streak active status
-  const { data: isStreakActive } = useReadContract({
-    address: CONTRACT_ADDRESS,
-    abi: CONTRACT_ABI,
-    functionName: "isStreakActive",
+    functionName: "getUserInfo",
     args: address ? [address] : undefined,
     query: {
       enabled: !!address,
-      refetchInterval: 10000,
+      refetchInterval: 10000, // Refetch every 10 seconds
     },
   });
 
@@ -285,6 +277,9 @@ export default function StreakCard({
 
   const claiming = isClaimPending || isClaimConfirming || fetchingSignature;
   const withdrawing = isWithdrawPending || isWithdrawConfirming;
+  const initialLoading = isUserInfoLoading;
+
+  console.log(userInfo);
 
   return (
     <Modal>
@@ -430,14 +425,19 @@ export default function StreakCard({
             {/* Claim button */}
             <button
               onClick={handleClaim}
-              disabled={!canClaim || claiming}
+              disabled={!canClaim || claiming || initialLoading}
               className={`w-full py-2 rounded-lg font-bold text-sm transition-all duration-300 transform ${
                 canClaim && !claiming
                   ? "bg-gradient-to-r from-yellow-400 to-orange-500 text-purple-900 hover:scale-105 hover:shadow-2xl hover:shadow-yellow-500/50 active:scale-95"
                   : "bg-gray-600/50 text-gray-300 cursor-not-allowed"
               } ${claiming ? "animate-pulse" : ""}`}
             >
-              {claiming ? (
+              {initialLoading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  Loading...
+                </span>
+              ) : claiming ? (
                 <span className="flex items-center justify-center gap-2">
                   <Loader2 className="w-5 h-5 animate-spin" />
                   {fetchingSignature
