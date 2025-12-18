@@ -9,7 +9,7 @@ import {
   Share2,
   TrendingUp,
 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { truncateAddress } from "@/lib/utils";
 import { Tab, useFrame } from "@/components/providers/farcaster-provider";
 import { APP_URL } from "@/lib/constants";
@@ -49,6 +49,16 @@ const FarcasterProfile = ({ neynarUser }: FarcasterProfileProps) => {
       enabled: !!address,
     },
   });
+
+  useEffect(() => {
+    const hasSeenDailyClaimModal = localStorage.getItem(
+      "seen-daily-claim-modal"
+    );
+    if (!hasSeenDailyClaimModal) {
+      setShowStreakModal(true);
+      localStorage.setItem("seen-daily-claim-modal", "true");
+    }
+  }, []);
 
   const streak = userInfo ? Number(userInfo[2]) : 0;
   const canClaim = userInfo ? userInfo[4] : false;
