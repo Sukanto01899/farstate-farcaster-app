@@ -56,7 +56,7 @@ export default function StreakCard({
     functionName: "getUserInfoByFID",
     args: context ? [BigInt(context.user?.fid)] : undefined,
     query: {
-      enabled: !!address,
+      enabled: !!context,
       refetchInterval: 10000, // Refetch every 10 seconds
     },
   });
