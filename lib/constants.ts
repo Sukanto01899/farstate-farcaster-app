@@ -104,6 +104,12 @@ export const notificationsBtn = [
     title: "💰 Claim DEGEN Drop now!",
     body: "DEGEN Exclusive drop claiming started (FCFS)⚡!",
   },
+  {
+    id: 5,
+    name: "Rewards",
+    title: "💰 Did you claim your DEGEN Today?",
+    body: "Keep your streak going strong, check-in now⚡!",
+  },
 ];
 
 import { defineChain } from "viem";

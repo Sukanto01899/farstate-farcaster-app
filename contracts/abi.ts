@@ -3935,4 +3935,827 @@ export const abi = {
     ],
     chain: base,
   },
+
+  DailyStreakRewards: {
+    address: "0xffbE82CA81A4DDD5c96ABEd1DB9D0b09798e3535",
+    abi: [
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "initialOwner",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "_signerAddress",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "_rewardToken",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "_dailyReward",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "_weeklyBonus",
+            type: "uint256",
+          },
+        ],
+        stateMutability: "nonpayable",
+        type: "constructor",
+      },
+      {
+        inputs: [],
+        name: "AlreadyClaimedToday",
+        type: "error",
+      },
+      {
+        inputs: [
+          {
+            internalType: "uint256",
+            name: "fid",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "nonce",
+            type: "uint256",
+          },
+          {
+            internalType: "bytes",
+            name: "signature",
+            type: "bytes",
+          },
+        ],
+        name: "claimDaily",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "ECDSAInvalidSignature",
+        type: "error",
+      },
+      {
+        inputs: [
+          {
+            internalType: "uint256",
+            name: "length",
+            type: "uint256",
+          },
+        ],
+        name: "ECDSAInvalidSignatureLength",
+        type: "error",
+      },
+      {
+        inputs: [
+          {
+            internalType: "bytes32",
+            name: "s",
+            type: "bytes32",
+          },
+        ],
+        name: "ECDSAInvalidSignatureS",
+        type: "error",
+      },
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "token",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "amount",
+            type: "uint256",
+          },
+        ],
+        name: "emergencyWithdraw",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "EnforcedPause",
+        type: "error",
+      },
+      {
+        inputs: [],
+        name: "ExpectedPause",
+        type: "error",
+      },
+      {
+        inputs: [],
+        name: "FIDAlreadyLinked",
+        type: "error",
+      },
+      {
+        inputs: [],
+        name: "InsufficientContractBalance",
+        type: "error",
+      },
+      {
+        inputs: [],
+        name: "InvalidAmount",
+        type: "error",
+      },
+      {
+        inputs: [],
+        name: "InvalidFID",
+        type: "error",
+      },
+      {
+        inputs: [],
+        name: "InvalidSignature",
+        type: "error",
+      },
+      {
+        inputs: [],
+        name: "NoRewardsAvailable",
+        type: "error",
+      },
+      {
+        inputs: [],
+        name: "NonceAlreadyUsed",
+        type: "error",
+      },
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "owner",
+            type: "address",
+          },
+        ],
+        name: "OwnableInvalidOwner",
+        type: "error",
+      },
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "account",
+            type: "address",
+          },
+        ],
+        name: "OwnableUnauthorizedAccount",
+        type: "error",
+      },
+      {
+        inputs: [],
+        name: "pause",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "ReentrancyGuardReentrantCall",
+        type: "error",
+      },
+      {
+        inputs: [],
+        name: "renounceOwnership",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "token",
+            type: "address",
+          },
+        ],
+        name: "SafeERC20FailedOperation",
+        type: "error",
+      },
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "newSigner",
+            type: "address",
+          },
+        ],
+        name: "setSignerAddress",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "StreakExpired",
+        type: "error",
+      },
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "newOwner",
+            type: "address",
+          },
+        ],
+        name: "transferOwnership",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "unpause",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "ZeroAddress",
+        type: "error",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: "address",
+            name: "user",
+            type: "address",
+          },
+          {
+            indexed: true,
+            internalType: "uint256",
+            name: "fid",
+            type: "uint256",
+          },
+          {
+            indexed: false,
+            internalType: "uint256",
+            name: "streak",
+            type: "uint256",
+          },
+          {
+            indexed: false,
+            internalType: "uint256",
+            name: "reward",
+            type: "uint256",
+          },
+          {
+            indexed: false,
+            internalType: "uint256",
+            name: "timestamp",
+            type: "uint256",
+          },
+        ],
+        name: "DailyClaimed",
+        type: "event",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: "address",
+            name: "user",
+            type: "address",
+          },
+          {
+            indexed: true,
+            internalType: "uint256",
+            name: "fid",
+            type: "uint256",
+          },
+        ],
+        name: "FIDLinked",
+        type: "event",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: "address",
+            name: "previousOwner",
+            type: "address",
+          },
+          {
+            indexed: true,
+            internalType: "address",
+            name: "newOwner",
+            type: "address",
+          },
+        ],
+        name: "OwnershipTransferred",
+        type: "event",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: false,
+            internalType: "address",
+            name: "account",
+            type: "address",
+          },
+        ],
+        name: "Paused",
+        type: "event",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: false,
+            internalType: "uint256",
+            name: "dailyReward",
+            type: "uint256",
+          },
+          {
+            indexed: false,
+            internalType: "uint256",
+            name: "weeklyBonus",
+            type: "uint256",
+          },
+        ],
+        name: "RewardsUpdated",
+        type: "event",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: "address",
+            name: "user",
+            type: "address",
+          },
+          {
+            indexed: false,
+            internalType: "uint256",
+            name: "amount",
+            type: "uint256",
+          },
+          {
+            indexed: false,
+            internalType: "uint256",
+            name: "timestamp",
+            type: "uint256",
+          },
+        ],
+        name: "RewardsWithdrawn",
+        type: "event",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: "address",
+            name: "oldSigner",
+            type: "address",
+          },
+          {
+            indexed: true,
+            internalType: "address",
+            name: "newSigner",
+            type: "address",
+          },
+        ],
+        name: "SignerUpdated",
+        type: "event",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: false,
+            internalType: "address",
+            name: "account",
+            type: "address",
+          },
+        ],
+        name: "Unpaused",
+        type: "event",
+      },
+      {
+        inputs: [
+          {
+            internalType: "uint256",
+            name: "_dailyReward",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "_weeklyBonus",
+            type: "uint256",
+          },
+        ],
+        name: "updateRewards",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: true,
+            internalType: "address",
+            name: "user",
+            type: "address",
+          },
+          {
+            indexed: true,
+            internalType: "uint256",
+            name: "fid",
+            type: "uint256",
+          },
+          {
+            indexed: false,
+            internalType: "uint256",
+            name: "bonus",
+            type: "uint256",
+          },
+          {
+            indexed: false,
+            internalType: "uint256",
+            name: "timestamp",
+            type: "uint256",
+          },
+        ],
+        name: "WeeklyBonusClaimed",
+        type: "event",
+      },
+      {
+        inputs: [],
+        name: "withdrawRewards",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "",
+            type: "address",
+          },
+        ],
+        name: "addressToFID",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "dailyReward",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
+        name: "fidToAddress",
+        outputs: [
+          {
+            internalType: "address",
+            name: "",
+            type: "address",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "getContractBalance",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "getContractStats",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "_totalClaimed",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "_totalUsers",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "contractBalance",
+            type: "uint256",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "user",
+            type: "address",
+          },
+        ],
+        name: "getTimeUntilNextClaim",
+        outputs: [
+          {
+            internalType: "bool",
+            name: "available",
+            type: "bool",
+          },
+          {
+            internalType: "uint256",
+            name: "timeRemaining",
+            type: "uint256",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "user",
+            type: "address",
+          },
+        ],
+        name: "getUserInfo",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "fid",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "lastClaim",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "streak",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "pending",
+            type: "uint256",
+          },
+          {
+            internalType: "bool",
+            name: "canClaim",
+            type: "bool",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "uint256",
+            name: "fid",
+            type: "uint256",
+          },
+        ],
+        name: "getUserInfoByFID",
+        outputs: [
+          {
+            internalType: "address",
+            name: "userAddress",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "lastClaim",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "streak",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "pending",
+            type: "uint256",
+          },
+          {
+            internalType: "bool",
+            name: "canClaim",
+            type: "bool",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "user",
+            type: "address",
+          },
+        ],
+        name: "isStreakActive",
+        outputs: [
+          {
+            internalType: "bool",
+            name: "isActive",
+            type: "bool",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "owner",
+        outputs: [
+          {
+            internalType: "address",
+            name: "",
+            type: "address",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "paused",
+        outputs: [
+          {
+            internalType: "bool",
+            name: "",
+            type: "bool",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "rewardToken",
+        outputs: [
+          {
+            internalType: "contract IERC20",
+            name: "",
+            type: "address",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "signerAddress",
+        outputs: [
+          {
+            internalType: "address",
+            name: "",
+            type: "address",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "totalClaimed",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "totalUsers",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
+        name: "usedNonces",
+        outputs: [
+          {
+            internalType: "bool",
+            name: "",
+            type: "bool",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
+        name: "userStreaks",
+        outputs: [
+          {
+            internalType: "uint40",
+            name: "lastClaimTime",
+            type: "uint40",
+          },
+          {
+            internalType: "uint16",
+            name: "currentStreak",
+            type: "uint16",
+          },
+          {
+            internalType: "uint200",
+            name: "pendingRewards",
+            type: "uint200",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "weeklyBonus",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+    ],
+    chain: base,
+  },
 } as const;

@@ -4,8 +4,6 @@ import { createClient, Errors } from "@farcaster/quick-auth";
 
 const client = createClient();
 
-const DEPLOYMENT_DOMAIN = process.env.DOMAIN || "your-domain.com";
-
 export async function middleware(request: NextRequest) {
   const authHeader = request.headers.get("authorization") || "";
   //   console.log("Auth Header:", authHeader);
@@ -17,10 +15,17 @@ export async function middleware(request: NextRequest) {
   // console.log("Token:", token);
 
   try {
-    // console.log("Verifying token for domain:", DEPLOYMENT_DOMAIN);
+    const deploymentDomain = process.env.DOMAIN || request.nextUrl.host;
+    if (!deploymentDomain) {
+      return NextResponse.json(
+        { error: "Missing deployment domain" },
+        { status: 500 }
+      );
+    }
+    // console.log("Verifying token for domain:", deploymentDomain);
     const payload = await client.verifyJwt({
       token,
-      domain: DEPLOYMENT_DOMAIN,
+      domain: deploymentDomain,
     });
     // payload.sub = user FID
     // console.log("Authenticated FID:", payload);
@@ -60,7 +65,7 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     "/api/auth/signature/:path*",
-    "/api/signature/drop",
+    "/api/signature/:path*",
     "/api/ai/create-thumbnail",
     "/api/ai/create-cast",
   ], // PROTECT all /api/auth/* routes

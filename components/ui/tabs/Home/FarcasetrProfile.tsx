@@ -3,18 +3,20 @@ import {
   Award,
   CheckCircle,
   Code,
+  Flame,
   Loader,
   LoaderIcon,
   Share2,
   TrendingUp,
 } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { truncateAddress } from "@/lib/utils";
 import { Tab, useFrame } from "@/components/providers/farcaster-provider";
 import { APP_URL } from "@/lib/constants";
 import {
   useAccount,
   useConnect,
+  useReadContract,
   useSendTransaction,
   useSwitchChain,
 } from "wagmi";
@@ -23,20 +25,33 @@ import { base } from "viem/chains";
 import { farcasterMiniApp as miniAppConnector } from "@farcaster/miniapp-wagmi-connector";
 import MintProfile from "./MintProfile";
 import useShareCast from "@/hooks/useShareCast";
+import DailyClaimReward from "./DailyClaimReward";
+import { abi } from "@/contracts/abi";
 
 type FarcasterProfileProps = {
   neynarUser: NeynarUser | null;
 };
 
 const FarcasterProfile = ({ neynarUser }: FarcasterProfileProps) => {
-  const { context, actions, setTab } = useFrame();
-  const { chainId, isConnected } = useAccount();
-  const { switchChainAsync } = useSwitchChain();
-  const { connectAsync } = useConnect();
-  const { sendTransaction: sendGM, isPending: gmPending } =
-    useSendTransaction();
+  const { context, actions } = useFrame();
+  const { address } = useAccount();
+  const [showStreakModal, setShowStreakModal] = useState(false);
 
   const { handleShare } = useShareCast();
+
+  // Read user info from contract
+  const { data: userInfo } = useReadContract({
+    address: abi.DailyStreakRewards.address,
+    abi: abi.DailyStreakRewards.abi,
+    functionName: "getUserInfoByFID",
+    args: context ? [BigInt(context.user?.fid)] : undefined,
+    query: {
+      enabled: !!address,
+    },
+  });
+
+  const streak = userInfo ? Number(userInfo[2]) : 0;
+  const canClaim = userInfo ? userInfo[4] : false;
   return (
     <div className="bg-slate-900 rounded-2xl p-4 border border-slate-800 shadow-xl">
       <div className="flex justify-between items-center mb-4">
@@ -70,23 +85,16 @@ const FarcasterProfile = ({ neynarUser }: FarcasterProfileProps) => {
           </div>
         </div>
 
-        <button
-          onClick={async () => {
-            if (!isConnected) {
-              await connectAsync({ connector: miniAppConnector() });
-            }
-            if (chainId !== base.id) {
-              await switchChainAsync({ chainId: base.id });
-            }
-            sendGM({
-              to: "0x49ee323Ea1Bb65F68FA75df0c6D441d20d83A8Cd",
-              value: parseEther("0"),
-            });
-          }}
-          className=" bg-purple-500/20 hover:bg-purple-500/50 ring-2 ring-purple-500 rounded-full p-3 text-lg text-white font-bold"
+        {/* <button
+          onClick={() => setShowStreakModal(true)}
+          className=" bg-purple-500/20 hover:bg-purple-500/50 ring-2 ring-purple-500 rounded-xl p-2 text-xs text-white font-bold"
         >
-          {gmPending ? <Loader className="h-5 w-5 animate-spin" /> : <i>GM</i>}
-        </button>
+          <i>Claim Reward</i>
+        </button> */}
+
+        {showStreakModal && (
+          <DailyClaimReward setShowStreakModal={setShowStreakModal} />
+        )}
       </div>
 
       {/* Neynar Score - Separate Highlighted Card */}
@@ -188,10 +196,25 @@ const FarcasterProfile = ({ neynarUser }: FarcasterProfileProps) => {
 
       {/* Marketing  */}
       <div
-        onClick={() => setTab(Tab.Create)}
-        className="fixed h-20 w-20  cursor-pointer flex justify-center items-center bg-gradient  right-4 bottom-24"
+        onClick={() => setShowStreakModal(true)}
+        className="fixed  cursor-pointer flex flex-col gap-2 justify-center items-center bg-gradient  right-4 bottom-24"
       >
-        <img src="/discount.gif" className="w-full animate-bounce" />
+        <div className="flex items-center gap-1 relative w-12 h-12">
+          <h3 className="text-sm text-white font-bold absolute z-30 top-2/3 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            {streak}
+          </h3>
+          <Flame
+            className="w-full h-full text-orange-400 animate-pulse"
+            fill="currentColor"
+          />
+        </div>
+        <div
+          className={`${
+            canClaim ? "bg-orange-400" : "bg-gray-400"
+          } py-1 px-2 rounded-xl text-xs font-bold animate-bounce`}
+        >
+          {canClaim ? "Daily Degen" : "Already Claimed"}
+        </div>
       </div>
     </div>
   );
