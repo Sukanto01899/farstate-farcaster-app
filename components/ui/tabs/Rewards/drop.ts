@@ -16,6 +16,16 @@ export type DropType = {
 
 export const drop = [
   {
+    title: "Exclusive CELO Drop",
+    description: "Early first 150 users",
+    contract: abi.CELODrop,
+    chain: celo,
+    isActive: true,
+    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/5567.png",
+    reward: "0.1 $CELO",
+    isUpcoming: false,
+  },
+  {
     title: "Exclusive WCT Drop",
     description: "Claim WCT Drop (FCFS)",
     contract: abi.WCTDrop,

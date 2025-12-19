@@ -279,8 +279,6 @@ export default function StreakCard({
   const withdrawing = isWithdrawPending || isWithdrawConfirming;
   const initialLoading = isUserInfoLoading;
 
-  console.log(userInfo);
-
   return (
     <Modal>
       <div className="relative w-full max-w-md">
