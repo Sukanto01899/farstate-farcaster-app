@@ -317,7 +317,7 @@ export const abi = {
     chain: Monad,
   },
   ARBDrop: {
-    address: "0x08227695cD528C01364b61b6E46a8cdfe8b70545",
+    address: "0x9559895EFd662f166FF43B7bd2bc29586f9909c1",
     abi: [
       {
         inputs: [
@@ -333,7 +333,7 @@ export const abi = {
           },
           {
             internalType: "address",
-            name: "_arbToken",
+            name: "_dropToken",
             type: "address",
           },
         ],
@@ -445,19 +445,6 @@ export const abi = {
         type: "function",
       },
       {
-        inputs: [],
-        name: "arbToken",
-        outputs: [
-          {
-            internalType: "contract IERC20",
-            name: "",
-            type: "address",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
-      },
-      {
         inputs: [
           {
             internalType: "uint256",
@@ -499,6 +486,19 @@ export const abi = {
         name: "diposit",
         outputs: [],
         stateMutability: "payable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "dropToken",
+        outputs: [
+          {
+            internalType: "contract IERC20",
+            name: "",
+            type: "address",
+          },
+        ],
+        stateMutability: "view",
         type: "function",
       },
       {
@@ -563,6 +563,19 @@ export const abi = {
           },
         ],
         name: "setClaimAmount",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "_dropToken",
+            type: "address",
+          },
+        ],
+        name: "setDropToken",
         outputs: [],
         stateMutability: "nonpayable",
         type: "function",
@@ -665,31 +678,6 @@ export const abi = {
       {
         inputs: [
           {
-            internalType: "uint256",
-            name: "_fid",
-            type: "uint256",
-          },
-          {
-            internalType: "bytes",
-            name: "_signature",
-            type: "bytes",
-          },
-        ],
-        name: "claimDrop",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-      },
-      {
-        inputs: [],
-        name: "diposit",
-        outputs: [],
-        stateMutability: "payable",
-        type: "function",
-      },
-      {
-        inputs: [
-          {
             internalType: "address",
             name: "initialOwner",
             type: "address",
@@ -701,7 +689,7 @@ export const abi = {
           },
           {
             internalType: "address",
-            name: "_opToken",
+            name: "_dropToken",
             type: "address",
           },
         ],
@@ -729,13 +717,6 @@ export const abi = {
         ],
         name: "OwnableUnauthorizedAccount",
         type: "error",
-      },
-      {
-        inputs: [],
-        name: "pause",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
       },
       {
         inputs: [
@@ -781,6 +762,148 @@ export const abi = {
         type: "event",
       },
       {
+        anonymous: false,
+        inputs: [
+          {
+            indexed: false,
+            internalType: "address",
+            name: "account",
+            type: "address",
+          },
+        ],
+        name: "Unpaused",
+        type: "event",
+      },
+      {
+        inputs: [],
+        name: "MAX_CLAIM",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "MAX_FIDEPOCH",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "uint256",
+            name: "_fid",
+            type: "uint256",
+          },
+          {
+            internalType: "bytes",
+            name: "_signature",
+            type: "bytes",
+          },
+        ],
+        name: "claimDrop",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
+        name: "claimedFid",
+        outputs: [
+          {
+            internalType: "bool",
+            name: "",
+            type: "bool",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "diposit",
+        outputs: [],
+        stateMutability: "payable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "dropToken",
+        outputs: [
+          {
+            internalType: "contract IERC20",
+            name: "",
+            type: "address",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "fidEpoch",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "owner",
+        outputs: [
+          {
+            internalType: "address",
+            name: "",
+            type: "address",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "pause",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [],
+        name: "paused",
+        outputs: [
+          {
+            internalType: "bool",
+            name: "",
+            type: "bool",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
         inputs: [],
         name: "renounceOwnership",
         outputs: [],
@@ -796,6 +919,19 @@ export const abi = {
           },
         ],
         name: "setClaimAmount",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        inputs: [
+          {
+            internalType: "address",
+            name: "_dropToken",
+            type: "address",
+          },
+        ],
+        name: "setDropToken",
         outputs: [],
         stateMutability: "nonpayable",
         type: "function",
@@ -827,6 +963,19 @@ export const abi = {
         type: "function",
       },
       {
+        inputs: [],
+        name: "signerAddress",
+        outputs: [
+          {
+            internalType: "address",
+            name: "",
+            type: "address",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+      {
         inputs: [
           {
             internalType: "address",
@@ -847,140 +996,6 @@ export const abi = {
         type: "function",
       },
       {
-        anonymous: false,
-        inputs: [
-          {
-            indexed: false,
-            internalType: "address",
-            name: "account",
-            type: "address",
-          },
-        ],
-        name: "Unpaused",
-        type: "event",
-      },
-      {
-        inputs: [],
-        name: "withdraw",
-        outputs: [],
-        stateMutability: "nonpayable",
-        type: "function",
-      },
-      {
-        stateMutability: "payable",
-        type: "receive",
-      },
-      {
-        inputs: [
-          {
-            internalType: "uint256",
-            name: "",
-            type: "uint256",
-          },
-        ],
-        name: "claimedFid",
-        outputs: [
-          {
-            internalType: "bool",
-            name: "",
-            type: "bool",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
-      },
-      {
-        inputs: [],
-        name: "fidEpoch",
-        outputs: [
-          {
-            internalType: "uint256",
-            name: "",
-            type: "uint256",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
-      },
-      {
-        inputs: [],
-        name: "MAX_CLAIM",
-        outputs: [
-          {
-            internalType: "uint256",
-            name: "",
-            type: "uint256",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
-      },
-      {
-        inputs: [],
-        name: "MAX_FIDEPOCH",
-        outputs: [
-          {
-            internalType: "uint256",
-            name: "",
-            type: "uint256",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
-      },
-      {
-        inputs: [],
-        name: "opToken",
-        outputs: [
-          {
-            internalType: "contract IERC20",
-            name: "",
-            type: "address",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
-      },
-      {
-        inputs: [],
-        name: "owner",
-        outputs: [
-          {
-            internalType: "address",
-            name: "",
-            type: "address",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
-      },
-      {
-        inputs: [],
-        name: "paused",
-        outputs: [
-          {
-            internalType: "bool",
-            name: "",
-            type: "bool",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
-      },
-      {
-        inputs: [],
-        name: "signerAddress",
-        outputs: [
-          {
-            internalType: "address",
-            name: "",
-            type: "address",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
-      },
-      {
         inputs: [
           {
             internalType: "uint256",
@@ -998,6 +1013,17 @@ export const abi = {
         ],
         stateMutability: "view",
         type: "function",
+      },
+      {
+        inputs: [],
+        name: "withdraw",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+      },
+      {
+        stateMutability: "payable",
+        type: "receive",
       },
     ],
     chain: optimism,
