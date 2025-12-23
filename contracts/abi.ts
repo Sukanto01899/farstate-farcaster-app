@@ -673,7 +673,7 @@ export const abi = {
     chain: arbitrum,
   },
   OPDrop: {
-    address: "0xBD5961CD27C422593C65ee0520e06bcE0aE68959",
+    address: "0x2f737F5081B1F8B55396EABCB79622971Fecf8E7",
     abi: [
       {
         inputs: [

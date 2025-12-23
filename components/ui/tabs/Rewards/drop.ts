@@ -97,7 +97,7 @@ export const drop = [
     isActive: true,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/11840.png",
     reward: "0.1 OP",
-    isUpcoming: true,
+    isUpcoming: false,
   },
 
   {
