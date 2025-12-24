@@ -32,7 +32,7 @@ export const drop = [
     chain: base,
     isActive: true,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/33152.png",
-    reward: "0.5 $WCT",
+    reward: "0.3 $WCT",
     isUpcoming: false,
   },
 
