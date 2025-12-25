@@ -16,6 +16,16 @@ export type DropType = {
 
 export const drop = [
   {
+    title: "Become a DEGEN Holder",
+    description: "Increase Onchain Activity",
+    contract: abi.DEGENDrop,
+    chain: base,
+    isActive: true,
+    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/30096.png",
+    reward: "5 $DEGEN",
+    isUpcoming: false,
+  },
+  {
     title: "Exclusive CELO Drop",
     description: "Claim CELO Drop (FCFS)",
     contract: abi.CELODrop,
@@ -44,16 +54,6 @@ export const drop = [
     isActive: false,
     icon: "https://monadvision.com/images/token/monad.svg",
     reward: "0.5 MON",
-    isUpcoming: false,
-  },
-  {
-    title: "Become a DEGEN Holder",
-    description: "Increase Onchain Activity",
-    contract: abi.DEGENDrop,
-    chain: base,
-    isActive: false,
-    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/30096.png",
-    reward: "3 $DEGEN",
     isUpcoming: false,
   },
 
