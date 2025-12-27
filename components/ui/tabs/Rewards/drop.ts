@@ -16,6 +16,16 @@ export type DropType = {
 
 export const drop = [
   {
+    title: "Exclusive DONUT Drop",
+    description: "Claim DONUT Drop (FCFS)",
+    contract: abi.DONUTDrop,
+    chain: base,
+    isActive: true,
+    icon: "https://assets.coingecko.com/coins/images/70995/standard/donut-logo.jpg?1765020130",
+    reward: "0.1 $DONUT",
+    isUpcoming: false,
+  },
+  {
     title: "Become a DEGEN Holder",
     description: "Increase Onchain Activity",
     contract: abi.DEGENDrop,
