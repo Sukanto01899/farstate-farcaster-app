@@ -175,12 +175,11 @@ try it below 👇
   };
 
   useEffect(() => {
-    const isVisited = localStorage.getItem(`quest-visited`);
+    const isVisited = localStorage.getItem(`quest-visited-${id}`);
     if (isVisited) {
       setIsVisited(true);
     }
-  }, []);
-
+  }, [id]);
   return (
     <div className="bg-slate-900 rounded-2xl p-4 border border-slate-800 shadow-xl hover:border-purple-600 transition-all">
       <div className="flex items-start justify-between mb-3">
