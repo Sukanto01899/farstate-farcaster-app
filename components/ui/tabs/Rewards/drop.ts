@@ -13,6 +13,18 @@ export type DropType = {
   reward: string;
   isUpcoming: Boolean;
 };
+export type QuestsDropType = {
+  title: string;
+  description: string;
+  contract: { address: `0x${string}`; abi: Abi; chain: Chain };
+  chain: Chain;
+  isActive: Boolean;
+  icon: string;
+  reward: string;
+  isUpcoming: Boolean;
+  appUrl: string;
+  id: number;
+};
 
 export const drop = [
   {
@@ -93,7 +105,7 @@ export const drop = [
     description: "Claim ARB Drop (FCFS)",
     contract: abi.ARBDrop,
     chain: arbitrum,
-    isActive: true,
+    isActive: false,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/11841.png",
     reward: "0.1 ARB",
     isUpcoming: false,
@@ -104,7 +116,7 @@ export const drop = [
     description: "Claim OP Drop (FCFS)",
     contract: abi.OPDrop,
     chain: optimism,
-    isActive: true,
+    isActive: false,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/11840.png",
     reward: "0.1 OP",
     isUpcoming: false,
@@ -119,5 +131,20 @@ export const drop = [
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png",
     reward: "0.02 $USDC",
     isUpcoming: false,
+  },
+];
+
+export const questDrop = [
+  {
+    id: 1,
+    title: "Alchemy Mini App Visit",
+    description: "Visit Alchemy Mini App to claim reward",
+    contract: abi.JesseDrop,
+    chain: base,
+    isActive: true,
+    icon: "https://alchemy-fc.vercel.app/icon.png",
+    reward: "1 $jesse",
+    isUpcoming: false,
+    appUrl: "https://farcaster.xyz/miniapps/wLLjqojZVubo/alchemy",
   },
 ];

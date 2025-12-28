@@ -1,7 +1,8 @@
 import { Gift } from "lucide-react";
 import React, { useState } from "react";
-import { drop } from "./drop";
+import { drop, questDrop } from "./drop";
 import ExclusiveDrop from "./ExclusiveDrop";
+import QuestDrop from "./QuestDrop";
 
 const RewardsTab = () => {
   const [isActiveTab, setActiveTab] = useState(true);
@@ -42,6 +43,9 @@ const RewardsTab = () => {
       </div>
 
       <div className="space-y-4">
+        {questDrop.map((quest) => (
+          <QuestDrop key={quest.id} {...quest} />
+        ))}
         {isActiveTab
           ? activeDrop.map((drop) => <ExclusiveDrop {...drop} />)
           : endedDrop.map((drop) => <ExclusiveDrop {...drop} />)}
