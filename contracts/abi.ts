@@ -3,7 +3,7 @@ import { arbitrum, base, baseSepolia, celo, optimism } from "viem/chains";
 
 export const abi = {
   MONDrop: {
-    address: "0x653EBa7955530275273b7Cc6044260B42edF816C",
+    address: "0x29FB746fc3f127F9630cf1d2eA49E2DF2A5759D6",
     abi: [
       {
         inputs: [
