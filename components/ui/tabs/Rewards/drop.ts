@@ -28,6 +28,16 @@ export type QuestsDropType = {
 
 export const drop = [
   {
+    title: "Exclusive WCT Drop",
+    description: "Claim WCT Drop (FCFS)",
+    contract: abi.WCTDrop,
+    chain: base,
+    isActive: true,
+    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/33152.png",
+    reward: "0.3 $WCT",
+    isUpcoming: false,
+  },
+  {
     title: "Exclusive MON Drop",
     description: "Claim Monad Drop (FCFS)",
     contract: abi.MONDrop,
@@ -37,16 +47,7 @@ export const drop = [
     reward: "1 $MON",
     isUpcoming: false,
   },
-  {
-    title: "Exclusive WCT Drop",
-    description: "Claim WCT Drop (FCFS)",
-    contract: abi.WCTDrop,
-    chain: base,
-    isActive: false,
-    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/33152.png",
-    reward: "0.3 $WCT",
-    isUpcoming: false,
-  },
+
   {
     title: "Exclusive DONUT Drop",
     description: "Claim DONUT Drop (FCFS)",
@@ -78,16 +79,6 @@ export const drop = [
     isUpcoming: false,
   },
 
-  {
-    title: "Exclusive CELO Drop",
-    description: "Early first 150 users",
-    contract: abi.CELODrop,
-    chain: celo,
-    isActive: false,
-    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/5567.png",
-    reward: "0.1 $CELO",
-    isUpcoming: false,
-  },
   {
     title: "Exclusive TOSHI Drop",
     description: "Early first 500 users",
