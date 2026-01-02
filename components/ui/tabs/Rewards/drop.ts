@@ -32,7 +32,7 @@ export const drop = [
     description: "Claim Monad Drop (FCFS)",
     contract: abi.MONDrop,
     chain: Monad,
-    isActive: true,
+    isActive: false,
     icon: "https://monadvision.com/images/token/monad.svg",
     reward: "1 $MON",
     isUpcoming: false,
