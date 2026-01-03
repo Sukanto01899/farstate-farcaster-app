@@ -28,6 +28,16 @@ export type QuestsDropType = {
 
 export const drop = [
   {
+    title: "Exclusive TOSHI Drop",
+    description: "Claim TOSHI Drop (FCFS)",
+    contract: abi.TOSHIDrop,
+    chain: base,
+    isActive: true,
+    icon: "https://assets.coingecko.com/coins/images/31126/standard/Toshi_Logo_-_Circular.png?1721677476",
+    reward: "10 $TOSHI",
+    isUpcoming: false,
+  },
+  {
     title: "Exclusive WCT Drop",
     description: "Claim WCT Drop (FCFS)",
     contract: abi.WCTDrop,
@@ -76,17 +86,6 @@ export const drop = [
     isActive: false,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/5567.png",
     reward: "0.1 $CELO",
-    isUpcoming: false,
-  },
-
-  {
-    title: "Exclusive TOSHI Drop",
-    description: "Early first 500 users",
-    contract: abi.TOSHIDrop,
-    chain: base,
-    isActive: false,
-    icon: "https://assets.coingecko.com/coins/images/31126/standard/Toshi_Logo_-_Circular.png?1721677476",
-    reward: "10 $TOSHI",
     isUpcoming: false,
   },
 
