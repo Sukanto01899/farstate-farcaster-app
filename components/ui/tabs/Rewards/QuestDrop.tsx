@@ -118,6 +118,7 @@ const QuestDrop = ({
 
   // mini app visit handler
   const handleVisitMiniApp = () => {
+    localStorage.removeItem(`quest-visited-1`);
     if (!isVisited) {
       localStorage.setItem(`quest-visited-${id}`, "true");
       actions?.openMiniApp({
@@ -213,7 +214,7 @@ try it below 👇
             className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-xl text-sm font-semibold transition-all shadow-lg"
             onClick={handleVisitMiniApp}
           >
-            Visit Now
+            Visit To Claim
           </button>
         ) : isActive || isPaused ? (
           <ClaimBtn
