@@ -28,11 +28,21 @@ export type QuestsDropType = {
 
 export const drop = [
   {
+    title: "Exclusive MON Drop",
+    description: "Claim Monad Drop (FCFS)",
+    contract: abi.MONDrop,
+    chain: Monad,
+    isActive: true,
+    icon: "https://monadvision.com/images/token/monad.svg",
+    reward: "0.5 $MON",
+    isUpcoming: false,
+  },
+  {
     title: "Exclusive TOSHI Drop",
     description: "Claim TOSHI Drop (FCFS)",
     contract: abi.TOSHIDrop,
     chain: base,
-    isActive: true,
+    isActive: false,
     icon: "https://assets.coingecko.com/coins/images/31126/standard/Toshi_Logo_-_Circular.png?1721677476",
     reward: "10 $TOSHI",
     isUpcoming: false,
@@ -45,16 +55,6 @@ export const drop = [
     isActive: false,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/33152.png",
     reward: "0.3 $WCT",
-    isUpcoming: false,
-  },
-  {
-    title: "Exclusive MON Drop",
-    description: "Claim Monad Drop (FCFS)",
-    contract: abi.MONDrop,
-    chain: Monad,
-    isActive: false,
-    icon: "https://monadvision.com/images/token/monad.svg",
-    reward: "1 $MON",
     isUpcoming: false,
   },
 
