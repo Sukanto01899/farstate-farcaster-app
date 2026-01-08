@@ -28,6 +28,16 @@ export type QuestsDropType = {
 
 export const drop = [
   {
+    title: "Exclusive TOSHI Drop",
+    description: "Claim TOSHI Drop (FCFS)",
+    contract: abi.TOSHIDrop,
+    chain: base,
+    isActive: true,
+    icon: "https://assets.coingecko.com/coins/images/31126/standard/Toshi_Logo_-_Circular.png?1721677476",
+    reward: "10 $TOSHI",
+    isUpcoming: false,
+  },
+  {
     title: "Exclusive MON Drop",
     description: "Claim Monad Drop (FCFS)",
     contract: abi.MONDrop,
@@ -37,16 +47,7 @@ export const drop = [
     reward: "0.5 $MON",
     isUpcoming: false,
   },
-  {
-    title: "Exclusive TOSHI Drop",
-    description: "Claim TOSHI Drop (FCFS)",
-    contract: abi.TOSHIDrop,
-    chain: base,
-    isActive: false,
-    icon: "https://assets.coingecko.com/coins/images/31126/standard/Toshi_Logo_-_Circular.png?1721677476",
-    reward: "10 $TOSHI",
-    isUpcoming: false,
-  },
+
   {
     title: "Exclusive WCT Drop",
     description: "Claim WCT Drop (FCFS)",
