@@ -118,7 +118,7 @@ const QuestDrop = ({
 
   // mini app visit handler
   const handleVisitMiniApp = () => {
-    localStorage.removeItem(`quest-visited-1`);
+    localStorage.removeItem(`quest-visited-2`);
     if (!isVisited) {
       localStorage.setItem(`quest-visited-${id}`, "true");
       actions?.openMiniApp({
@@ -193,7 +193,14 @@ try it below 👇
               </span>
             )}
           </h3>
-          <p className="text-slate-400 text-sm">{description} </p>
+          <p className="text-slate-400 text-sm">
+            {description}{" "}
+            {isActive && !isUpcoming && (
+              <span className="text-xs text-purple-400 font-semibold">
+                ({totalClaimed}/{maxClaimEpoch})
+              </span>
+            )}
+          </p>
         </div>
         <img src={icon} alt="" className="h-8 w-8 rounded-full" />
       </div>

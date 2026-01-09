@@ -126,14 +126,14 @@ export const drop = [
 
 export const questDrop = [
   {
-    id: 2,
+    id: 3,
     title: "Mini App Visit Quest",
     description: "Visit Alchemy Mini App to claim WCT",
     contract: abi.WCTDrop,
     chain: base,
     isActive: true,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/33152.png",
-    reward: "0.2 $WCT",
+    reward: "0.5 $WCT",
     isUpcoming: false,
     appUrl: "https://farcaster.xyz/miniapps/wLLjqojZVubo/alchemy",
   },
