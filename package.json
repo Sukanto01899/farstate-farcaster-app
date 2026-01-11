@@ -30,7 +30,6 @@
     "next": "^16.0.7",
     "phaser": "^3.90.0",
     "react": "^18",
-    "react-custom-roulette": "^1.4.1",
     "react-dom": "^18",
     "react-hot-toast": "^2.6.0",
     "viem": "^2.22.22",
