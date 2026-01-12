@@ -28,6 +28,16 @@ export type QuestsDropType = {
 
 export const drop = [
   {
+    title: "Exclusive DEGEN Drop",
+    description: "Claim DEGEN Drop (FCFS)",
+    contract: abi.DEGENDrop,
+    chain: base,
+    isActive: true,
+    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/30096.png",
+    reward: "10 $DEGEN",
+    isUpcoming: false,
+  },
+  {
     title: "Exclusive TOSHI Drop",
     description: "Claim TOSHI Drop (FCFS)",
     contract: abi.TOSHIDrop,
@@ -69,16 +79,7 @@ export const drop = [
     reward: "0.1 $DONUT",
     isUpcoming: false,
   },
-  {
-    title: "Exclusive DEGEN Drop",
-    description: "Claim DEGEN Drop (FCFS)",
-    contract: abi.DEGENDrop,
-    chain: base,
-    isActive: false,
-    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/30096.png",
-    reward: "3 $DEGEN",
-    isUpcoming: false,
-  },
+
   {
     title: "Exclusive CELO Drop",
     description: "Claim CELO Drop (FCFS)",
