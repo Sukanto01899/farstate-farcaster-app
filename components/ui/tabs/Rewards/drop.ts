@@ -32,7 +32,7 @@ export const drop = [
     description: "Claim DEGEN Drop (FCFS)",
     contract: abi.DEGENDrop,
     chain: base,
-    isActive: true,
+    isActive: false,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/30096.png",
     reward: "10 $DEGEN",
     isUpcoming: false,
