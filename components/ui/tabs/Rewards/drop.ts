@@ -127,15 +127,15 @@ export const drop = [
 
 export const questDrop = [
   {
-    id: 6,
+    id: 7,
     title: "Mini App Visit Quest",
-    description: "Visit FarReward Mini App to claim DEGEN",
-    contract: abi.DEGENDrop,
+    description: "Visit Alchemy Mini App to claim TOSHI",
+    contract: abi.TOSHIDrop,
     chain: base,
     isActive: true,
-    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/30096.png",
-    reward: "5 DEGEN",
+    icon: "https://assets.coingecko.com/coins/images/31126/standard/Toshi_Logo_-_Circular.png?1721677476",
+    reward: "10 TOSHI",
     isUpcoming: false,
-    appUrl: "https://farcaster.xyz/miniapps/kaThIXNoQonz/farrewards",
+    appUrl: "https://farcaster.xyz/miniapps/wLLjqojZVubo/alchemy",
   },
 ];
