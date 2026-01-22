@@ -118,7 +118,7 @@ const QuestDrop = ({
 
   // mini app visit handler
   const handleVisitMiniApp = () => {
-    localStorage.removeItem(`quest-visited-7`);
+    localStorage.removeItem(`quest-visited-8`);
     if (!isVisited) {
       localStorage.setItem(`quest-visited-${id}`, "true");
       actions?.openMiniApp({
@@ -148,7 +148,7 @@ const QuestDrop = ({
             toast.success("Transaction submitted");
             handleAutoCast();
           },
-        }
+        },
       );
     } catch (error) {
       console.log(error);
@@ -171,7 +171,7 @@ try it below 👇
               `,
         embeds: [`${APP_URL}/share/${context?.user?.fid || ""}`],
       },
-      false
+      false,
     );
   };
 
