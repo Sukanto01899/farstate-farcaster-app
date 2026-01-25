@@ -127,7 +127,7 @@ export const drop = [
 
 export const questDrop = [
   {
-    id: 10,
+    id: 11,
     title: "Mini App Visit Quest",
     description: "Visit Alchemy Mini App to claim DEGEN",
     contract: abi.DEGENDrop,
