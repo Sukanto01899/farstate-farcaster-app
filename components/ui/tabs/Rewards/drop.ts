@@ -28,13 +28,13 @@ export type QuestsDropType = {
 
 export const drop = [
   {
-    title: "Exclusive DEGEN Drop",
-    description: "Claim DEGEN Drop (FCFS)",
-    contract: abi.DEGENDrop,
+    title: "Exclusive jesse Drop",
+    description: "Claim jesse Drop (FCFS)",
+    contract: abi.JesseDrop,
     chain: base,
-    isActive: false,
-    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/30096.png",
-    reward: "10 $DEGEN",
+    isActive: true,
+    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/38973.png",
+    reward: "1 $jesse",
     isUpcoming: false,
   },
   {
