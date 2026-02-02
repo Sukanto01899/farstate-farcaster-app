@@ -32,7 +32,7 @@ export const drop = [
     description: "Claim jesse Drop (FCFS)",
     contract: abi.JesseDrop,
     chain: base,
-    isActive: true,
+    isActive: false,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/38973.png",
     reward: "1 $jesse",
     isUpcoming: false,
@@ -127,15 +127,15 @@ export const drop = [
 
 export const questDrop = [
   {
-    id: 13,
+    id: 14,
     title: "Mini App Visit Quest",
-    description: "Visit Captcha App to claim DEGEN",
-    contract: abi.DEGENDrop,
+    description: "Visit Alchemy App to claim BRACKY",
+    contract: abi.BRACkYDrop,
     chain: base,
     isActive: true,
-    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/30096.png",
-    reward: "5 $DEGEN",
+    icon: "https://assets.coingecko.com/coins/images/67973/small/original.jpeg?1754476921",
+    reward: "100 $BRACKY",
     isUpcoming: false,
-    appUrl: "https://base.app/app/captchaid.vercel.app",
+    appUrl: "https://farcaster.xyz/miniapps/wLLjqojZVubo/alchemy",
   },
 ];
