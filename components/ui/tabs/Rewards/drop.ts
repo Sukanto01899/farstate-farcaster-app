@@ -127,14 +127,14 @@ export const drop = [
 
 export const questDrop = [
   {
-    id: 15,
+    id: 16,
     title: "Mini App Visit Quest",
-    description: "Visit Alchemy App to claim TOSHI",
-    contract: abi.TOSHIDrop,
+    description: "Visit Alchemy App to claim jesse",
+    contract: abi.JesseDrop,
     chain: base,
     isActive: true,
     icon: "https://assets.coingecko.com/coins/images/31126/standard/Toshi_Logo_-_Circular.png?1721677476",
-    reward: "10 $TOSHI",
+    reward: "1 $JESSE",
     isUpcoming: false,
     appUrl: "https://base.app/app/alchemy-fc.vercel.app",
   },
