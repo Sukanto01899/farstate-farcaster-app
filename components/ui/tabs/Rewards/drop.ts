@@ -127,14 +127,14 @@ export const drop = [
 
 export const questDrop = [
   {
-    id: 16,
+    id: 17,
     title: "Mini App Visit Quest",
-    description: "Visit Alchemy App to claim jesse",
-    contract: abi.JesseDrop,
+    description: "Visit Alchemy App to claim sukanto01899",
+    contract: abi.sukantoDrop,
     chain: base,
     isActive: true,
-    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/38973.png",
-    reward: "1 $jesse",
+    icon: "https://i.ibb.co.com/7d5QcBnp/dqrgu89e319xe2ljw0oune6immjj-1.webp",
+    reward: "1k $sukanto01899",
     isUpcoming: false,
     appUrl: "https://base.app/app/alchemy-fc.vercel.app",
   },
