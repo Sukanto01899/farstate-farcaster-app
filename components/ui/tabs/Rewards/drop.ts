@@ -129,13 +129,13 @@ export const questDrop = [
   {
     id: 18,
     title: "Mini App Visit Quest",
-    description: "Visit Alchemy App to claim BRACKY",
-    contract: abi.BRACkYDrop,
+    description: "Visit Alchemy App to claim WCT",
+    contract: abi.WCTDrop,
     chain: base,
     isActive: true,
-    icon: "https://assets.coingecko.com/coins/images/67973/standard/original.jpeg?1754476921",
-    reward: "100 $BRACKY",
+    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/33152.png",
+    reward: "0.25 $WCT",
     isUpcoming: false,
-    appUrl: "https://base.app/app/alchemy-fc.vercel.app",
+    appUrl: "https://farcaster.xyz/miniapps/wLLjqojZVubo/alchemy",
   },
 ];

@@ -25,6 +25,7 @@ import { quickAuth } from "@farcaster/miniapp-sdk";
 import { base } from "viem/chains";
 import { abi } from "@/contracts/abi";
 import { useFrame } from "@/components/providers/farcaster-provider";
+import { BUILDER_DATA_SUFFIX } from "@/lib/builder-code";
 
 // Contract ABI
 const CONTRACT_ABI = abi.DailyStreakRewards.abi;
@@ -257,6 +258,7 @@ export default function StreakCard({
         BigInt(sigData.nonce),
         sigData.signature as `0x${string}`,
       ],
+      dataSuffix: BUILDER_DATA_SUFFIX,
     });
   };
 
@@ -272,6 +274,7 @@ export default function StreakCard({
       address: CONTRACT_ADDRESS,
       abi: CONTRACT_ABI,
       functionName: "withdrawRewards",
+      dataSuffix: BUILDER_DATA_SUFFIX,
     });
   };
 

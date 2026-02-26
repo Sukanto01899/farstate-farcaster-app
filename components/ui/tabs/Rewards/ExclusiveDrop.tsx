@@ -15,6 +15,7 @@ import { DropType } from "./drop";
 import { useFrame } from "@/components/providers/farcaster-provider";
 import useShareCast from "@/hooks/useShareCast";
 import { APP_URL } from "@/lib/constants";
+import { BUILDER_DATA_SUFFIX } from "@/lib/builder-code";
 
 const ExclusiveDrop = ({
   title,
@@ -128,6 +129,7 @@ const ExclusiveDrop = ({
           abi: abi,
           functionName: "claimDrop",
           args: [BigInt(userFid), signature as `0x${string}`],
+          dataSuffix: BUILDER_DATA_SUFFIX,
         },
         {
           onSuccess: () => {

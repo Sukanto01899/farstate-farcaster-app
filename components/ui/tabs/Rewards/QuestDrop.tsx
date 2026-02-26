@@ -15,6 +15,7 @@ import { QuestsDropType } from "./drop";
 import { useFrame } from "@/components/providers/farcaster-provider";
 import useShareCast from "@/hooks/useShareCast";
 import { APP_URL } from "@/lib/constants";
+import { BUILDER_DATA_SUFFIX } from "@/lib/builder-code";
 
 const QuestDrop = ({
   title,
@@ -121,7 +122,7 @@ const QuestDrop = ({
     localStorage.removeItem(`quest-visited-17`);
     if (!isVisited) {
       localStorage.setItem(`quest-visited-${id}`, "true");
-      actions?.openUrl({
+      actions?.openMiniApp({
         url: appUrl,
       });
     }
@@ -142,6 +143,7 @@ const QuestDrop = ({
           abi: abi,
           functionName: "claimDrop",
           args: [BigInt(userFid), signature as `0x${string}`],
+          dataSuffix: BUILDER_DATA_SUFFIX,
         },
         {
           onSuccess: () => {
