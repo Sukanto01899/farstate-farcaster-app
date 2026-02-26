@@ -1,11 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { privateKeyToAccount } from "viem/accounts";
 import { keccak256, encodePacked } from "viem";
+import { requireQuickAuthFid } from "@/lib/quickauth";
 
 export async function POST(request: NextRequest) {
   const { userAddress, contract } = await request.json();
 
-  const fid = request.headers.get("x-fid");
+  let fid: number;
+  try {
+    fid = await requireQuickAuthFid(request);
+  } catch {
+    return NextResponse.json(
+      { error: "Unauthorized", isSuccess: false },
+      { status: 401 }
+    );
+  }
 
   // Validate input
   if (!userAddress || !fid || !contract) {

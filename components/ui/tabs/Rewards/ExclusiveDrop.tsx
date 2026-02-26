@@ -73,6 +73,7 @@ const ExclusiveDrop = ({
           body: JSON.stringify({
             userAddress: address,
             contract: contract.address,
+            chainId: contract.chain?.id,
           }),
         });
 
@@ -85,6 +86,8 @@ const ExclusiveDrop = ({
         return (await res.json()) as {
           signature: string;
           fid: number;
+          nonce: string;
+          deadline: string;
           isSuccess: boolean;
         };
       },
@@ -120,7 +123,9 @@ const ExclusiveDrop = ({
       const signatureData = await getSignature();
       const signature = signatureData?.signature;
       const userFid = signatureData?.fid;
-      if (!signature || !userFid) {
+      const nonce = signatureData?.nonce;
+      const deadline = signatureData?.deadline;
+      if (!signature || !userFid || !nonce || !deadline) {
         return;
       }
       await claimDrop(
@@ -128,7 +133,12 @@ const ExclusiveDrop = ({
           address: contractAddress,
           abi: abi,
           functionName: "claimDrop",
-          args: [BigInt(userFid), signature as `0x${string}`],
+          args: [
+            BigInt(userFid),
+            BigInt(nonce),
+            BigInt(deadline),
+            signature as `0x${string}`,
+          ],
           dataSuffix: BUILDER_DATA_SUFFIX,
         },
         {

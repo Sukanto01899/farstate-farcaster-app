@@ -33,6 +33,9 @@ const QuestDrop = ({
   const { address: contractAddress, abi } = contract;
   const { handleShare } = useShareCast();
   const [isVisited, setIsVisited] = useState(false);
+  const [claimError, setClaimError] = useState<string | null>(null);
+  const [retrying, setRetrying] = useState(false);
+  const [retryCount, setRetryCount] = useState(0);
 
   const {
     data: isClaimed,
@@ -76,6 +79,7 @@ const QuestDrop = ({
           body: JSON.stringify({
             userAddress: address,
             contract: contract.address,
+            chainId: contract.chain?.id,
           }),
         });
 
@@ -88,6 +92,8 @@ const QuestDrop = ({
         return (await res.json()) as {
           signature: string;
           fid: number;
+          nonce: string;
+          deadline: string;
           isSuccess: boolean;
         };
       },
@@ -119,7 +125,7 @@ const QuestDrop = ({
 
   // mini app visit handler
   const handleVisitMiniApp = () => {
-    localStorage.removeItem(`quest-visited-17`);
+    localStorage.removeItem(`quest-visited-18`);
     if (!isVisited) {
       localStorage.setItem(`quest-visited-${id}`, "true");
       actions?.openMiniApp({
@@ -130,11 +136,15 @@ const QuestDrop = ({
 
   // Claim function
   const handleClaimDrop = async () => {
+    setClaimError(null);
     try {
-      const signatureData = await getSignature();
+      const signatureData = await getSignatureWithRetry();
       const signature = signatureData?.signature;
       const userFid = signatureData?.fid;
-      if (!signature || !userFid) {
+      const nonce = signatureData?.nonce;
+      const deadline = signatureData?.deadline;
+      if (!signature || !userFid || !nonce || !deadline) {
+        setClaimError("Signature not received. Please try again.");
         return;
       }
       await claimDrop(
@@ -142,7 +152,12 @@ const QuestDrop = ({
           address: contractAddress,
           abi: abi,
           functionName: "claimDrop",
-          args: [BigInt(userFid), signature as `0x${string}`],
+          args: [
+            BigInt(userFid),
+            BigInt(nonce),
+            BigInt(deadline),
+            signature as `0x${string}`,
+          ],
           dataSuffix: BUILDER_DATA_SUFFIX,
         },
         {
@@ -154,8 +169,31 @@ const QuestDrop = ({
       );
     } catch (error) {
       console.log(error);
+      setClaimError("Claim failed. Please try again.");
       toast.error("Claim failed");
     }
+  };
+
+  const getSignatureWithRetry = async (maxRetries = 2) => {
+    let lastError: unknown = null;
+    for (let attempt = 0; attempt <= maxRetries; attempt += 1) {
+      try {
+        if (attempt > 0) {
+          setRetrying(true);
+          setRetryCount(attempt);
+          await new Promise((resolve) => setTimeout(resolve, 1000 * attempt));
+        }
+        const res = await getSignature();
+        setRetrying(false);
+        setRetryCount(0);
+        return res;
+      } catch (err) {
+        lastError = err;
+      }
+    }
+    setRetrying(false);
+    setRetryCount(0);
+    throw lastError;
   };
 
   useEffect(() => {
@@ -244,7 +282,8 @@ try it below 👇
               "You'r Claimed"
             ) : txLoading ? (
               <span className="flex items-center gap-2">
-                <Loader className="animate-spin" /> Claiming...
+                <Loader className="animate-spin" />
+                {retrying ? `Retrying (${retryCount})...` : "Claiming..."}
               </span>
             ) : (
               "Claim Now"
@@ -254,6 +293,11 @@ try it below 👇
           <div className="text-red-400 text-sm font-bold">Ended</div>
         )}
       </div>
+      {claimError && (
+        <p className="mt-3 text-red-300 text-xs text-center bg-red-500/10 rounded-lg p-2">
+          {claimError}
+        </p>
+      )}
     </div>
   );
 };
