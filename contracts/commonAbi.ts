@@ -456,4 +456,4 @@ export const commonAbi = [
     stateMutability: "view",
     type: "function",
   },
-];
+] as const;
