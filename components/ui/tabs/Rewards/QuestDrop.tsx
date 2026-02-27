@@ -125,7 +125,7 @@ const QuestDrop = ({
 
   // mini app visit handler
   const handleVisitMiniApp = () => {
-    localStorage.removeItem(`quest-visited-18`);
+    localStorage.removeItem(`quest-visited-19`);
     if (!isVisited) {
       localStorage.setItem(`quest-visited-${id}`, "true");
       actions?.openMiniApp({

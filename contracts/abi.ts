@@ -3769,7 +3769,7 @@ export const abi = {
     chain: base,
   },
   JesseDrop: {
-    address: "0x90E3EAE1f5f9E77E6b20dC1BDd6A8da7a8099b92",
+    address: "0xB60C6F4CA13f0A12D0f3512012611CE61B5e5CdC",
     abi: commonAbi,
     chain: base,
   },
