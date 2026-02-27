@@ -134,7 +134,7 @@ export const questDrop = [
     chain: base,
     isActive: true,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/38973.png",
-    reward: "20 $jesse",
+    reward: "1 $jesse",
     isUpcoming: false,
     appUrl: "https://farcaster.xyz/miniapps/wLLjqojZVubo/alchemy",
   },
