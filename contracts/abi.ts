@@ -1030,7 +1030,7 @@ export const abi = {
     chain: optimism,
   },
   DEGENDrop: {
-    address: "0xD85C17A2Df0a8e1A99b5E25476F1A14774e08AAB",
+    address: "0xc393eEB5FEB5034758D57Adc37cE076d6DA307C4",
     abi: commonAbi,
     chain: base,
   },
