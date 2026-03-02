@@ -127,15 +127,15 @@ export const drop = [
 
 export const questDrop = [
   {
-    id: 21,
-    title: "Join the Degen & Earn",
-    description: "Sign up and earn points to claim valuable NFT",
-    contract: abi.DEGENDrop,
+    id: 22,
+    title: "Visit Alchemy Mini App",
+    description: "Visit Alchemy Mini App to claim your jesse",
+    contract: abi.JesseDrop,
     chain: base,
     isActive: true,
-    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/30096.png",
-    reward: "10 $DEGEN",
+    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/38973.png",
+    reward: "1 $jesse",
     isUpcoming: false,
-    appUrl: "https://dream.degen.tips/login?ref=sukanto018",
+    appUrl: "https://farcaster.xyz/miniapps/wLLjqojZVubo/alchemy",
   },
 ];
