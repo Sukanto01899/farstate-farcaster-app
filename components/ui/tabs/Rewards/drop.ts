@@ -127,14 +127,14 @@ export const drop = [
 
 export const questDrop = [
   {
-    id: 22,
+    id: 23,
     title: "Visit Alchemy Mini App",
-    description: "Visit Alchemy Mini App to claim your jesse",
-    contract: abi.JesseDrop,
+    description: "Visit Alchemy Mini App to claim your BRACKY",
+    contract: abi.BRACkYDrop,
     chain: base,
     isActive: true,
-    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/38973.png",
-    reward: "1 $jesse",
+    icon: "https://assets.coingecko.com/coins/images/67973/standard/original.jpeg?1754476921",
+    reward: "500 $BRACKY",
     isUpcoming: false,
     appUrl: "https://farcaster.xyz/miniapps/wLLjqojZVubo/alchemy",
   },

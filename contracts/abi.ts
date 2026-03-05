@@ -1364,7 +1364,7 @@ export const abi = {
     chain: base,
   },
   BRACkYDrop: {
-    address: "0x28c689df98A458E96A989F175313913bd4a0631D",
+    address: "0x3C39ef0B8CCf6D7b7664dAb171Ea6d6D844a8254",
     abi: commonAbi,
     chain: base,
   },
