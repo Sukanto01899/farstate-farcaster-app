@@ -24,6 +24,8 @@ export type QuestsDropType = {
   isUpcoming: Boolean;
   appUrl: string;
   id: number;
+  visitLabel?: string;
+  verifyLabel?: string;
 };
 
 export const drop = [
@@ -137,5 +139,7 @@ export const questDrop = [
     reward: "0.3 $WCT",
     isUpcoming: false,
     appUrl: "https://base.app/app/alchemy-fc.vercel.app",
+    visitLabel: "Visit Alchemy",
+    verifyLabel: "Verify Visit",
   },
 ];

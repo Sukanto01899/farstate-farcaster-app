@@ -4,109 +4,11 @@ import { privateKeyToAccount } from "viem/accounts";
 import { requireQuickAuthFid } from "@/lib/quickauth";
 import {
   questDropVerificationRule,
-  type QuestVerificationRule,
 } from "@/lib/quest-drop-verification";
-
-type QuestVerificationResponse = {
-  visit?: {
-    completed?: boolean;
-  };
-  free?: {
-    completed?: boolean;
-  };
-  ember?: {
-    completed?: boolean;
-  };
-  celestial?: {
-    completed?: boolean;
-  };
-};
-
-function getUtcDateString() {
-  return new Date().toISOString().slice(0, 10);
-}
-
-async function verifyQuestRequirements(
-  request: NextRequest,
-  fid: number,
-  rule: QuestVerificationRule,
-) {
-  const questSecret = process.env.QUEST_PLATFORM_API_SECRET;
-
-  if (!questSecret) {
-    return {
-      ok: false,
-      status: 500,
-      error: "QUEST_PLATFORM_API_SECRET is not configured",
-    };
-  }
-
-  const verifyBaseUrl = process.env.QUEST_VERIFY_URL;
-  if (!verifyBaseUrl) {
-    return {
-      ok: false,
-      status: 500,
-      error: "QUEST_VERIFY_URL is not configured",
-    };
-  }
-
-  const verifyUrl = new URL(verifyBaseUrl);
-  verifyUrl.searchParams.set("fid", String(fid));
-  verifyUrl.searchParams.set("date", getUtcDateString());
-
-  const response = await fetch(verifyUrl.toString(), {
-    method: "GET",
-    headers: {
-      "x-quest-secret": questSecret,
-    },
-    cache: "no-store",
-  });
-
-  if (!response.ok) {
-    return {
-      ok: false,
-      status: response.status,
-      error: "Quest verification failed",
-    };
-  }
-
-  const verification =
-    (await response.json().catch(() => null)) as QuestVerificationResponse | null;
-
-  if (rule.requireVisit && !verification?.visit?.completed) {
-    return {
-      ok: false,
-      status: 403,
-      error: "Visit quest not completed for the current UTC day",
-    };
-  }
-
-  if (rule.requireFree && !verification?.free?.completed) {
-    return {
-      ok: false,
-      status: 403,
-      error: "Free claim quest not completed for the current UTC day",
-    };
-  }
-
-  if (rule.requireEmber && !verification?.ember?.completed) {
-    return {
-      ok: false,
-      status: 403,
-      error: "Ember claim quest not completed for the current UTC day",
-    };
-  }
-
-  if (rule.requireCelestial && !verification?.celestial?.completed) {
-    return {
-      ok: false,
-      status: 403,
-      error: "Celestial claim quest not completed for the current UTC day",
-    };
-  }
-
-  return { ok: true as const };
-}
+import {
+  evaluateQuestVerification,
+  fetchQuestVerification,
+} from "@/lib/quest-verification";
 
 export async function POST(request: NextRequest) {
   const { userAddress, contract, chainId } = await request.json();
@@ -150,9 +52,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const questVerification = await verifyQuestRequirements(
-      request,
-      fid,
+    const verificationResponse = await fetchQuestVerification(request, fid);
+    if (!verificationResponse.ok || !("verification" in verificationResponse)) {
+      return NextResponse.json(
+        { error: verificationResponse.error, isSuccess: false },
+        { status: verificationResponse.status },
+      );
+    }
+
+    const questVerification = evaluateQuestVerification(
+      verificationResponse.verification,
       questDropVerificationRule,
     );
     if (!questVerification.ok) {

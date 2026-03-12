@@ -17,6 +17,34 @@ import useShareCast from "@/hooks/useShareCast";
 import { APP_URL } from "@/lib/constants";
 import { BUILDER_DATA_SUFFIX } from "@/lib/builder-code";
 
+function getUserFacingError(error: unknown) {
+  const fallback = "Claim failed. Please try again.";
+
+  if (!(error instanceof Error)) {
+    return fallback;
+  }
+
+  const message = error.message || fallback;
+  const lowered = message.toLowerCase();
+
+  if (
+    lowered.includes("user rejected") ||
+    lowered.includes("user denied") ||
+    lowered.includes("rejected the request") ||
+    lowered.includes("request rejected") ||
+    lowered.includes("cancelled") ||
+    lowered.includes("canceled")
+  ) {
+    return "Transaction cancelled.";
+  }
+
+  if (lowered.includes("insufficient funds")) {
+    return "Insufficient funds for gas.";
+  }
+
+  return message.split("\n")[0].slice(0, 120) || fallback;
+}
+
 const ExclusiveDrop = ({
   title,
   description,
@@ -150,7 +178,7 @@ const ExclusiveDrop = ({
       );
     } catch (error) {
       console.log(error);
-      toast.error("Claim failed");
+      toast.error(getUserFacingError(error));
     }
   };
 
