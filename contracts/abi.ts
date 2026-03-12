@@ -1035,7 +1035,7 @@ export const abi = {
     chain: base,
   },
   WCTDrop: {
-    address: "0xCBFCc1Fde2099494B8327b5431D7560C491B5a5c",
+    address: "0x31d4FCBD8718167e72F4D18353687dB728E3c5E1",
     abi: commonAbi,
     chain: base,
   },
