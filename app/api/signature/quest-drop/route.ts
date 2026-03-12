@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { randomBytes } from "crypto";
 import { privateKeyToAccount } from "viem/accounts";
+import { getRequestIp, runDropSecurityChecks } from "@/lib/drop-security";
 import { requireQuickAuthFid } from "@/lib/quickauth";
 import {
   questDropVerificationRule,
@@ -39,6 +40,19 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    const securityCheck = await runDropSecurityChecks({
+      fid,
+      userAddress,
+      contract,
+      ip: getRequestIp(request.headers),
+    });
+    if (!securityCheck.ok) {
+      return NextResponse.json(
+        { error: securityCheck.error, isSuccess: false },
+        { status: securityCheck.status },
+      );
+    }
+
     const hasVerificationRequirement =
       questDropVerificationRule.requireVisit ||
       questDropVerificationRule.requireFree ||
@@ -82,7 +96,7 @@ export async function POST(request: NextRequest) {
         name: "ExclusiveDrop",
         version: "1",
         chainId: resolvedChainId,
-        verifyingContract: contract,
+        verifyingContract: securityCheck.contract as `0x${string}`,
       },
       types: {
         Claim: [
@@ -94,7 +108,7 @@ export async function POST(request: NextRequest) {
       },
       primaryType: "Claim",
       message: {
-        user: userAddress,
+        user: securityCheck.userAddress,
         fid: BigInt(fid),
         nonce,
         deadline,

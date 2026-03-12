@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { privateKeyToAccount } from "viem/accounts";
 import { randomBytes } from "crypto";
 import { requireQuickAuthFid } from "@/lib/quickauth";
+import { getRequestIp, runDropSecurityChecks } from "@/lib/drop-security";
 
 export async function POST(request: NextRequest) {
   const { userAddress, contract, chainId } = await request.json();
@@ -32,6 +33,19 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    const securityCheck = await runDropSecurityChecks({
+      fid,
+      userAddress,
+      contract,
+      ip: getRequestIp(request.headers),
+    });
+    if (!securityCheck.ok) {
+      return NextResponse.json(
+        { error: securityCheck.error, isSuccess: false },
+        { status: securityCheck.status },
+      );
+    }
+
     const account = privateKeyToAccount(SERVER_PRIVATE_KEY as `0x${string}`);
 
     const nonce = BigInt(`0x${randomBytes(8).toString("hex")}`);
@@ -44,7 +58,7 @@ export async function POST(request: NextRequest) {
         name: "ExclusiveDrop",
         version: "1",
         chainId: resolvedChainId,
-        verifyingContract: contract,
+        verifyingContract: securityCheck.contract as `0x${string}`,
       },
       types: {
         Claim: [
@@ -56,16 +70,17 @@ export async function POST(request: NextRequest) {
       },
       primaryType: "Claim",
       message: {
-        user: userAddress,
+        user: securityCheck.userAddress,
         fid: BigInt(fid),
         nonce,
         deadline,
       },
     });
 
+    // Signature generate closed for testing - remove when ready to use
     return NextResponse.json(
       {
-        signature,
+        signature: "close signature",
         fid,
         nonce: nonce.toString(),
         deadline: deadline.toString(),
