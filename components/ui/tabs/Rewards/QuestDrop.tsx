@@ -70,7 +70,7 @@ const QuestDrop = ({
           throw new Error("QuickAuth is not available");
         }
         const { token } = await quickAuth.getToken();
-        const res = await fetch("/api/signature/drop", {
+        const res = await fetch("/api/signature/quest-drop", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -84,8 +84,12 @@ const QuestDrop = ({
         });
 
         if (!res.ok) {
-          const text = await res.text().catch(() => null);
-          throw new Error(text || `Request failed with status ${res.status}`);
+          const errorBody = (await res.json().catch(() => null)) as
+            | { error?: string }
+            | null;
+          throw new Error(
+            errorBody?.error || `Request failed with status ${res.status}`,
+          );
         }
 
         // parse and return JSON so onSuccess receives the parsed object (with `success`)
@@ -167,8 +171,10 @@ const QuestDrop = ({
       );
     } catch (error) {
       console.log(error);
-      setClaimError("Claim failed. Please try again.");
-      toast.error("Claim failed");
+      const message =
+        error instanceof Error ? error.message : "Claim failed. Please try again.";
+      setClaimError(message);
+      toast.error(message);
     }
   };
 
