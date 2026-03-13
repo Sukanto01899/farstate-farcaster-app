@@ -129,17 +129,17 @@ export const drop = [
 
 export const questDrop = [
   {
-    id: 24,
-    title: "Visit Alchemy Mini App",
-    description: "Visit Alchemy Mini App to claim your WCT",
-    contract: abi.WCTDrop,
+    id: 25,
+    title: "Open Alchemy Mini App",
+    description: "Open the Alchemy Mini App and explore its features.",
+    contract: abi.zoraDrop,
     chain: base,
     isActive: true,
-    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/33152.png",
-    reward: "0.3 $WCT",
+    icon: "https://assets.coingecko.com/coins/images/54693/standard/zora.jpg?1741094751",
+    reward: "1 $ZORA",
     isUpcoming: false,
     appUrl: "https://base.app/app/alchemy-fc.vercel.app",
-    visitLabel: "Visit Alchemy",
-    verifyLabel: "Verify Visit",
+    visitLabel: "Open Alchemy",
+    verifyLabel: "Verify Open",
   },
 ];

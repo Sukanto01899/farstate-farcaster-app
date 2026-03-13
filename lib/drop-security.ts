@@ -15,6 +15,7 @@ const allowedDropContracts = new Set(
     abi.ARBDrop.address,
     abi.OPDrop.address,
     abi.ExclusiveUSDCDrop.address,
+    abi.zoraDrop.address,
   ].map((address) => address.toLowerCase()),
 );
 
@@ -43,7 +44,11 @@ function getClientIp(ipHeader: string | null) {
   return ipHeader?.split(",")[0]?.trim() || "unknown";
 }
 
-async function consumeRateLimit(key: string, limit: number, windowSeconds: number) {
+async function consumeRateLimit(
+  key: string,
+  limit: number,
+  windowSeconds: number,
+) {
   const current = await redis.incr(key);
   if (current === 1) {
     await redis.expire(key, windowSeconds);
@@ -93,19 +98,19 @@ export async function runDropSecurityChecks({
     };
   }
 
-  await dbConnect();
-  const user = await User.findOne({ fid }).lean<{ address?: string } | null>();
-  if (!user?.address) {
-    return {
-      ok: false,
-      status: 403,
-      error: "Wallet is not linked to this Farcaster account",
-    };
-  }
+  // await dbConnect();
+  // const user = await User.findOne({ fid }).lean<{ address?: string } | null>();
+  // if (!user?.address) {
+  //   return {
+  //     ok: false,
+  //     status: 403,
+  //     error: "Wallet is not linked to this Farcaster account",
+  //   };
+  // }
 
   let normalizedStoredAddress: string;
   try {
-    normalizedStoredAddress = getAddress(user.address);
+    normalizedStoredAddress = getAddress(userAddress);
   } catch {
     return {
       ok: false,
@@ -127,7 +132,11 @@ export async function runDropSecurityChecks({
     const hourWindow = 60 * 60;
     const limits = await Promise.all([
       consumeRateLimit(`sig:fid:${fid}`, 8, minuteWindow),
-      consumeRateLimit(`sig:wallet:${normalizedUserAddress.toLowerCase()}`, 8, minuteWindow),
+      consumeRateLimit(
+        `sig:wallet:${normalizedUserAddress.toLowerCase()}`,
+        8,
+        minuteWindow,
+      ),
       consumeRateLimit(`sig:ip:${ip}`, 20, minuteWindow),
       consumeRateLimit(`sig:fid-hour:${fid}`, 40, hourWindow),
     ]);

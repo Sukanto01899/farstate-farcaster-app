@@ -3778,4 +3778,9 @@ export const abi = {
     abi: commonAbi,
     chain: base,
   },
+  zoraDrop: {
+    address: "0x1e2FbEa2f90ef175bA6080E49E7dd2Bd02Aa1558",
+    abi: commonAbi,
+    chain: base,
+  },
 } as const;
