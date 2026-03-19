@@ -129,14 +129,14 @@ export const drop = [
 
 export const questDrop = [
   {
-    id: 25,
+    id: 26,
     title: "Open Alchemy Mini App",
     description: "Open the Alchemy Mini App and explore its features.",
-    contract: abi.zoraDrop,
+    contract: abi.WCTDrop,
     chain: base,
     isActive: true,
-    icon: "https://assets.coingecko.com/coins/images/54693/standard/zora.jpg?1741094751",
-    reward: "1 $ZORA",
+    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/33152.png",
+    reward: "0.5 $WCT",
     isUpcoming: false,
     appUrl: "https://base.app/app/alchemy-fc.vercel.app",
     visitLabel: "Open Alchemy",
