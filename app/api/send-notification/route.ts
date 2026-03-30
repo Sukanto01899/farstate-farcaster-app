@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { timingSafeEqual } from "crypto";
 import {
   getUsersNotificationDetails,
   removeInvalidNotificationTokens,
 } from "@/lib/kv";
+
+export const runtime = "nodejs";
 
 const requestSchema = z.object({
   title: z.string(),
@@ -14,6 +17,27 @@ const requestSchema = z.object({
 const BATCH_SIZE = 100;
 const PARALLEL_BATCHES = 5; // Send 5 batches at once
 const REQUEST_TIMEOUT = 10000; // 10 second timeout
+
+function timingSafeEqualString(a: string, b: string) {
+  const aBuffer = Buffer.from(a);
+  const bBuffer = Buffer.from(b);
+  if (aBuffer.length !== bBuffer.length) return false;
+  return timingSafeEqual(aBuffer, bBuffer);
+}
+
+function getAuthSecret(request: NextRequest) {
+  const authorization = request.headers.get("authorization");
+  const bearer =
+    authorization?.toLowerCase().startsWith("bearer ") === true
+      ? authorization.slice(7).trim()
+      : null;
+
+  return (
+    bearer ??
+    request.headers.get("x-notification-secret") ??
+    request.headers.get("x-api-key")
+  );
+}
 
 async function sendNotificationBatch(
   url: string,
@@ -66,7 +90,38 @@ async function sendNotificationBatch(
 }
 
 export async function POST(request: NextRequest) {
-  const requestJson = await request.json();
+  const requiredSecret = process.env.SEND_NOTIFICATION_SECRET;
+  if (!requiredSecret) {
+    return NextResponse.json(
+      {
+        success: false,
+        error:
+          "Server misconfigured: missing SEND_NOTIFICATION_SECRET environment variable",
+      },
+      { status: 500 }
+    );
+  }
+
+  const providedSecret = getAuthSecret(request);
+  if (!providedSecret || !timingSafeEqualString(providedSecret, requiredSecret)) {
+    return NextResponse.json(
+      { success: false, error: "Unauthorized" },
+      {
+        status: 401,
+        headers: { "WWW-Authenticate": 'Bearer realm="send-notification"' },
+      }
+    );
+  }
+
+  let requestJson: unknown;
+  try {
+    requestJson = await request.json();
+  } catch {
+    return NextResponse.json(
+      { success: false, error: "Invalid JSON body" },
+      { status: 400 }
+    );
+  }
   const requestBody = requestSchema.safeParse(requestJson);
 
   if (requestBody.success === false) {
