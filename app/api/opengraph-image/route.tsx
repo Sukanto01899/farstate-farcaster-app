@@ -3,6 +3,7 @@ import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
+const ONE_DAY_SECONDS = 60 * 60 * 24;
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -33,6 +34,10 @@ export async function GET(request: NextRequest) {
     {
       width: 1200,
       height: 800,
+      headers: {
+        // Cache at the edge (CDN) for 1 day to reduce function invocations.
+        "Cache-Control": `public, max-age=0, s-maxage=${ONE_DAY_SECONDS}, stale-while-revalidate=${ONE_DAY_SECONDS}`,
+      },
     }
   );
 }
