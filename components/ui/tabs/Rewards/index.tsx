@@ -45,8 +45,8 @@ const RewardsTab = () => {
         {isActiveTab
           ? activeDrop.map((drop) => <ExclusiveDrop {...drop} />)
           : endedDrop.map((drop) => <ExclusiveDrop {...drop} />)}
-        {isActiveTab &&
-          questDrop.map((quest) => <QuestDrop key={quest.id} {...quest} />)}
+        {/* {isActiveTab &&
+          questDrop.map((quest) => <QuestDrop key={quest.id} {...quest} />)} */}
       </div>
 
       <div className="flex flex-col justify-center items-center">

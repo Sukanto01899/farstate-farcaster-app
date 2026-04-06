@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import {
   useAccount,
   useReadContract,
+  useSwitchChain,
   useTransactionReceipt,
   useWriteContract,
 } from "wagmi";
@@ -80,7 +81,7 @@ const QuestDrop = ({
   verifyLabel = "Verify Quest",
 }: QuestsDropType) => {
   const { context, actions } = useFrame();
-  const { address } = useAccount();
+  const { address, isConnected, chainId } = useAccount();
   const { address: contractAddress, abi } = contract;
   const { handleShare } = useShareCast();
   const [isVisited, setIsVisited] = useState(false);
@@ -88,6 +89,7 @@ const QuestDrop = ({
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [retrying, setRetrying] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
+  const { switchChain, isPending: chainSwitching, error } = useSwitchChain();
 
   const {
     data: isClaimed,
@@ -338,6 +340,14 @@ const QuestDrop = ({
   ];
 
   const renderAction = () => {
+    if (isConnected && chainId !== contract.chain.id) {
+      return (
+        <button onClick={() => switchChain({ chainId: contract.chain.id })}>
+          Switch to {contract.chain.name}
+        </button>
+      );
+    }
+
     if (initialLoading) {
       return (
         <div className="flex items-center gap-2 text-slate-300 text-sm font-semibold">
