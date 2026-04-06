@@ -87,9 +87,9 @@ export const drop = [
     description: "Claim CELO Drop (FCFS)",
     contract: abi.CELODrop,
     chain: celo,
-    isActive: false,
+    isActive: true,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/5567.png",
-    reward: "0.1 $CELO",
+    reward: "0.02 $CUSD",
     isUpcoming: false,
   },
 
@@ -128,18 +128,18 @@ export const drop = [
 ];
 
 export const questDrop = [
-  {
-    id: 29,
-    title: "Open Alchemy Mini App",
-    description: "Open the Alchemy Mini App and explore its features.",
-    contract: abi.WCTDrop,
-    chain: base,
-    isActive: true,
-    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/33152.png",
-    reward: "0.5 $WCT",
-    isUpcoming: false,
-    appUrl: "https://base.app/app/alchemy-fc.vercel.app",
-    visitLabel: "Open Alchemy",
-    verifyLabel: "Verify Open",
-  },
+  // {
+  //   id: 29,
+  //   title: "Open Alchemy Mini App",
+  //   description: "Open the Alchemy Mini App and explore its features.",
+  //   contract: abi.WCTDrop,
+  //   chain: base,
+  //   isActive: true,
+  //   icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/33152.png",
+  //   reward: "0.5 $WCT",
+  //   isUpcoming: false,
+  //   appUrl: "https://base.app/app/alchemy-fc.vercel.app",
+  //   visitLabel: "Open Alchemy",
+  //   verifyLabel: "Verify Open",
+  // },
 ];
