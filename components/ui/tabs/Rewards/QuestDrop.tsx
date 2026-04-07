@@ -259,6 +259,7 @@ const QuestDrop = ({
             signature as `0x${string}`,
           ],
           dataSuffix: BUILDER_DATA_SUFFIX,
+          chainId: contract.chain.id,
         },
         {
           onSuccess: () => {
