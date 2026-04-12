@@ -129,16 +129,16 @@ export const drop = [
 
 export const questDrop = [
   {
-    id: 30,
+    id: 31,
     title: "Open Alchemy Mini App",
-    description: "Open the Alchemy Mini App and explore its features.",
-    contract: abi.JesseDrop,
+    description: "Open the Alchemy App and claim Mystery box.",
+    contract: abi.WCTDrop,
     chain: base,
     isActive: true,
-    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/35931.png",
-    reward: "2 $ZORA",
+    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/33152.png",
+    reward: "0.5 $WCT",
     isUpcoming: false,
-    appUrl: "https://base.app/app/alchemy-fc.vercel.app",
+    appUrl: "https://farcaster.xyz/miniapps/wLLjqojZVubo/alchemy",
     visitLabel: "Open Alchemy",
     verifyLabel: "Verify Open",
   },
