@@ -44,7 +44,7 @@ export function getUtcDateString() {
 
 export async function fetchQuestVerification(
   _request: NextRequest,
-  fid: number,
+  identity: string | number,
   date = getUtcDateString(),
 ): Promise<QuestVerificationResult> {
   const questSecret = process.env.QUEST_PLATFORM_API_SECRET;
@@ -66,7 +66,7 @@ export async function fetchQuestVerification(
   }
 
   const verifyUrl = new URL(verifyBaseUrl);
-  verifyUrl.searchParams.set("fid", String(fid));
+  verifyUrl.searchParams.set("address", String(identity));
   verifyUrl.searchParams.set("date", date);
 
   const response = await fetch(verifyUrl.toString(), {
@@ -77,6 +77,8 @@ export async function fetchQuestVerification(
     cache: "no-store",
   });
 
+  console.log(response);
+
   if (!response.ok) {
     return {
       ok: false,
@@ -85,8 +87,9 @@ export async function fetchQuestVerification(
     };
   }
 
-  const verification =
-    (await response.json().catch(() => null)) as QuestVerificationResponse | null;
+  const verification = (await response
+    .json()
+    .catch(() => null)) as QuestVerificationResponse | null;
 
   if (!verification) {
     return {

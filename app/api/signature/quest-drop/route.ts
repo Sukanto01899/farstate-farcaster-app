@@ -3,9 +3,7 @@ import { randomBytes } from "crypto";
 import { privateKeyToAccount } from "viem/accounts";
 import { getRequestIp, runDropSecurityChecks } from "@/lib/drop-security";
 import { requireQuickAuthFid } from "@/lib/quickauth";
-import {
-  questDropVerificationRule,
-} from "@/lib/quest-drop-verification";
+import { questDropVerificationRule } from "@/lib/quest-drop-verification";
 import {
   evaluateQuestVerification,
   fetchQuestVerification,
@@ -15,6 +13,7 @@ export async function POST(request: NextRequest) {
   const { userAddress, contract, chainId } = await request.json();
 
   let fid: number;
+
   try {
     fid = await requireQuickAuthFid(request);
   } catch {
@@ -46,6 +45,7 @@ export async function POST(request: NextRequest) {
       contract,
       ip: getRequestIp(request.headers),
     });
+
     if (!securityCheck.ok) {
       return NextResponse.json(
         { error: securityCheck.error, isSuccess: false },
@@ -61,12 +61,19 @@ export async function POST(request: NextRequest) {
 
     if (!hasVerificationRequirement) {
       return NextResponse.json(
-        { error: "No quest verification requirement is enabled", isSuccess: false },
+        {
+          error: "No quest verification requirement is enabled",
+          isSuccess: false,
+        },
         { status: 500 },
       );
     }
 
-    const verificationResponse = await fetchQuestVerification(request, fid);
+    const verificationResponse = await fetchQuestVerification(
+      request,
+      securityCheck.userAddress,
+    );
+
     if (!verificationResponse.ok || !("verification" in verificationResponse)) {
       return NextResponse.json(
         { error: verificationResponse.error, isSuccess: false },

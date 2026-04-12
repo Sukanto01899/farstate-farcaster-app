@@ -132,7 +132,7 @@ export const questDrop = [
     id: 30,
     title: "Open Alchemy Mini App",
     description: "Open the Alchemy Mini App and explore its features.",
-    contract: abi.zoraDrop,
+    contract: abi.JesseDrop,
     chain: base,
     isActive: true,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/35931.png",

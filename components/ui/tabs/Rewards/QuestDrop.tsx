@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import {
   useAccount,
   useReadContract,
+  useSignMessage,
   useSwitchChain,
   useTransactionReceipt,
   useWriteContract,
@@ -33,6 +34,16 @@ type VerificationResult = {
   verified: boolean;
   error?: string | null;
 };
+
+const VERIFY_MESSAGE_PREFIX = "Farstate quest verification";
+
+function buildQuestVerificationMessage(address: `0x${string}`) {
+  return [
+    VERIFY_MESSAGE_PREFIX,
+    `Address: ${address}`,
+    `Issued At: ${Date.now()}`,
+  ].join("\n");
+}
 
 function getUserFacingError(error: unknown) {
   const fallback = "Something went wrong. Please try again.";
@@ -90,6 +101,7 @@ const QuestDrop = ({
   const [retrying, setRetrying] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
   const { switchChain, isPending: chainSwitching, error } = useSwitchChain();
+  const { signMessageAsync } = useSignMessage();
 
   const {
     data: isClaimed,
@@ -119,16 +131,22 @@ const QuestDrop = ({
 
   const { mutateAsync: verifyQuest, isPending: verifyPending } = useMutation({
     mutationFn: async () => {
-      if (!quickAuth) {
-        throw new Error("QuickAuth is not available");
+      if (!address) {
+        throw new Error("Connect your wallet to verify.");
       }
 
-      const { token } = await quickAuth.getToken();
+      const message = buildQuestVerificationMessage(address);
+      const signature = await signMessageAsync({ message });
       const res = await fetch("/api/quests/self-verify", {
-        method: "GET",
+        method: "POST",
         headers: {
-          authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+          userAddress: address,
+          message,
+          signature,
+        }),
       });
 
       const body = (await res.json().catch(() => null)) as
