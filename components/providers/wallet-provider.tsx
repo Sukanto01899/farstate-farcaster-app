@@ -15,7 +15,7 @@ import {
 } from "wagmi/chains";
 
 export const config = createConfig({
-  chains: [base, Monad, arbitrum, optimism, polygon, story, baseSepolia, celo],
+  chains: [base, Monad, arbitrum, optimism, polygon, story, celo],
   transports: {
     [base.id]: http(),
     [Monad.id]: http(),
@@ -23,7 +23,6 @@ export const config = createConfig({
     [optimism.id]: http(),
     [polygon.id]: http(),
     [story.id]: http(),
-    [baseSepolia.id]: http(),
     [celo.id]: http(),
   },
   connectors: [miniAppConnector()],

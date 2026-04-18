@@ -129,9 +129,10 @@ export const drop = [
 
 export const questDrop = [
   {
-    id: 31,
-    title: "Open Alchemy Mini App",
-    description: "Open the Alchemy App and claim Mystery box.",
+    id: 32,
+    title: "Complete Free Box AP Bonus Quest",
+    description:
+      "Visit the Alchemy, Open free Mystery box and claim AP from quest tab.",
     contract: abi.WCTDrop,
     chain: base,
     isActive: true,
@@ -140,6 +141,6 @@ export const questDrop = [
     isUpcoming: false,
     appUrl: "https://farcaster.xyz/miniapps/wLLjqojZVubo/alchemy",
     visitLabel: "Open Alchemy",
-    verifyLabel: "Verify Open",
+    verifyLabel: "Verify Claim AP",
   },
 ];

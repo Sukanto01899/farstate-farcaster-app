@@ -361,7 +361,10 @@ const QuestDrop = ({
   const renderAction = () => {
     if (isConnected && chainId !== contract.chain.id) {
       return (
-        <button onClick={() => switchChain({ chainId: contract.chain.id })}>
+        <button
+          className="text-white border rounded-md p-1 text-sm"
+          onClick={() => switchChain({ chainId: contract.chain.id })}
+        >
           Switch to {contract.chain.name}
         </button>
       );
