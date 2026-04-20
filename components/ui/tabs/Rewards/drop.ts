@@ -129,17 +129,17 @@ export const drop = [
 
 export const questDrop = [
   {
-    id: 32,
+    id: 33,
     title: "Complete Free Box AP Bonus Quest",
     description:
       "Visit the Alchemy, Open free Mystery box and claim AP from quest tab.",
-    contract: abi.WCTDrop,
+    contract: abi.zoraDrop,
     chain: base,
     isActive: true,
-    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/33152.png",
-    reward: "0.5 $WCT",
+    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/35931.png",
+    reward: "1 $ZORA",
     isUpcoming: false,
-    appUrl: "https://farcaster.xyz/miniapps/wLLjqojZVubo/alchemy",
+    appUrl: "https://base.app/app/alchemy-fc.vercel.app",
     visitLabel: "Open Alchemy",
     verifyLabel: "Verify Claim AP",
   },

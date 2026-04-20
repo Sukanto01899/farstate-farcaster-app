@@ -232,7 +232,7 @@ const QuestDrop = ({
     localStorage.removeItem(getVerifiedStorageKey(id));
     setIsVisited(true);
     setIsVerified(false);
-    actions?.openMiniApp({ url: appUrl });
+    actions?.openUrl(appUrl);
   };
 
   const handleVerifyQuest = async () => {

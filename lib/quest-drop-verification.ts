@@ -7,8 +7,8 @@ export type QuestVerificationRule = {
 
 // Edit these booleans to control quest-drop verification globally.
 export const questDropVerificationRule: QuestVerificationRule = {
-  requireVisit: true,
-  requireFree: true,
+  requireVisit: false,
+  requireFree: false,
   requireEmber: false,
   requireCelestial: false,
 };

@@ -59,15 +59,15 @@ export async function POST(request: NextRequest) {
       questDropVerificationRule.requireEmber ||
       questDropVerificationRule.requireCelestial;
 
-    if (!hasVerificationRequirement) {
-      return NextResponse.json(
-        {
-          error: "No quest verification requirement is enabled",
-          isSuccess: false,
-        },
-        { status: 500 },
-      );
-    }
+    // if (!hasVerificationRequirement) {
+    //   return NextResponse.json(
+    //     {
+    //       error: "No quest verification requirement is enabled",
+    //       isSuccess: false,
+    //     },
+    //     { status: 500 },
+    //   );
+    // }
 
     const verificationResponse = await fetchQuestVerification(
       request,

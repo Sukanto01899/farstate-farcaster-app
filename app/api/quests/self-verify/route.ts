@@ -18,7 +18,10 @@ function parseVerificationMessage(message: string) {
   const addressLine = parts[1];
   const issuedAtLine = parts[2];
 
-  if (!addressLine.startsWith("Address: ") || !issuedAtLine.startsWith("Issued At: ")) {
+  if (
+    !addressLine.startsWith("Address: ") ||
+    !issuedAtLine.startsWith("Issued At: ")
+  ) {
     return null;
   }
 
@@ -29,13 +32,11 @@ function parseVerificationMessage(message: string) {
 }
 
 export async function POST(request: NextRequest) {
-  const body = (await request.json().catch(() => null)) as
-    | {
-        userAddress?: string;
-        message?: string;
-        signature?: `0x${string}`;
-      }
-    | null;
+  const body = (await request.json().catch(() => null)) as {
+    userAddress?: string;
+    message?: string;
+    signature?: `0x${string}`;
+  } | null;
 
   const userAddress = body?.userAddress?.trim();
   const message = body?.message?.trim();
@@ -107,12 +108,13 @@ export async function POST(request: NextRequest) {
     questDropVerificationRule.requireEmber ||
     questDropVerificationRule.requireCelestial;
 
-  if (!hasVerificationRequirement) {
-    return NextResponse.json(
-      { error: "No quest verification requirement is enabled", isSuccess: false },
-      { status: 500 },
-    );
-  }
+  // Disabled verification requirement check for now to allow users to verify with old verification data even after we update the quest verification requirements. We will re-enable this check in the future once we are ready to enforce the new verification requirements and have given users enough time to update their verification data if needed.
+  // if (!hasVerificationRequirement) {
+  //   return NextResponse.json(
+  //     { error: "No quest verification requirement is enabled", isSuccess: false },
+  //     { status: 500 },
+  //   );
+  // }
 
   const verificationResponse = await fetchQuestVerification(
     request,
