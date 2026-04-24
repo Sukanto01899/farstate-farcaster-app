@@ -87,9 +87,9 @@ export const drop = [
     description: "Claim CELO Drop (FCFS)",
     contract: abi.CELODrop,
     chain: celo,
-    isActive: false,
+    isActive: true,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/5567.png",
-    reward: "0.02 $CUSD",
+    reward: "0.03 $CUSD",
     isUpcoming: false,
   },
 
