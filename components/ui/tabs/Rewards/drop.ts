@@ -87,7 +87,7 @@ export const drop = [
     description: "Claim CELO Drop (FCFS)",
     contract: abi.CELODrop,
     chain: celo,
-    isActive: true,
+    isActive: false,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/5567.png",
     reward: "0.03 $CUSD",
     isUpcoming: false,
@@ -129,15 +129,15 @@ export const drop = [
 
 export const questDrop = [
   {
-    id: 33,
+    id: 34,
     title: "Complete Free Box AP Bonus Quest",
     description:
       "Visit the Alchemy, Open free Mystery box and claim AP from quest tab.",
-    contract: abi.zoraDrop,
+    contract: abi.WCTDrop,
     chain: base,
     isActive: true,
-    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/35931.png",
-    reward: "1 $ZORA",
+    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/33152.png",
+    reward: "0.5 $WCT",
     isUpcoming: false,
     appUrl: "https://base.app/app/alchemy-fc.vercel.app",
     visitLabel: "Open Alchemy",
