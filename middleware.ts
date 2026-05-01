@@ -20,13 +20,6 @@ function requiresAuth(pathname: string) {
   return false;
 }
 
-function isWebhookPath(pathname: string) {
-  return (
-    pathname.startsWith("/api/webhook") ||
-    pathname.startsWith("/api/ai/subscription/webhook")
-  );
-}
-
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
@@ -34,15 +27,12 @@ export async function middleware(request: NextRequest) {
   // Tune with env vars; defaults are conservative.
   const windowSeconds = Number(process.env.API_RATELIMIT_WINDOW_SECONDS || 60);
   const ipLimit = Number(process.env.API_RATELIMIT_MAX_PER_IP || 120);
-  const webhookIpLimit = Number(
-    process.env.API_RATELIMIT_WEBHOOK_MAX_PER_IP || 600
-  );
 
   const clientIp = getClientIp(request);
   const ipResult = await consumeRateLimit({
     keyPrefix: "rl:api:ip",
     id: clientIp,
-    limit: isWebhookPath(pathname) ? webhookIpLimit : ipLimit,
+    limit: ipLimit,
     windowSeconds,
   });
 
@@ -146,7 +136,12 @@ export async function middleware(request: NextRequest) {
   }
 }
 
-// middleware  route matcher
+// Keep middleware off public/cacheable GET APIs so they can be served by CDN
+// without paying an auth/rate-limit invocation on every request.
 export const config = {
-  matcher: ["/api/:path*"],
+  matcher: [
+    "/api/signature/:path*",
+    "/api/ai/create-cast",
+    "/api/ai/create-thumbnail",
+  ],
 };

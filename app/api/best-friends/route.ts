@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 
+const BEST_FRIENDS_CACHE_SECONDS = 60 * 60;
+const BEST_FRIENDS_STALE_SECONDS = 6 * 60 * 60;
+
 export async function GET(request: Request) {
   const apiKey = process.env.NEYNAR_API_KEY;
   const { searchParams } = new URL(request.url);
@@ -40,7 +43,14 @@ export async function GET(request: Request) {
       users: { user: { fid: number; username: string } }[];
     };
 
-    return NextResponse.json({ bestFriends: users });
+    return NextResponse.json(
+      { bestFriends: users },
+      {
+        headers: {
+          "Cache-Control": `public, max-age=0, s-maxage=${BEST_FRIENDS_CACHE_SECONDS}, stale-while-revalidate=${BEST_FRIENDS_STALE_SECONDS}`,
+        },
+      }
+    );
   } catch (error) {
     console.error("Failed to fetch best friends:", error);
     return NextResponse.json(

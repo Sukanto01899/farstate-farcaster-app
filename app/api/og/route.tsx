@@ -1,7 +1,7 @@
 import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
 
-export const dynamic = "force-dynamic";
+const ONE_DAY_SECONDS = 60 * 60 * 24;
 
 export async function GET(request: NextRequest) {
   try {
@@ -127,6 +127,9 @@ export async function GET(request: NextRequest) {
       {
         width: 600,
         height: 400,
+        headers: {
+          "Cache-Control": `public, max-age=0, s-maxage=${ONE_DAY_SECONDS}, stale-while-revalidate=${ONE_DAY_SECONDS}`,
+        },
         fonts: [
           {
             name: "Inter",

@@ -1,6 +1,9 @@
 import { NeynarAPIClient } from "@neynar/nodejs-sdk";
 import { NextResponse } from "next/server";
 
+const USER_CACHE_SECONDS = 10 * 60;
+const USER_STALE_SECONDS = 60 * 60;
+
 export async function GET(request: Request) {
   const apiKey = process.env.NEYNAR_API_KEY;
   const { searchParams } = new URL(request.url);
@@ -31,7 +34,14 @@ export async function GET(request: Request) {
       fids: fidsArray,
     });
 
-    return NextResponse.json({ users });
+    return NextResponse.json(
+      { users },
+      {
+        headers: {
+          "Cache-Control": `public, max-age=0, s-maxage=${USER_CACHE_SECONDS}, stale-while-revalidate=${USER_STALE_SECONDS}`,
+        },
+      }
+    );
   } catch (error) {
     console.error("Failed to fetch users:", error);
     return NextResponse.json(

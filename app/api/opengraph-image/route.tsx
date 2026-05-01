@@ -2,7 +2,6 @@ import { getNeynarUser } from "@/lib/neynar";
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
 
-export const dynamic = "force-dynamic";
 const ONE_DAY_SECONDS = 60 * 60 * 24;
 
 export async function GET(request: NextRequest) {

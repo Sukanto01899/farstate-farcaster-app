@@ -1,6 +1,5 @@
 import { useFrame } from "@/components/providers/farcaster-provider";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
 
 export type StatusType = {
   tier: string;
@@ -21,10 +20,14 @@ const useAiLimitStatus = () => {
     isLoading: isStatusLoading,
     refetch: refetchStatus,
   } = useQuery({
-    queryKey: [fid],
+    queryKey: ["ai-limit-status", fid],
+    enabled: !!fid,
+    staleTime: 60 * 1000,
+    gcTime: 5 * 60 * 1000,
     refetchOnReconnect: true,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
     queryFn: async () => {
-      if (!fid) return;
       const res = await fetch("/api/ai/subscription", {
         method: "POST",
         headers: {
