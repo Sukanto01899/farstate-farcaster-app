@@ -1,8 +1,8 @@
 import { APP_DESCRIPTION, APP_NAME, APP_URL } from "@/lib/constants";
 import { getMiniAppEmbedMetadata } from "@/lib/utils";
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
-export const revalidate = 300;
+
+export const revalidate = 86400;
 
 // This is an example of how to generate a dynamically generated share page based on fid:
 // Sharing this route e.g. exmaple.com/share/123 will generate a share page for fid 123,
@@ -29,6 +29,10 @@ export async function generateMetadata({
 }
 
 export default function SharePage() {
-  // redirect to home page
-  redirect("/");
+  return (
+    <>
+      <meta httpEquiv="refresh" content="0;url=/" />
+      <main className="min-h-screen bg-slate-950 text-white" />
+    </>
+  );
 }
