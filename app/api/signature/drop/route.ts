@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
     // Signature generate closed for testing - remove when ready to use
     return NextResponse.json(
       {
-        signature: "signature-none",
+        signature: "signature",
         fid,
         nonce: nonce.toString(),
         deadline: deadline.toString(),

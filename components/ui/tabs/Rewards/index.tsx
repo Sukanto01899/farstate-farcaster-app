@@ -42,8 +42,8 @@ const RewardsTab = () => {
       </div>
 
       <div className="space-y-4">
-        {isActiveTab &&
-          questDrop.map((quest) => <QuestDrop key={quest.id} {...quest} />)}
+        {/* {isActiveTab &&
+          questDrop.map((quest) => <QuestDrop key={quest.id} {...quest} />)} */}
         {isActiveTab
           ? activeDrop.map((drop) => <ExclusiveDrop {...drop} />)
           : endedDrop.map((drop) => <ExclusiveDrop {...drop} />)}
