@@ -139,7 +139,7 @@ export const questDrop = [
     chain: celo,
     isActive: true,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/35931.png",
-    reward: "0.2 $CUSD",
+    reward: "0.01 $CUSD",
     isUpcoming: false,
     appUrl: "https://base.app/app/alchemy-fc.vercel.app",
     visitLabel: "Open Alchemy",
