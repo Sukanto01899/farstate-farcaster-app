@@ -129,17 +129,17 @@ export const drop = [
 
 export const questDrop = [
   {
-    id: 39,
+    id: 40,
     title: "Complete Free Box AP Bonus Quest",
     // title: "Visit Captcha Mini App",
     description:
       "Visit the Alchemy, Open free Mystery box and claim AP from quest tab.",
     // description: "Visit the Captcha, Open Captcha App and claim onchain ID.",
-    contract: abi.CELODrop,
-    chain: celo,
+    contract: abi.zoraDrop,
+    chain: base,
     isActive: true,
-    icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/5567.png",
-    reward: "0.02 $CUSD",
+    icon: "https://basescan.org/token/images/zora_64.pngg",
+    reward: "2 $ZORA",
     isUpcoming: false,
     appUrl: "https://base.app/app/alchemy-fc.vercel.app",
     visitLabel: "Open Alchemy",
