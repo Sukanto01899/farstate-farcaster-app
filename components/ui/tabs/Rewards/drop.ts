@@ -129,7 +129,7 @@ export const drop = [
 
 export const questDrop = [
   {
-    id: 40,
+    id: 41,
     title: "Complete Free Box AP Bonus Quest",
     // title: "Visit Captcha Mini App",
     description:
@@ -139,7 +139,7 @@ export const questDrop = [
     chain: base,
     isActive: true,
     icon: "https://basescan.org/token/images/zora_64.pngg",
-    reward: "2 $ZORA",
+    reward: "1 $ZORA",
     isUpcoming: false,
     appUrl: "https://base.app/app/alchemy-fc.vercel.app",
     visitLabel: "Open Alchemy",
