@@ -140,7 +140,7 @@ export const questDrop = [
     isActive: true,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/35931.png",
     reward: "2 $ZORA",
-    isUpcoming: false,
+    isUpcoming: true,
     appUrl: "https://base.app/app/alchemy-fc.vercel.app",
     visitLabel: "Open Alchemy",
     verifyLabel: "Verify Claim AP",
