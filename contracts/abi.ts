@@ -1044,8 +1044,13 @@ export const abi = {
     abi: commonAbi,
     chain: base,
   },
-  CELODrop: {
+  CeloUsdDrop: {
     address: "0x4790a3bBE3284917e8224640dBf3a2Dc85355604",
+    abi: commonAbi,
+    chain: celo,
+  },
+  CELODrop: {
+    address: "0x72a802501b7Cccb6579cA5556E967aDAb81A0F8b",
     abi: commonAbi,
     chain: celo,
   },
