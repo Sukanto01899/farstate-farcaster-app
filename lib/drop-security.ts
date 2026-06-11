@@ -16,6 +16,7 @@ const allowedDropContracts = new Set(
     abi.OPDrop.address,
     abi.ExclusiveUSDCDrop.address,
     abi.zoraDrop.address,
+    abi.CeloUsdDrop.address,
   ].map((address) => address.toLowerCase()),
 );
 
