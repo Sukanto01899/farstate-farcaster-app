@@ -87,7 +87,7 @@ export const drop = [
     description: "Claim CELO Drop (FCFS)",
     contract: abi.CeloUsdDrop,
     chain: celo,
-    isActive: true,
+    isActive: false,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/5567.png",
     reward: "0.02 $cUSD",
     isUpcoming: false,
@@ -129,7 +129,7 @@ export const drop = [
 
 export const questDrop = [
   {
-    id: 50,
+    id: 51,
     title: "Complete Free Box AP Bonus Quest",
     // title: "Visit Captcha Mini App",
     description:
