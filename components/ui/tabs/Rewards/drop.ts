@@ -129,7 +129,7 @@ export const drop = [
 
 export const questDrop = [
   {
-    id: 52,
+    id: 53,
     title: "Complete Free Box AP Bonus Quest",
     // title: "Visit Captcha Mini App",
     description:
@@ -137,7 +137,7 @@ export const questDrop = [
     // description: "Visit the Captcha, Open Captcha App and claim onchain ID.",
     contract: abi.zoraDrop,
     chain: base,
-    isActive: false,
+    isActive: true,
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/35931.png",
     reward: "2 $ZORA",
     isUpcoming: false,
