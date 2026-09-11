@@ -141,7 +141,7 @@ export const questDrop = [
     icon: "https://s2.coinmarketcap.com/static/img/coins/64x64/35931.png",
     reward: "2 $ZORA",
     isUpcoming: false,
-    appUrl: "https://base.app/app/forgeapp.fun",
+    appUrl: "https://base.app/app/play.forgeapp.fun",
     visitLabel: "Open Alchemy",
     verifyLabel: "Verify Claim AP",
   },
